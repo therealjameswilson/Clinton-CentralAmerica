@@ -11,7 +11,7 @@ https://history.state.gov/historicaldocuments/frus1993-00v32
 
 - `index.html` - GitHub Pages-ready page shell.
 - `styles.css` - responsive page styling.
-- `app.js` - data and rendering for the candidate document chronology, official anchors, country lanes, source families, and queue filters.
+- `app.js` - data and rendering for the candidate document chronology, gap controls, official anchors, country lanes, source families, and queue filters.
 - `assets/central-america-research-map.svg` - local visual asset for the workspace header.
 
 ## Clinton Library Finding-Aid Inputs
@@ -43,6 +43,16 @@ The same chronology now also incorporates GovInfo Public Papers records for Clin
 1997 San Jose summit, 1998 Hurricane Mitch remarks, and March 1999 Central America trip.
 These public documents are candidates and chronology anchors, not substitutes for policy-process
 records; the queue requires matching them against NSC, State, speechwriting, press, and trip-book files.
+
+## Gap Fixes
+
+The page now closes the first-pass chronology gaps for 1995, 1996, and 2000 with GovInfo
+Public Papers anchors for Summit of the Americas follow-through, Caribbean Basin trade,
+narcotics certification, CBI beneficiary designations, and Panama Canal transfer. A new
+gap-control section records what was fixed and what still needs private-record follow-up.
+
+Federal Register and USAID source families were added so public statements can be tested
+against legal implementation, aid, disaster-relief, trade, TPS, and project records.
 
 The source map and queue also incorporate the Clinton administration FRUS index so adjacent
 volumes can be checked before a Central America selection decision is made.

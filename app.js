@@ -142,6 +142,22 @@ const sources = [
     href: "https://www.govinfo.gov/app/collection/PPP",
   },
   {
+    title: "Federal Register",
+    type: "Public legal control",
+    description:
+      "Presidential determinations, proclamations, notices, TPS actions, and trade designations supply legal implementation evidence behind public statements.",
+    checks: ["FR citation", "Effective date", "Linked statute or determination"],
+    href: "https://www.federalregister.gov/documents/search",
+  },
+  {
+    title: "USAID Development Experience Clearinghouse",
+    type: "Aid implementation",
+    description:
+      "Use USAID reporting to test disaster-relief, reconstruction, democracy, and development claims against implementation records.",
+    checks: ["Project title", "Country coverage", "Report date"],
+    href: "https://dec.usaid.gov/dec/home/Default.aspx",
+  },
+  {
     title: "Department of State FOIA",
     type: "Agency records",
     description:
@@ -511,14 +527,62 @@ const chronologyOverview = [
     detail: "Filtered to LPWJC 2010-0083-F",
   },
   {
-    value: "18",
+    value: "27",
     label: "candidate references",
-    detail: "Daily Diary plus Public Papers anchors",
+    detail: "Daily Diary, Public Papers, and gap-fill anchors",
   },
   {
-    value: "1993-1999",
+    value: "1993-2000",
     label: "date span",
     detail: "Chronology references surfaced so far",
+  },
+];
+
+const gapControls = [
+  {
+    title: "Chronology Span",
+    status: "Closed for first pass",
+    gap: "The public chronology skipped 1995, 1996, and 2000.",
+    fix:
+      "Added 1995 Summit and narcotics letters, 1996 Caribbean Basin and narcotics letters, and 2000 trade, CBI, and drug-certification candidates.",
+    next:
+      "Match each public anchor to NSC, State, Treasury, USAID, and Federal Register implementation records before selection.",
+  },
+  {
+    title: "Panama Terminal-Year Evidence",
+    status: "Closed for first pass",
+    gap: "Panama Canal transfer appeared only as a queue item, despite being a major terminal-year boundary issue.",
+    fix:
+      "Promoted Clinton's December 14, 1999 Panama Canal transfer statement into the dated chronology.",
+    next:
+      "Connect the statement to PC/DC/PRD, Defense Policy, State, treaty-obligation, and Canal Commission records.",
+  },
+  {
+    title: "Belize Visibility",
+    status: "Partly closed",
+    gap: "Belize had a country lane but little document-level evidence beyond regional summit attendance.",
+    fix:
+      "Added narcotics-list letters and trade/CBI controls where Belize appears as a policy object rather than only an attendee.",
+    next:
+      "Decide whether Belize warrants standalone treatment or should remain inside regional, narcotics, migration, and trade chapters.",
+  },
+  {
+    title: "Public-Law and Implementation Sources",
+    status: "Closed for routing",
+    gap: "Public Papers were present, but legal and implementation sources were not explicit enough for follow-through.",
+    fix:
+      "Added Federal Register and USAID source families, plus queue tasks for CBI, drug certification, TPS/migration, and Hurricane Mitch implementation.",
+    next:
+      "Record FR citations, statutory hooks, project files, and no-hit searches in the provenance ledger.",
+  },
+  {
+    title: "Public vs. Private Evidence",
+    status: "Open risk",
+    gap: "The page still leans heavily on public statements for dated anchors.",
+    fix:
+      "Every new public item is marked as a candidate anchor and paired with explicit private-record follow-up.",
+    next:
+      "Do not treat public rhetoric as final selection evidence until matched to decision records, memoranda, cables, or meeting notes.",
   },
 ];
 
@@ -534,7 +598,7 @@ const publicPapersRoot =
 
 function publicPapersSourceNote(year, book, pageRange, title, eventDate, verificationNote = "") {
   const note = verificationNote ? ` ${verificationNote}` : "";
-  return `${publicPapersRoot} (${year}, ${book}), ${pageRange}, "${title}," ${eventDate}. GovInfo details page; public chronology lead to be matched against speechwriting, press, trip-book, NSC, and State records before selection.${note}`;
+  return `${publicPapersRoot} (${year}, ${book}), ${pageRange}, "${title}," ${eventDate}. GovInfo details page; public chronology lead to be matched against relevant White House, NSC, State, agency, and implementation records before selection.${note}`;
 }
 
 const chronologyItems = [
@@ -584,6 +648,80 @@ const chronologyItems = [
     href: "https://catalog.archives.gov/id/17368177",
   },
   {
+    title: "Major narcotics producing and transit countries letter",
+    date: "February 2, 1995",
+    type: "Letter",
+    countries: ["Regional", "Guatemala", "Panama", "Belize"],
+    summary:
+      "Clinton's letter to congressional leaders listed Guatemala and Panama as major illicit drug producing or transit countries and removed Belize from the list while warning that Belize should be watched as a potential transit point.",
+    sourceNote: publicPapersSourceNote(
+      "1995",
+      "Book I",
+      "pages 156-157",
+      "Letter to Congressional Leaders on Major Narcotics Producing and Transit Countries",
+      "February 2, 1995",
+      "GovInfo notes that identical letters were sent to congressional foreign relations and appropriations leaders and that a related February 28 memorandum appears in Appendix D.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1995-book1/PPP-1995-book1-doc-pg156",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
+  {
+    title: "First anniversary of the Summit of the Americas",
+    date: "December 12, 1995",
+    type: "Public statement",
+    countries: ["Regional"],
+    summary:
+      "Clinton's anniversary statement is a public anchor for Summit of the Americas follow-through on democracy, environment, trade liberalization, money laundering, narcotics trafficking, and hemispheric prosperity.",
+    sourceNote: publicPapersSourceNote(
+      "1995",
+      "Book II",
+      "page 1885",
+      "Statement on the First Anniversary of the Summit of the Americas",
+      "December 12, 1995",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1995-book2/PPP-1995-book2-doc-pg1885",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
+  {
+    title: "Caribbean Basin economic recovery report transmittal",
+    date: "October 1, 1996",
+    type: "Message",
+    countries: ["Regional"],
+    summary:
+      "Clinton transmitted the second report on the operation of the Caribbean Basin Economic Recovery Act. Use this as a public trade-policy anchor for Central America and Caribbean Basin follow-up, then verify country-specific treatment in the underlying report and Federal Register implementation records.",
+    sourceNote: publicPapersSourceNote(
+      "1996",
+      "Book II",
+      "page 1737",
+      "Message to the Congress Transmitting a Report on Caribbean Basin Economic Recovery",
+      "October 1, 1996",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1996-book2/PPP-1996-book2-doc-pg1737",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
+  {
+    title: "Major illicit drug-producing and drug-transit countries letter",
+    date: "December 2, 1996",
+    type: "Letter",
+    countries: ["Regional", "Belize", "Guatemala", "Panama"],
+    summary:
+      "Clinton's 1996 narcotics letter listed Belize, Guatemala, and Panama among major illicit drug-producing or drug-transit countries, giving the page a second-year public anchor for narcotics policy beyond the 1995 list.",
+    sourceNote: publicPapersSourceNote(
+      "1996",
+      "Book II",
+      "pages 2162-2163",
+      "Letter to Congressional Leaders on Major Illicit Drug-Producing and Drug-Transit Countries",
+      "December 2, 1996",
+      "GovInfo notes that the letter was released by the Office of the Press Secretary on December 3.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1996-book2/PPP-1996-book2-doc-pg2162",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
+  {
     title: "Central American Summit welcoming ceremony",
     date: "May 8, 1997",
     type: "Public statement",
@@ -600,6 +738,25 @@ const chronologyItems = [
     href: "https://www.govinfo.gov/app/details/PPP-1997-book1/PPP-1997-book1-doc-pg565-2",
     linkLabel: "Open GovInfo record",
     badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "News conference with Central American leaders",
+    date: "May 8, 1997",
+    type: "News conference",
+    countries: ["Regional", "Costa Rica", "Guatemala", "El Salvador", "Honduras", "Nicaragua", "Belize"],
+    summary:
+      "The San Jose news conference is a high-density public anchor for Central America-U.S. relations, trade, migration, labor rights, law enforcement, environment, education, and the claim that regional leaders were seeking a deeper partnership with Washington.",
+    sourceNote: publicPapersSourceNote(
+      "1997",
+      "Book I",
+      "pages 566-574",
+      "The President's News Conference With Central American Leaders in San Jose",
+      "May 8, 1997",
+      "GovInfo notes that the news conference began at 1:20 p.m. at the National Theater and included translated remarks by leaders from Costa Rica, El Salvador, and Guatemala.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1997-book1/PPP-1997-book1-doc-pg566",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
   },
   {
     title: "Declaration of San Jose",
@@ -848,6 +1005,81 @@ const chronologyItems = [
     linkLabel: "Open GovInfo record",
     badges: ["Public Papers", "GovInfo", "Joint statement"],
   },
+  {
+    title: "Panama Canal transfer statement",
+    date: "December 14, 1999",
+    type: "Public statement",
+    countries: ["Panama"],
+    summary:
+      "Clinton's statement on transferring the Panama Canal to the Republic of Panama closes a major terminal-year gap in the chronology and should be matched against treaty-obligation, Canal Commission, Defense, State, and NSC decision records.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book II",
+      "pages 2299-2300",
+      "Statement on the Transfer of the Panama Canal to the Republic of Panama",
+      "December 14, 1999",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book2/PPP-1999-book2-doc-pg2299",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
+  {
+    title: "Trade and Development Act signing remarks",
+    date: "May 18, 2000",
+    type: "Public statement",
+    countries: ["Regional"],
+    summary:
+      "Clinton's remarks on signing the Trade and Development Act of 2000 provide a public anchor for Caribbean Basin trade parity and Central America-facing trade implementation. Match this to CBI beneficiary designations, congressional files, USTR, State, and Federal Register records.",
+    sourceNote: publicPapersSourceNote(
+      "2000",
+      "Book I",
+      "pages 963-965",
+      "Remarks on Signing the Trade and Development Act of 2000",
+      "May 18, 2000",
+      "GovInfo notes that H.R. 434 became Public Law 106-200.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-2000-book1/PPP-2000-book1-doc-pg963",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
+  {
+    title: "CBI and AGOA beneficiary countries statement",
+    date: "October 2, 2000",
+    type: "Public statement",
+    countries: ["Regional"],
+    summary:
+      "The Caribbean Basin Initiative and African Growth and Opportunity Act beneficiary-country statement gives the terminal-year trade lane a public implementation anchor. Use it to find the underlying proclamations, eligibility determinations, and country-by-country files.",
+    sourceNote: publicPapersSourceNote(
+      "2000",
+      "Book II",
+      "pages 2000-2001",
+      "Statement on Caribbean Basin Initiative and African Growth and Opportunity Act Beneficiary Countries",
+      "October 2, 2000",
+      "GovInfo notes that the proclamations are listed in Appendix D.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-2000-book2/PPP-2000-book2-doc-pg2000-2",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
+  {
+    title: "Major drug producing and transit countries certification letter",
+    date: "November 1, 2000",
+    type: "Letter",
+    countries: ["Regional", "Belize", "Guatemala", "Panama"],
+    summary:
+      "Clinton's November 2000 certification letter provides an end-of-administration narcotics-policy anchor for Belize, Guatemala, and Panama. It should be reconciled with annual INCSR records, State cables, law-enforcement files, and congressional notification records.",
+    sourceNote: publicPapersSourceNote(
+      "2000",
+      "Book III",
+      "pages 2410-2413",
+      "Letter to Congressional Leaders on Certification of Major Illicit Drug Producing and Transit Countries",
+      "November 1, 2000",
+      "GovInfo notes that identical letters were sent to Senate and House foreign relations and appropriations leaders.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-2000-book3/PPP-2000-book3-doc-pg2410-2",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Gap fix"],
+  },
 ];
 
 const queueItems = [
@@ -1070,6 +1302,72 @@ const queueItems = [
       "For each candidate, record whether the eventual FRUS citation should rely on a document number, canonical volume or document URL, page image, archival source note, or public-paper page range.",
     href: "https://history.state.gov/historicaldocuments/citing-frus",
   },
+  {
+    title: "Close 1995-1996 public-document gap",
+    country: "Regional",
+    source: "GovInfo Public Papers",
+    priority: "High",
+    query:
+      'PPP-1995-book1 pg156 PPP-1995-book2 pg1885 PPP-1996-book2 pg1737 pg2162 Central America',
+    output:
+      "Verify the four added 1995-1996 public anchors, then record which need underlying NSC, State, Treasury, USTR, or Federal Register follow-up.",
+    href: "https://www.govinfo.gov/app/collection/PPP",
+  },
+  {
+    title: "Close 2000 terminal-year public-document gap",
+    country: "Regional",
+    source: "GovInfo Public Papers",
+    priority: "High",
+    query:
+      'PPP-2000-book1 pg963 PPP-2000-book2 pg2000 PPP-2000-book3 pg2410 Caribbean Basin narcotics Central America',
+    output:
+      "Use the 2000 trade, CBI beneficiary, and narcotics certification records to build terminal-year public chronology, then test against agency implementation files.",
+    href: "https://www.govinfo.gov/app/collection/PPP",
+  },
+  {
+    title: "Trace CBI and trade implementation",
+    country: "Regional",
+    source: "Federal Register",
+    priority: "High",
+    query:
+      '"Caribbean Basin" "Trade and Development Act of 2000" Clinton Belize Guatemala Honduras Nicaragua El Salvador',
+    output:
+      "Pull proclamations, beneficiary-country notices, USTR material, and statutory hooks behind the May and October 2000 Public Papers items.",
+    href: "https://www.federalregister.gov/documents/search",
+  },
+  {
+    title: "Build the annual narcotics certification spine",
+    country: "Regional",
+    source: "Department of State FOIA",
+    priority: "High",
+    query:
+      '"major illicit drug" Guatemala Panama Belize Clinton INCSR certification 1995 1996 2000',
+    output:
+      "Pair Public Papers certification letters with INCSR country narratives, State cables, law-enforcement files, and congressional notification records.",
+    href: "https://foia.state.gov/searchapp/Search/SubmitSimpleQuery",
+  },
+  {
+    title: "Audit Mitch migration and TPS records",
+    country: "Regional",
+    source: "Federal Register",
+    priority: "High",
+    query:
+      '"Hurricane Mitch" TPS Honduras Nicaragua El Salvador Guatemala Clinton',
+    output:
+      "Close the migration gap by locating TPS, INS, State, and humanitarian-policy records that connect Mitch relief to migration policy.",
+    href: "https://www.federalregister.gov/documents/search",
+  },
+  {
+    title: "Harvest 1997 San Jose fact sheets and briefings",
+    country: "Regional",
+    source: "GovInfo Public Papers",
+    priority: "Medium",
+    query:
+      '"San Jose Declaration" "Cooperative Law Enforcement in Central America" "Sustainable Development in Central America"',
+    output:
+      "Use the Public Papers digest to pull White House fact sheets and press briefings that sit between public rhetoric and NSC implementation files.",
+    href: "https://www.govinfo.gov/app/details/PPP-1997-book1/context",
+  },
 ];
 
 const methodCards = [
@@ -1122,6 +1420,7 @@ const roots = {
   batches: document.querySelector("#batch-root"),
   chronologyOverview: document.querySelector("#chronology-overview-root"),
   chronology: document.querySelector("#chronology-root"),
+  gaps: document.querySelector("#gap-root"),
   queue: document.querySelector("#queue-root"),
   method: document.querySelector("#method-root"),
   summary: document.querySelector("#queue-summary"),
@@ -1325,6 +1624,35 @@ function renderChronology() {
     .join("");
 }
 
+function renderGaps() {
+  roots.gaps.innerHTML = gapControls
+    .map(
+      (item) => `
+        <article class="gap-card">
+          <div class="gap-card-header">
+            <h3>${escapeHtml(item.title)}</h3>
+            ${pill(item.status)}
+          </div>
+          <dl>
+            <div>
+              <dt>Gap</dt>
+              <dd>${escapeHtml(item.gap)}</dd>
+            </div>
+            <div>
+              <dt>Fix</dt>
+              <dd>${escapeHtml(item.fix)}</dd>
+            </div>
+            <div>
+              <dt>Next Control</dt>
+              <dd>${escapeHtml(item.next)}</dd>
+            </div>
+          </dl>
+        </article>
+      `,
+    )
+    .join("");
+}
+
 function populateFilters() {
   const countryOptions = ["", ...unique(queueItems.map((item) => item.country))];
   const priorityOptions = ["", ...unique(queueItems.map((item) => item.priority))];
@@ -1460,6 +1788,7 @@ function init() {
   renderCountries();
   renderSources();
   renderChronology();
+  renderGaps();
   renderLibrary();
   populateFilters();
   renderQueue();
