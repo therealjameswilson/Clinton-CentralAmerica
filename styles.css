@@ -305,6 +305,7 @@ dd {
 .country-grid,
 .source-grid,
 .library-grid,
+.gap-grid,
 .method-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -315,6 +316,7 @@ dd {
 
 .source-grid,
 .library-grid,
+.gap-grid,
 .method-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -323,6 +325,7 @@ dd {
 .country-card,
 .source-card,
 .library-card,
+.gap-card,
 .chronology-card,
 .method-card,
 .queue-card {
@@ -336,6 +339,7 @@ dd {
 .country-card,
 .source-card,
 .library-card,
+.gap-card,
 .method-card {
   padding: 18px;
 }
@@ -344,6 +348,7 @@ dd {
 .country-card p,
 .source-card p,
 .library-card p,
+.gap-card p,
 .chronology-card p,
 .method-card p,
 .queue-card p {
@@ -353,6 +358,7 @@ dd {
 .official-card p,
 .source-card p,
 .library-card p,
+.gap-card p,
 .method-card p {
   margin: 10px 0 0;
 }
@@ -374,6 +380,7 @@ dd {
 .country-card .meta,
 .source-card .meta,
 .library-card .meta,
+.gap-card .meta,
 .chronology-card .meta,
 .queue-card .meta {
   display: flex;
@@ -544,6 +551,35 @@ dd {
   background: var(--surface-strong);
   color: #2d3f39 !important;
   font-size: 0.9rem;
+}
+
+.gap-card {
+  display: grid;
+  gap: 14px;
+}
+
+.gap-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gap-card dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.gap-card dl div {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.gap-card dd {
+  margin-top: 4px;
+  color: var(--muted);
+  font-weight: 500;
 }
 
 .library-card {
@@ -751,6 +787,7 @@ select:focus {
   .country-grid,
   .source-grid,
   .library-grid,
+  .gap-grid,
   .library-overview,
   .chronology-overview,
   .method-grid {
@@ -800,6 +837,7 @@ select:focus {
   .country-grid,
   .source-grid,
   .library-grid,
+  .gap-grid,
   .library-overview,
   .chronology-overview,
   .method-grid,
