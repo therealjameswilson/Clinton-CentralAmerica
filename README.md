@@ -11,7 +11,7 @@ https://history.state.gov/historicaldocuments/frus1993-00v32
 
 - `index.html` - GitHub Pages-ready page shell.
 - `styles.css` - responsive page styling.
-- `app.js` - data and rendering for the declassified chronology, official anchors, country lanes, source families, and queue filters.
+- `app.js` - data and rendering for the candidate document chronology, official anchors, country lanes, source families, and queue filters.
 - `assets/central-america-research-map.svg` - local visual asset for the workspace header.
 
 ## Clinton Library Finding-Aid Inputs
@@ -29,15 +29,25 @@ call-slip batches, and high-yield folder-title clusters derived from those findi
 The displayed source-note stems follow the FRUS order: repository, record collection,
 office or series, OA/ID locator, folder title, then a short editorial verification note.
 
-## Declassified Chronology Input
+## Candidate Chronology Inputs
 
-The first section of the page uses the Presidential Daily Diary records surfaced through the National Archives Catalog search:
+The first section of the page uses Presidential Daily Diary records surfaced through the National Archives Catalog search:
 
 https://catalog.archives.gov/search?q=%222010-0083-F%22&collectionIdentifier=WJC*
 
 The search returns 59 catalog hits; the page filters the results to the 30 file units whose
 FOIA tracking number is `LPWJC 2010-0083-F`, then lists pertinent Central America released
 diary entries, calls, meetings, and trip events with NAID references and FRUS-style source-note stems.
+
+The same chronology now also incorporates GovInfo Public Papers records for Clinton's
+1997 San Jose summit, 1998 Hurricane Mitch remarks, and March 1999 Central America trip.
+These public documents are candidates and chronology anchors, not substitutes for policy-process
+records; the queue requires matching them against NSC, State, speechwriting, press, and trip-book files.
+
+The source map and queue also incorporate the Clinton administration FRUS index so adjacent
+volumes can be checked before a Central America selection decision is made.
+They also link the Office of the Historian citation guidance so candidate records can be
+normalized into document-number, canonical-URL, page-range, and image-reference controls.
 
 ## Local Preview
 

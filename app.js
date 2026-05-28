@@ -31,6 +31,22 @@ const officialLinks = [
     status: "Public chronology",
     href: "https://www.govinfo.gov/app/collection/PPP",
   },
+  {
+    title: "Clinton FRUS volume index",
+    label: "Office of the Historian",
+    description:
+      "Adjacent Clinton-era volumes identify scope boundaries for public diplomacy, North America, Caribbean, South America, global issues, narcotics, and human-rights overlaps.",
+    status: "Cross-volume control",
+    href: "https://history.state.gov/historicaldocuments/clinton",
+  },
+  {
+    title: "FRUS citation guidance",
+    label: "Office of the Historian",
+    description:
+      "Use the citation guidance as the control model for document numbers, canonical URLs, page references, and source-note normalization.",
+    status: "Citation control",
+    href: "https://history.state.gov/historicaldocuments/citing-frus",
+  },
 ];
 
 const countries = [
@@ -148,6 +164,22 @@ const sources = [
       "Previous Central America volumes provide source-note practice, chapter precedents, and continuity checks.",
     checks: ["Source-note pattern", "Chapter model", "Cross-volume overlap"],
     href: "https://history.state.gov/historicaldocuments",
+  },
+  {
+    title: "Clinton FRUS Assist Pages",
+    type: "Scope control",
+    description:
+      "Use the Clinton administration FRUS index to flag records that may belong in adjacent volumes before building the final Central America selection list.",
+    checks: ["Adjacent volume", "Overlap issue", "Selection rationale"],
+    href: "https://history.state.gov/historicaldocuments/clinton",
+  },
+  {
+    title: "FRUS Citation Guidance",
+    type: "Citation control",
+    description:
+      "Normalize research leads into FRUS-ready citation components before a candidate is promoted from chronology lead to selection evidence.",
+    checks: ["Document number when assigned", "Canonical URL", "Page or image reference"],
+    href: "https://history.state.gov/historicaldocuments/citing-frus",
   },
 ];
 
@@ -479,9 +511,9 @@ const chronologyOverview = [
     detail: "Filtered to LPWJC 2010-0083-F",
   },
   {
-    value: "6",
-    label: "pertinent references",
-    detail: "Released diary chronology anchors",
+    value: "18",
+    label: "candidate references",
+    detail: "Daily Diary plus Public Papers anchors",
   },
   {
     value: "1993-1999",
@@ -495,6 +527,14 @@ const dailyDiaryRoot =
 
 function dailyDiarySourceNote(oaId, folderTitle, entryLabel, naid) {
   return `${dailyDiaryRoot}, OA/ID ${oaId}, ${folderTitle}, ${entryLabel}. NARA Catalog NAID ${naid}; FOIA 2010-0083-F; entry-level redactions and release markings verified from the digitized Daily Diary file unit.`;
+}
+
+const publicPapersRoot =
+  "Source: Public Papers of the Presidents of the United States: William J. Clinton";
+
+function publicPapersSourceNote(year, book, pageRange, title, eventDate, verificationNote = "") {
+  const note = verificationNote ? ` ${verificationNote}` : "";
+  return `${publicPapersRoot} (${year}, ${book}), ${pageRange}, "${title}," ${eventDate}. GovInfo details page; public chronology lead to be matched against speechwriting, press, trip-book, NSC, and State records before selection.${note}`;
 }
 
 const chronologyItems = [
@@ -544,6 +584,43 @@ const chronologyItems = [
     href: "https://catalog.archives.gov/id/17368177",
   },
   {
+    title: "Central American Summit welcoming ceremony",
+    date: "May 8, 1997",
+    type: "Public statement",
+    countries: ["Regional", "Costa Rica", "Guatemala", "El Salvador", "Honduras", "Nicaragua", "Belize"],
+    summary:
+      "Clinton's San Jose remarks framed Central America as moving from civil war toward peace, democracy, free trade, antidrug cooperation, education, and environmental protection. The GovInfo record identifies the summit leaders present, including Costa Rica, Belize, Guatemala, Honduras, Nicaragua, and El Salvador.",
+    sourceNote: publicPapersSourceNote(
+      "1997",
+      "Book I",
+      "pages 565-566",
+      "Remarks at the Central American Summit Welcoming Ceremony in San Jose",
+      "May 8, 1997",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1997-book1/PPP-1997-book1-doc-pg565-2",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "Declaration of San Jose",
+    date: "May 8, 1997",
+    type: "Joint statement",
+    countries: ["Regional", "Costa Rica", "Guatemala", "El Salvador", "Honduras", "Nicaragua", "Belize"],
+    summary:
+      "The San Jose declaration is a public joint-statement candidate for regional democracy, crime, narcotics, corruption, immigration, free trade, worker rights, Open Skies, and environment follow-up. GovInfo notes that an original was not available for verification.",
+    sourceNote: publicPapersSourceNote(
+      "1997",
+      "Book I",
+      "pages 574-577",
+      "Declaration of San Jose",
+      "May 8, 1997",
+      "GovInfo notes that an original was not available for verification of the joint statement.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1997-book1/PPP-1997-book1-doc-pg574",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Joint statement"],
+  },
+  {
     title: "Nicaragua and Honduras calls after Mitch",
     date: "November 7, 1998",
     type: "Call",
@@ -557,6 +634,24 @@ const chronologyItems = [
       "17368190",
     ),
     href: "https://catalog.archives.gov/id/17368190",
+  },
+  {
+    title: "Telephone remarks on Hurricane Mitch damage",
+    date: "November 10, 1998",
+    type: "Public statement",
+    countries: ["Regional", "Honduras", "Nicaragua"],
+    summary:
+      "The Public Papers record a White House telephone exchange with Tipper Gore on hurricane damage in Central America three days after the diary calls to Nicaragua and Honduras. The notes identify President Carlos Flores of Honduras and Mary Flores as referenced by Mrs. Gore.",
+    sourceNote: publicPapersSourceNote(
+      "1998",
+      "Book II",
+      "pages 2012-2013",
+      "Remarks in a Telephone Conversation With Tipper Gore on Hurricane Damage in Central America",
+      "November 10, 1998",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1998-book2/PPP-1998-book2-doc-pg2012",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
   },
   {
     title: "Nicaragua trip and President Aleman meetings",
@@ -574,6 +669,43 @@ const chronologyItems = [
     href: "https://catalog.archives.gov/id/17368192",
   },
   {
+    title: "Posoltega community remarks",
+    date: "March 8, 1999",
+    type: "Public statement",
+    countries: ["Nicaragua"],
+    summary:
+      "The Public Papers record Clinton's remarks at Jose Dolores Toruno Lopez High School field in Posoltega during the Hurricane Mitch recovery trip. The notes identify President Arnoldo Aleman, local officials, Bishop Bosco Vivas, and Maria Andres Chamorro.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 323-324",
+      "Remarks to the Community in Posoltega, Nicaragua",
+      "March 8, 1999",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg323-2",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "Las Casitas mudslide survivor roundtable",
+    date: "March 8, 1999",
+    type: "Public statement",
+    countries: ["Nicaragua"],
+    summary:
+      "The Public Papers record a Posoltega roundtable with Hurricane Mitch survivors, beginning at 3:45 p.m. in the Cotton Research Center auditorium. GovInfo notes that a tape was not available for content verification.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 324-327",
+      "Remarks in a Roundtable Discussion With Las Casitas Volcano Mudslide Survivors in Posoltega",
+      "March 8, 1999",
+      "GovInfo notes that a tape was not available for verification of the content.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg324",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
     title: "El Salvador arrival and Calderon Sol ceremony",
     date: "March 8, 1999",
     type: "Trip event",
@@ -587,6 +719,134 @@ const chronologyItems = [
       "17368192",
     ),
     href: "https://catalog.archives.gov/id/17368192",
+  },
+  {
+    title: "Soto Cano Air Base remarks",
+    date: "March 9, 1999",
+    type: "Public statement",
+    countries: ["Honduras"],
+    summary:
+      "The Public Papers record Clinton's remarks in Hangar 1 at Soto Cano Air Base, with President Carlos Roberto Flores, U.S. Southern Command, and Joint Task Force Bravo figures named in the notes. This is a candidate anchor for the military relief and basing lane.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 328-329",
+      "Remarks to the Community at Soto Cano Air Base, Honduras",
+      "March 9, 1999",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg328-3",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "Hurricane Mitch reconstruction roundtable",
+    date: "March 9, 1999",
+    type: "Public statement",
+    countries: ["Honduras"],
+    summary:
+      "The Public Papers record a 2:52 p.m. roundtable in Tegucigalpa on Hurricane Mitch reconstruction efforts. GovInfo flags that a portion could not be verified because the tape was incomplete.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 330-334",
+      "Remarks in a Roundtable Discussion on Hurricane Mitch Reconstruction Efforts in Tegucigalpa, Honduras",
+      "March 9, 1999",
+      "GovInfo notes that a portion of the remarks could not be verified because the tape was incomplete.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg330",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "El Salvador Legislative Assembly address",
+    date: "March 10, 1999",
+    type: "Public statement",
+    countries: ["El Salvador"],
+    summary:
+      "The Public Papers record Clinton's San Salvador address to the Legislative Assembly, connecting Hurricane Mitch recovery, postwar democratic institutions, youth, justice, and reconciliation. GovInfo notes that part of the remarks could not be verified because the tape was incomplete.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 335-339",
+      "Remarks to the Legislative Assembly of El Salvador in San Salvador",
+      "March 10, 1999",
+      "GovInfo notes that a portion of the remarks could not be verified because the tape was incomplete.",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg335-2",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "Guatemala City arrival remarks",
+    date: "March 10, 1999",
+    type: "Public statement",
+    countries: ["Guatemala"],
+    summary:
+      "The Public Papers record the Guatemala City arrival remarks at the National Palace of Culture, with Clinton publicly linking U.S. support to truth about past abuses, peace-accord implementation, human rights, and the Central America summit in Antigua.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "page 339",
+      "Remarks on Arrival in Guatemala City, Guatemala",
+      "March 10, 1999",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg339",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "Guatemala peace-efforts roundtable",
+    date: "March 10, 1999",
+    type: "Public statement",
+    countries: ["Guatemala"],
+    summary:
+      "The Public Papers record a Guatemala City roundtable on peace efforts. This is a candidate public anchor for matching against NSC, State, declassification, human-rights, and peace-accord implementation files.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 340-344",
+      "Remarks in a Roundtable Discussion on Peace Efforts in Guatemala City",
+      "March 10, 1999",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg340",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "Central America Summit opening remarks",
+    date: "March 11, 1999",
+    type: "Public statement",
+    countries: ["Regional", "Guatemala", "El Salvador", "Honduras", "Nicaragua", "Costa Rica", "Belize"],
+    summary:
+      "The Public Papers record Clinton's Antigua summit opening at Casa Santo Domingo, with leaders from Guatemala, Nicaragua, Honduras, El Salvador, Costa Rica, the Dominican Republic, and Belize identified in the notes.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 344-345",
+      "Opening Remarks at the Central America Summit in Antigua, Guatemala",
+      "March 11, 1999",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg344-2",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo"],
+  },
+  {
+    title: "Declaration of Antigua",
+    date: "March 11, 1999",
+    type: "Joint statement",
+    countries: ["Regional", "Guatemala", "El Salvador", "Honduras", "Nicaragua", "Costa Rica", "Belize"],
+    summary:
+      "The Declaration of Antigua is a public joint-statement candidate for Mitch reconstruction, democracy, transparency, trade, migration, social development, anticorruption, counternarcotics, and regional follow-up after the 1999 summit.",
+    sourceNote: publicPapersSourceNote(
+      "1999",
+      "Book I",
+      "pages 350-354",
+      "Declaration of Antigua",
+      "March 11, 1999",
+    ),
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/PPP-1999-book1-doc-pg350",
+    linkLabel: "Open GovInfo record",
+    badges: ["Public Papers", "GovInfo", "Joint statement"],
   },
 ];
 
@@ -722,6 +982,94 @@ const queueItems = [
       "Extract source-note conventions and recurring institutions from prior Central America volumes.",
     href: "https://history.state.gov/historicaldocuments",
   },
+  {
+    title: "Audit adjacent Clinton FRUS volume boundaries",
+    country: "Regional",
+    source: "Clinton FRUS Assist Pages",
+    priority: "Critical",
+    query:
+      "Clinton FRUS Central America adjacent volumes public diplomacy North America Caribbean South America global issues",
+    output:
+      "Use the Clinton administration FRUS index to tag likely boundary cases: Public Diplomacy; North America; Cuba, Haiti, Caribbean; South America; Global Issues; Counterterrorism; and Rights and Governance.",
+    href: "https://history.state.gov/historicaldocuments/clinton",
+  },
+  {
+    title: "Harvest 1997 San Jose summit public-paper cluster",
+    country: "Regional",
+    source: "GovInfo Public Papers",
+    priority: "High",
+    query:
+      'PPP-1997-book1 "Central American Summit" "Declaration of San Jose" "San Jose"',
+    output:
+      "Capture GovInfo details pages, page ranges, notes, and document titles for the summit ceremony, news conference, joint statement, and environmental remarks before matching them to Blinken speech files and NSC summit folders.",
+    href: "https://www.govinfo.gov/app/details/PPP-1997-book1/context",
+  },
+  {
+    title: "Harvest 1999 Central America trip public-paper cluster",
+    country: "Regional",
+    source: "GovInfo Public Papers",
+    priority: "Critical",
+    query:
+      'PPP-1999-book1 Posoltega "Soto Cano" Tegucigalpa "Legislative Assembly" Antigua',
+    output:
+      "Treat the March 8-11, 1999 trip as a document cluster. Pair each public item with Daily Diary entries, trip books, speechwriting drafts, press files, NSC country files, and State reporting.",
+    href: "https://www.govinfo.gov/app/details/PPP-1999-book1/context",
+  },
+  {
+    title: "Reconcile Hurricane Mitch public statements with relief-policy files",
+    country: "Regional",
+    source: "GovInfo Public Papers",
+    priority: "High",
+    query:
+      '"Hurricane Mitch" "Central America" Clinton "Public Papers" "Tipper Gore"',
+    output:
+      "Use the November 1998 telephone remarks and March 1999 trip statements to build a relief-policy timeline, then test it against USAID, FEMA, State, NSC humanitarian affairs, TPS, and appropriations records.",
+    href: "https://www.govinfo.gov/app/details/PPP-1998-book2/PPP-1998-book2-doc-pg2012",
+  },
+  {
+    title: "Check Panama Canal transfer against Central America scope",
+    country: "Panama",
+    source: "GovInfo Public Papers",
+    priority: "High",
+    query:
+      '"Statement on the Transfer of the Panama Canal" Clinton "December 14, 1999"',
+    output:
+      "Decide whether Canal transfer public statements and decision records belong in Central America or an adjacent North America/hemispheric volume. If retained, pair Public Papers pages with PRD, PC/DC, Defense Policy, and treaty-obligation files.",
+    href: "https://www.govinfo.gov/content/pkg/PPP-1999-book2/pdf/PPP-1999-book2-doc-pg2299.pdf",
+  },
+  {
+    title: "Separate public diplomacy from policy process",
+    country: "Regional",
+    source: "Clinton FRUS Assist Pages",
+    priority: "High",
+    query:
+      "Clinton FRUS Volume XIV Public Diplomacy planned Central America public statements",
+    output:
+      "For every public statement candidate, log whether it is evidence of public framing only, whether it points to a private decision record, or whether it may belong in the planned Public Diplomacy volume.",
+    href: "https://history.state.gov/historicaldocuments/clinton",
+  },
+  {
+    title: "Build a source-note ledger for public documents",
+    country: "Regional",
+    source: "GovInfo Public Papers",
+    priority: "High",
+    query:
+      "GovInfo Public Papers Clinton Central America page range notes tape unavailable verification",
+    output:
+      "Record publication title, year/book, page range, event date, title, notes, URL, and any GovInfo verification limitation such as incomplete tape or missing original.",
+    href: "https://www.govinfo.gov/app/collection/PPP",
+  },
+  {
+    title: "Normalize source notes against FRUS citation guidance",
+    country: "Regional",
+    source: "FRUS Citation Guidance",
+    priority: "High",
+    query:
+      "FRUS citation guidance document numbers canonical URLs page image references source notes",
+    output:
+      "For each candidate, record whether the eventual FRUS citation should rely on a document number, canonical volume or document URL, page image, archival source note, or public-paper page range.",
+    href: "https://history.state.gov/historicaldocuments/citing-frus",
+  },
 ];
 
 const methodCards = [
@@ -733,7 +1081,7 @@ const methodCards = [
   {
     title: "Preserve source notes early",
     text:
-      "Every promising lead should capture repository, collection, file unit, date, title, release facts, URL, and page extent.",
+      "Every promising lead should capture repository, collection, file unit, date, title, release facts, canonical URL, page extent, and any document-number or image-reference control.",
   },
   {
     title: "Audit by issue and country",
@@ -965,12 +1313,11 @@ function renderChronology() {
             <p>${escapeHtml(finding.summary)}</p>
             <div class="meta">
               ${finding.countries.map((country) => pill(country)).join("")}
-              ${pill("FOIA release")}
-              ${pill("Digitized")}
+              ${(finding.badges || ["FOIA release", "Digitized"]).map((badge) => pill(badge)).join("")}
             </div>
             <p class="source-note-label">FRUS-style source note</p>
             <p class="source-note-text">${escapeHtml(finding.sourceNote)}</p>
-            <p><a class="inline-link" href="${finding.href}" rel="noreferrer">Open NARA record</a></p>
+            <p><a class="inline-link" href="${finding.href}" rel="noreferrer">${escapeHtml(finding.linkLabel || "Open NARA record")}</a></p>
           </div>
         </article>
       `,
