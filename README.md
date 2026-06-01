@@ -12,7 +12,7 @@ https://history.state.gov/historicaldocuments/frus1993-00v32
 - `index.html` - GitHub Pages-ready page shell.
 - `styles.css` - responsive page styling.
 - `app.js` - data and rendering for the candidate document chronology, gap controls, official anchors, country lanes, source families, and queue filters.
-- `packet.js` - browser-side compiler packet cards and CSV exports.
+- `packet.js` - browser-side compiler packet cards, chronology triage controls, and CSV exports.
 - `assets/central-america-research-map.svg` - local visual asset for the workspace header.
 
 ## Clinton Library Finding-Aid Inputs
@@ -44,6 +44,10 @@ The same chronology now also incorporates GovInfo Public Papers records for Clin
 1997 San Jose summit, 1998 Hurricane Mitch remarks, and March 1999 Central America trip.
 These public documents are candidates and chronology anchors, not substitutes for policy-process
 records; the queue requires matching them against NSC, State, speechwriting, press, and trip-book files.
+
+The chronology section includes country, type, evidence, and text filters plus a promotion
+gate for each item so public anchors, diary evidence, and records needing memcon/telcon or
+agency follow-up can be triaged before archival time is spent.
 
 ## Gap Fixes
 
