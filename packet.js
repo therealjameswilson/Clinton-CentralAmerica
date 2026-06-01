@@ -328,6 +328,108 @@
     "Tomorrow's first pull and fallback",
   ];
 
+  const sourceNoteQaRows = [
+    {
+      kind: "Chronology candidate - Daily Diary",
+      sourceFamily: "Presidential Daily Diary",
+      requiredOrder:
+        "Repository; record collection; series or office; OA/ID; folder title; diary entry date; NAID; FOIA or release note.",
+      check:
+        "Do not cite the diary as a policy document; use it to anchor calls, meetings, movements, and participants.",
+      commonGap: "Missing telcon, memcon, interpreter note, or issue-file match.",
+      nextAction:
+        "Match call and meeting entries to NSC, State, trip-book, or embassy records before promotion.",
+    },
+    {
+      kind: "Chronology candidate - Public Papers",
+      sourceFamily: "GovInfo Public Papers",
+      requiredOrder:
+        "Publication title; year/book; page range; document title; event date; GovInfo URL; public/private match note.",
+      check:
+        "Use as chronology and public-language anchor, not final policy-process evidence.",
+      commonGap: "No private decision, clearance, implementation, or agency record.",
+      nextAction:
+        "Pair with NSC, State, agency, trip-book, speechwriting, press, Federal Register, or USAID files.",
+    },
+    {
+      kind: "Clinton Library folder lead - NSC records",
+      sourceFamily: "Clinton Presidential Records",
+      requiredOrder:
+        "Repository; record collection; office or staff-file series; OA/ID; folder title; document title/date; release markings; page/image range.",
+      check:
+        "Folder-title stems are leads only until document-level details are captured onsite.",
+      commonGap:
+        "Missing document title, date, classification or release markings, or page range.",
+      nextAction:
+        "Capture withdrawal sheets and item metadata even when documents are closed.",
+    },
+    {
+      kind: "Decision record",
+      sourceFamily: "PC/DC/PRD or NSC decision files",
+      requiredOrder:
+        "Repository; collection; series; OA/ID; folder title; meeting/date; participants; decision/action line; release status.",
+      check: "Can this show policy process rather than public framing?",
+      commonGap: "No action line, participant list, or follow-up cable.",
+      nextAction:
+        "Pair minutes or memos with State, Defense, or agency implementation evidence.",
+    },
+    {
+      kind: "Trip book or briefing tab",
+      sourceFamily: "Trip books and briefing material",
+      requiredOrder:
+        "Repository; collection; series; OA/ID; trip book/folder title; tab title; event date; page/image range; release markings.",
+      check:
+        "Use tabs to connect public events to briefing and decision records.",
+      commonGap: "Table of contents copied but tab-level metadata missing.",
+      nextAction:
+        "Photograph contents first, then copy only tabs that answer docket questions.",
+    },
+    {
+      kind: "Restriction or withdrawal sheet",
+      sourceFamily: "Closed or partly released records",
+      requiredOrder:
+        "Repository; collection; series; OA/ID or NAID; folder title; withdrawal-sheet date or exemption; description; review path.",
+      check: "Restriction evidence is still source evidence.",
+      commonGap:
+        "Closed folder logged without exemption, reason, or open cross-reference search.",
+      nextAction:
+        "Ask staff for open cross-references and preserve the restriction text in the review ledger.",
+    },
+    {
+      kind: "Agency or public implementation record",
+      sourceFamily: "Federal Register, USAID, State FOIA, CIA Reading Room",
+      requiredOrder:
+        "Repository/site; record title; date; citation/identifier; URL; page range; relation to public/private anchor.",
+      check:
+        "Implementation records should prove follow-through, not replace presidential decision evidence.",
+      commonGap:
+        "Public statement has no legal, aid, cable, or project follow-up.",
+      nextAction:
+        "Record Federal Register citations, USAID project titles, FOIA release info, cable identifiers, or CREST citation.",
+    },
+    {
+      kind: "Final promoted candidate",
+      sourceFamily: "Selection review",
+      requiredOrder:
+        "Document number placeholder; canonical source note; date/title; source URL or image range; declassification status; cross-volume decision.",
+      check:
+        "Candidate is ready only when source note, private-policy evidence, and boundary decision are all complete.",
+      commonGap:
+        "Selected too early because it is interesting or public-facing.",
+      nextAction:
+        "Do not promote until document review ledger, source-note ledger, and selection docket agree.",
+    },
+  ];
+
+  const sourceNoteQaPrompts = [
+    "Repository and collection",
+    "Office, staff file, or series",
+    "OA/ID, NAID, or citation",
+    "Folder and document title",
+    "Date and page/image range",
+    "Release markings and boundary decision",
+  ];
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -563,6 +665,13 @@
         margin-top: 12px;
       }
 
+      .sourceqa-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .review-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -574,6 +683,16 @@
       }
 
       .closeout-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
+      .sourceqa-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
         border-radius: 6px;
@@ -605,6 +724,7 @@
         .visit-kit,
         .review-fields,
         .closeout-fields,
+        .sourceqa-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -617,6 +737,7 @@
         .visit-kit,
         .review-fields,
         .closeout-fields,
+        .sourceqa-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -701,6 +822,7 @@
         <button id="export-prepull" class="tool-button" type="button">Export Pre-Pull TXT</button>
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
         <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
+        <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
@@ -784,6 +906,19 @@
         </p>
         <div class="closeout-fields">
           ${closeoutPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Source-Note QA</p>
+        <h3>Make Every Citation Survive Later Scrutiny</h3>
+        <p>
+          The source-note QA export checks each candidate against the citation
+          pieces that usually go missing: repository, collection, series or
+          office, locator, folder, document title, date, page/image control,
+          release markings, and boundary decision.
+        </p>
+        <div class="sourceqa-fields">
+          ${sourceNoteQaPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -1095,6 +1230,25 @@
     downloadCsv("frus-central-america-daily-closeout.csv", headers, rows);
   }
 
+  function exportSourceNoteQaCsv() {
+    const headers = [
+      "kind",
+      "sourceFamily",
+      "requiredOrder",
+      "check",
+      "commonGap",
+      "nextAction",
+      "status",
+      "notes",
+    ];
+    const rows = sourceNoteQaRows.map((row) => ({
+      ...row,
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-source-note-qa.csv", headers, rows);
+  }
+
   function exportReviewLedgerCsv() {
     const rows = selectionDocket.map((item) => ({
       issue: item.issue,
@@ -1124,6 +1278,7 @@
     document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
     document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
+    document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
