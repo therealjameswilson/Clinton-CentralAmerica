@@ -59,12 +59,23 @@ gap-control section records what was fixed and what still needs private-record f
 Federal Register and USAID source families were added so public statements can be tested
 against legal implementation, aid, disaster-relief, trade, TPS, and project records.
 
+## Cross-Volume Boundary Control
+
+The page includes an exportable boundary matrix checked against the Office of the Historian
+Clinton administration index. It lists the adjacent Clinton-era volumes most likely to
+intersect with Central America, including Public Diplomacy; North America; Cuba, Haiti,
+and the Caribbean; South America and Latin America Region; Foreign Economic Policy;
+Counterterrorism; Global Issues; Rights and Governance; and National Security Policy.
+
+Each boundary card records when to keep a candidate in Volume XXXII, when to route or
+consult another volume, and the first document-level check to run before promotion.
+
 ## Compiler Packet and Docket Exports
 
 The page includes browser-side exports for the pre-pull request, reading-room run sheet,
-document-review ledger, candidate chronology, source-note ledger, selection docket,
-call-slip batches, and research queue. These are intended to become the working files for
-pre-pull requests, onsite logging, selection review, and daily closeout.
+document-review ledger, boundary matrix, candidate chronology, source-note ledger,
+selection docket, call-slip batches, and research queue. These are intended to become the
+working files for pre-pull requests, onsite logging, selection review, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival

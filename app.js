@@ -586,6 +586,165 @@ const gapControls = [
   },
 ];
 
+const boundaryMatrix = [
+  {
+    volume: "Volume XXXII",
+    officialTitle: "Central America",
+    status: "Being Researched",
+    riskLane: "Default keep lane",
+    keepInXxxiiWhen:
+      "The policy object is Guatemala, Belize, Honduras, El Salvador, Nicaragua, Costa Rica, Panama, or a regional Central America issue.",
+    routeOrConsultWhen:
+      "The record uses Central America only as background for a broader hemispheric, global, public-diplomacy, domestic, or agency implementation issue.",
+    firstCheck:
+      "Can the candidate be tied to a decision, diplomatic exchange, meeting, cable, memorandum, trip book, or implementation record about Central America itself?",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v32",
+  },
+  {
+    volume: "Volume XIV",
+    officialTitle: "Public Diplomacy",
+    status: "Planned",
+    riskLane: "Speeches, press, and message strategy",
+    keepInXxxiiWhen:
+      "The public statement fixes chronology and points directly to a private Central America policy record.",
+    routeOrConsultWhen:
+      "The file is mainly speech drafting, press strategy, public opinion, or messaging without a private Central America decision record.",
+    firstCheck:
+      "Look for a paired NSC, State, trip-book, meeting, or implementation file before treating the statement as selection evidence.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v14",
+  },
+  {
+    volume: "Volume XXX",
+    officialTitle: "North America",
+    status: "Planned",
+    riskLane: "Mexico, Canada, and North American frame",
+    keepInXxxiiWhen:
+      "Panama, migration, trade, or security records are primarily about Central American actors or regional Central America policy.",
+    routeOrConsultWhen:
+      "The main policy frame is Mexico, Canada, NAFTA, border management, or North American diplomacy.",
+    firstCheck:
+      "Tag shared migration, trade, and counternarcotics records by the country or regional object of the decision line.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v30",
+  },
+  {
+    volume: "Volume XXXI",
+    officialTitle: "Cuba; Haiti; Caribbean",
+    status: "Planned",
+    riskLane: "Caribbean Basin and island policy",
+    keepInXxxiiWhen:
+      "Caribbean Basin, CBI, migration, narcotics, or disaster records have country-specific Central America policy content.",
+    routeOrConsultWhen:
+      "The file is mostly Cuba, Haiti, Caribbean island diplomacy, CARICOM, or Caribbean Basin policy without Central America specificity.",
+    firstCheck:
+      "Separate CBI and regional language from country-specific Central America action, eligibility, aid, or diplomatic records.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v31",
+  },
+  {
+    volume: "Volume XXXIII",
+    officialTitle: "South America; Latin America Region, 1993-1996",
+    status: "Planned",
+    riskLane: "Hemispheric or Latin America regional frame, 1993-1996",
+    keepInXxxiiWhen:
+      "Summit, narcotics, rights, trade, or democracy records include an actionable Central America decision or country lane.",
+    routeOrConsultWhen:
+      "The record is a broad Latin America regional paper for 1993-1996 with no Central America-specific action.",
+    firstCheck:
+      "For 1993-1996 records, log whether the action officer, addressee, and decision paragraph point to Central America or to the wider region.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v33",
+  },
+  {
+    volume: "Volume XXXIV",
+    officialTitle: "South America; Latin America Region, 1997-2000",
+    status: "Planned",
+    riskLane: "Hemispheric or Latin America regional frame, 1997-2000",
+    keepInXxxiiWhen:
+      "San Jose, Mitch, migration, drug certification, or trade records contain Central America-specific presidential or interagency action.",
+    routeOrConsultWhen:
+      "The record is a 1997-2000 hemispheric summit, democracy, trade, or regional-strategy file without Central America-specific decisions.",
+    firstCheck:
+      "Use the date span first, then test whether the record changes Central America policy or only describes regional context.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v34",
+  },
+  {
+    volume: "Volume IV",
+    officialTitle: "Foreign Economic Policy, 1993-1996",
+    status: "Being Researched",
+    riskLane: "Trade, investment, and economic policy, 1993-1996",
+    keepInXxxiiWhen:
+      "CBI, reconstruction, development, or trade records show diplomacy with Central American governments or country-specific implementation.",
+    routeOrConsultWhen:
+      "The record is principally macroeconomic, trade-law, Treasury, USTR, or global economic policy without Central America diplomatic substance.",
+    firstCheck:
+      "Record statutory hooks, FR citations, and whether the file has a Central America country or regional policy action.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v04",
+  },
+  {
+    volume: "Volume V",
+    officialTitle: "Foreign Economic Policy, 1997-2000",
+    status: "Planned",
+    riskLane: "Trade, recovery, and development policy, 1997-2000",
+    keepInXxxiiWhen:
+      "Mitch reconstruction, CBI, trade-beneficiary, or development records are tied to Central America diplomacy or implementation.",
+    routeOrConsultWhen:
+      "The record is a general trade, finance, or economic-policy file with only incidental Central America references.",
+    firstCheck:
+      "Pair public trade statements with USTR, Treasury, State, USAID, or Federal Register evidence before deciding the destination volume.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v05",
+  },
+  {
+    volume: "Volume IX",
+    officialTitle: "Counterterrorism Policy",
+    status: "Planned",
+    riskLane: "Terrorism, international crime, and security labels",
+    keepInXxxiiWhen:
+      "A terrorism, arms, crime, or security record changes U.S. policy toward a Central American country or regional institution.",
+    routeOrConsultWhen:
+      "The file is mainly counterterrorism doctrine, threat architecture, or global law-enforcement policy.",
+    firstCheck:
+      "Do not decide from the folder title alone; inspect whether the decision line is country diplomacy or global counterterrorism policy.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v09",
+  },
+  {
+    volume: "Volume X",
+    officialTitle: "Global Issues: Transnational Security; United Nations; Multilateral Peacekeeping",
+    status: "Planned",
+    riskLane: "Narcotics, crime, UN, and peacekeeping",
+    keepInXxxiiWhen:
+      "Narcotics, border security, peacekeeping, or crime files have country-specific Central America decisions, certification, or diplomatic exchanges.",
+    routeOrConsultWhen:
+      "The file is about global transnational-security policy, UN mechanics, multilateral peacekeeping doctrine, or worldwide narcotics architecture.",
+    firstCheck:
+      "Match INCSR, certification, embassy, and NSC country records before routing a transnational-threat file away from Central America.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v10",
+  },
+  {
+    volume: "Volume XII",
+    officialTitle: "Global Issues: Rights and Governance",
+    status: "Planned",
+    riskLane: "Human rights, democracy, accountability",
+    keepInXxxiiWhen:
+      "Human-rights, declassification, democracy, or accountability files are anchored in Guatemala, El Salvador, or another Central American case.",
+    routeOrConsultWhen:
+      "The record is a global rights, governance, democracy-promotion, or institutional policy document without Central America case specificity.",
+    firstCheck:
+      "For Guatemala and El Salvador, preserve withdrawal sheets and intelligence equities even when final selection is uncertain.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v12",
+  },
+  {
+    volume: "Volume VI",
+    officialTitle: "National Security Policy",
+    status: "Planned",
+    riskLane: "PRDs, interagency process, and defense posture",
+    keepInXxxiiWhen:
+      "A PRD, PC/DC meeting, or defense-posture file contains a Central America country decision, Panama Canal action, or regional implementation line.",
+    routeOrConsultWhen:
+      "The record is about national-security process, doctrine, or global defense posture with Central America only as an example.",
+    firstCheck:
+      "Use meeting minutes, action items, distribution lists, and follow-up cables to decide whether the record is process architecture or regional policy.",
+    href: "https://history.state.gov/historicaldocuments/frus1993-00v06",
+  },
+];
+
 const dailyDiaryRoot =
   "Source: Clinton Library, Clinton Presidential Records, Presidential Daily Diary, Ellen McCathran";
 
@@ -1421,6 +1580,7 @@ const roots = {
   chronologyOverview: document.querySelector("#chronology-overview-root"),
   chronology: document.querySelector("#chronology-root"),
   gaps: document.querySelector("#gap-root"),
+  boundaries: document.querySelector("#boundary-root"),
   queue: document.querySelector("#queue-root"),
   method: document.querySelector("#method-root"),
   summary: document.querySelector("#queue-summary"),
@@ -1433,6 +1593,7 @@ const controls = {
   source: document.querySelector("#source-filter"),
   reset: document.querySelector("#reset-filters"),
   export: document.querySelector("#export-queue"),
+  exportBoundaries: document.querySelector("#export-boundaries"),
 };
 
 const escapeHtml = (value) =>
@@ -1653,6 +1814,43 @@ function renderGaps() {
     .join("");
 }
 
+function renderBoundaries() {
+  if (!roots.boundaries) {
+    return;
+  }
+
+  roots.boundaries.innerHTML = boundaryMatrix
+    .map(
+      (item) => `
+        <article class="boundary-card">
+          <div class="boundary-card-header">
+            <div>
+              <p class="kicker">${escapeHtml(item.riskLane)}</p>
+              <h3>${escapeHtml(item.volume)}: ${escapeHtml(item.officialTitle)}</h3>
+            </div>
+            ${pill(item.status, item.status === "Being Researched" ? "ready" : "")}
+          </div>
+          <dl>
+            <div>
+              <dt>Keep in XXXII When</dt>
+              <dd>${escapeHtml(item.keepInXxxiiWhen)}</dd>
+            </div>
+            <div>
+              <dt>Route or Consult When</dt>
+              <dd>${escapeHtml(item.routeOrConsultWhen)}</dd>
+            </div>
+            <div>
+              <dt>First Check</dt>
+              <dd>${escapeHtml(item.firstCheck)}</dd>
+            </div>
+          </dl>
+          <p><a class="inline-link" href="${item.href}" rel="noreferrer">Open official volume shell</a></p>
+        </article>
+      `,
+    )
+    .join("");
+}
+
 function populateFilters() {
   const countryOptions = ["", ...unique(queueItems.map((item) => item.country))];
   const priorityOptions = ["", ...unique(queueItems.map((item) => item.priority))];
@@ -1748,6 +1946,34 @@ function exportCsv() {
   URL.revokeObjectURL(url);
 }
 
+function exportBoundaryCsv() {
+  const headers = [
+    "volume",
+    "officialTitle",
+    "status",
+    "riskLane",
+    "keepInXxxiiWhen",
+    "routeOrConsultWhen",
+    "firstCheck",
+    "href",
+  ];
+  const csv = [
+    headers.join(","),
+    ...boundaryMatrix.map((row) =>
+      headers
+        .map((key) => `"${String(row[key]).replaceAll('"', '""')}"`)
+        .join(","),
+    ),
+  ].join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "frus-central-america-boundary-matrix.csv";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function bindEvents() {
   controls.search.addEventListener("input", (event) => {
     state.search = event.target.value;
@@ -1777,6 +2003,7 @@ function bindEvents() {
     renderQueue();
   });
   controls.export.addEventListener("click", exportCsv);
+  controls.exportBoundaries?.addEventListener("click", exportBoundaryCsv);
 }
 
 function init() {
@@ -1789,6 +2016,7 @@ function init() {
   renderSources();
   renderChronology();
   renderGaps();
+  renderBoundaries();
   renderLibrary();
   populateFilters();
   renderQueue();
