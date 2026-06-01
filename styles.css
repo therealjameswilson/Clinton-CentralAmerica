@@ -303,6 +303,7 @@ dd {
 
 .official-grid,
 .country-grid,
+.coverage-grid,
 .source-grid,
 .library-grid,
 .authority-grid,
@@ -320,6 +321,7 @@ dd {
 .source-grid,
 .library-grid,
 .authority-grid,
+.coverage-grid,
 .gap-grid,
 .boundary-grid,
 .packet-grid,
@@ -329,6 +331,7 @@ dd {
 
 .official-card,
 .country-card,
+.coverage-card,
 .source-card,
 .library-card,
 .authority-card,
@@ -346,6 +349,7 @@ dd {
 
 .official-card,
 .country-card,
+.coverage-card,
 .source-card,
 .library-card,
 .authority-card,
@@ -358,6 +362,7 @@ dd {
 
 .official-card p,
 .country-card p,
+.coverage-card p,
 .source-card p,
 .library-card p,
 .authority-card p,
@@ -371,6 +376,7 @@ dd {
 }
 
 .official-card p,
+.coverage-card p,
 .source-card p,
 .library-card p,
 .authority-card p,
@@ -396,6 +402,7 @@ dd {
 
 .official-card .meta,
 .country-card .meta,
+.coverage-card .meta,
 .source-card .meta,
 .library-card .meta,
 .authority-card .meta,
@@ -580,6 +587,7 @@ dd {
 }
 
 .gap-card-header,
+.coverage-card-header,
 .boundary-card-header {
   display: flex;
   align-items: flex-start;
@@ -595,6 +603,7 @@ dd {
 }
 
 .gap-card dl,
+.coverage-card dl,
 .boundary-card dl,
 .authority-card dl {
   display: grid;
@@ -603,6 +612,7 @@ dd {
 }
 
 .gap-card dl div,
+.coverage-card dl div,
 .boundary-card dl div,
 .authority-card dl div {
   padding-top: 12px;
@@ -610,6 +620,7 @@ dd {
 }
 
 .gap-card dd,
+.coverage-card dd,
 .boundary-card dd,
 .authority-card dd {
   margin-top: 4px;
@@ -618,6 +629,7 @@ dd {
 }
 
 .authority-card,
+.coverage-card,
 .boundary-card {
   display: grid;
   gap: 14px;
@@ -863,6 +875,7 @@ select:focus {
   .stats,
   .official-grid,
   .country-grid,
+  .coverage-grid,
   .source-grid,
   .library-grid,
   .authority-grid,
@@ -916,6 +929,7 @@ select:focus {
   .stats,
   .official-grid,
   .country-grid,
+  .coverage-grid,
   .source-grid,
   .library-grid,
   .authority-grid,

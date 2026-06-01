@@ -108,6 +108,129 @@ const countries = [
   },
 ];
 
+const coverageAudit = [
+  {
+    country: "Guatemala",
+    status: "High priority",
+    publicAnchors:
+      "1993 Central American Presidents breakfast; 1999 Guatemala arrival remarks; Guatemala peace-efforts roundtable; Antigua summit.",
+    privateRecordTargets:
+      "Soderberg OA/ID 1404; Intelligence Programs OA/IDs 2479, 2481, 2483, 2513, 2520, 2526; Democracy/Human Rights OA/ID 793.",
+    weakSpot:
+      "Public apology and peace-process language can outrun the declassified record; IOB, declassification, and intelligence equities need folder-level proof.",
+    firstPull:
+      "Batch 2 Soderberg files, then Batch 3 intelligence and democracy/human-rights cross-checks.",
+    promotionProof:
+      "Memcon, decision memorandum, declassification packet, IOB handling record, State cable, withdrawal sheet, or peace-accord implementation record.",
+    boundaryWatch: "Rights and Governance; intelligence equities; Public Diplomacy.",
+  },
+  {
+    country: "El Salvador",
+    status: "Needs balance",
+    publicAnchors:
+      "1993 Moakley dinner; 1999 El Salvador arrival event; Legislative Assembly address.",
+    privateRecordTargets:
+      "Soderberg OA/ID 1408; Access Management OA/IDs 3788, 3789; Intelligence Programs OA/ID 3031; Democracy/Human Rights OA/ID 494; MHA OA/IDs 3425, 3430, 3536.",
+    weakSpot:
+      "Accountability cases are visible, but post-war consolidation, police reform, justice, and migration can become under-documented.",
+    firstPull:
+      "Batch 3 accountability files, then MHA migration/parity files and Soderberg post-war implementation folders.",
+    promotionProof:
+      "Declassification record, accountability memo, embassy reporting, police or justice reform cable, DED/NACARA policy paper, or implementation memorandum.",
+    boundaryWatch: "Rights and Governance; domestic immigration-law spillover.",
+  },
+  {
+    country: "Honduras",
+    status: "Mitch spine",
+    publicAnchors:
+      "1998 Flores call; 1998 Tipper Gore Hurricane Mitch call; 1999 Soto Cano remarks; Tegucigalpa reconstruction roundtable.",
+    privateRecordTargets:
+      "Trip books OA/IDs 3622, 3638; MHA OA/IDs 3426, 3429, 3452; Press OA/IDs 3468, 3299; Soto Cano and military-support files.",
+    weakSpot:
+      "Disaster relief is strong publicly, but migration, base diplomacy, and military-support decisions require private-policy records.",
+    firstPull:
+      "Batch 4 Mitch, migration, and trip-book files; cross-check speech and press folders only after decision records are logged.",
+    promotionProof:
+      "Relief decision memo, USAID/State implementation record, military-support record, TPS/migration paper, embassy cable, or trip-book briefing tab.",
+    boundaryWatch: "Humanitarian assistance; defense basing; migration.",
+  },
+  {
+    country: "Nicaragua",
+    status: "Public heavy",
+    publicAnchors:
+      "1998 Aleman call; March 8, 1999 Managua arrival and Aleman meetings; Posoltega remarks; Las Casitas survivor roundtable.",
+    privateRecordTargets:
+      "Trip books OA/IDs 3622, 3638; MHA OA/IDs 2980, 3067, 3422-3430; speech and press files; Hurricane Mitch implementation records.",
+    weakSpot:
+      "Mitch and trip events are visible; property claims, demobilization, democratic transition, and aid implementation need deeper private-record support.",
+    firstPull:
+      "Batch 4 trip and MHA files, then targeted searches for Nicaragua property, aid, election, and migration records.",
+    promotionProof:
+      "Telcon, memcon, trip-book tab, relief-policy memo, USAID/State implementation record, or country-specific aid and migration decision paper.",
+    boundaryWatch: "Migration; humanitarian aid; public diplomacy.",
+  },
+  {
+    country: "Costa Rica",
+    status: "Summit control",
+    publicAnchors:
+      "1997 San Jose welcoming ceremony; leaders news conference; Declaration of San Jose; environment and summit remarks.",
+    privateRecordTargets:
+      "Blinken OA/ID 3388; Trip Book OA/ID 3625; Soderberg OA/ID 1416; Strategic Planning OA/ID 773.",
+    weakSpot:
+      "The summit is rich publicly, but the Central America volume needs follow-up tasking, implementation, or leader-meeting substance.",
+    firstPull:
+      "Batch 6 only after Panama, Guatemala, El Salvador, Mitch, and migration decision-record sweeps are underway.",
+    promotionProof:
+      "Summit briefing book, leader meeting notes, clearance memo, follow-up tasking, implementation cable, or law-enforcement/trade/environment record.",
+    boundaryWatch: "Public Diplomacy; trade; environment; hemispheric summit volumes.",
+  },
+  {
+    country: "Panama",
+    status: "Decision spine",
+    publicAnchors:
+      "1994 Perez Balladares call; 1995/1996/2000 narcotics letters; 1999 Panama Canal transfer statement.",
+    privateRecordTargets:
+      "Records Management OA/IDs 3906, 4001, 4003, 4004, 3908, 3910, 3898, 4125; Defense Policy Panama files; Transnational Threats OA/ID 2248.",
+    weakSpot:
+      "Canal transfer ceremony, counternarcotics, defense posture, and residual presence must be separated from public symbolism.",
+    firstPull:
+      "Batch 1 PC/DC/PRD decision records, then Batch 5 defense-policy Panama files and transnational-threats cross-checks.",
+    promotionProof:
+      "PC/DC minutes, PRD folder, Defense/State cable, Canal Commission briefing, treaty-obligation record, or presidential call memorandum.",
+    boundaryWatch: "North America; defense; narcotics; transnational security.",
+  },
+  {
+    country: "Belize",
+    status: "Thin lane",
+    publicAnchors:
+      "1997 San Jose summit participation; 1995, 1996, and 2000 narcotics letters; trade and CBI controls.",
+    privateRecordTargets:
+      "Transnational Threats OA/IDs 1497, 4042, 4050, 4067, 4069, 4070; Federal Register and CBI/eligibility implementation records.",
+    weakSpot:
+      "Belize appears in regional, narcotics, and trade frames, but may lack standalone presidential-level diplomatic evidence.",
+    firstPull:
+      "Use Batch 6 boundary pass, then decide whether Belize remains a regional/narcotics/trade lane or warrants a standalone document.",
+    promotionProof:
+      "Certification memo, INCSR narrative, border or transit-country cable, CBI eligibility record, summit follow-up, or country-specific tasking.",
+    boundaryWatch: "Cuba, Haiti, Caribbean; narcotics; trade/global economic policy.",
+  },
+  {
+    country: "Regional",
+    status: "Backbone lane",
+    publicAnchors:
+      "1993 presidents breakfast; 1997 San Jose summit; 1998-1999 Hurricane Mitch sequence; 1999 Antigua summit; 2000 trade/CBI and narcotics anchors.",
+    privateRecordTargets:
+      "Records Management PC/DC/PRD files; Soderberg regional leaders files; MHA Mitch/migration files; Transnational Threats; Federal Register; USAID; State FOIA.",
+    weakSpot:
+      "Regional records can drift into public diplomacy, Latin America region, trade, narcotics, or humanitarian companion volumes.",
+    firstPull:
+      "Use dated chronology to choose issue-specific first pulls; log every boundary decision in the selection docket before promotion.",
+    promotionProof:
+      "Private decision record, leader meeting notes, implementation tasking, cross-agency memo, State cable, legal/FR control, or USAID project record.",
+    boundaryWatch: "Public Diplomacy; South America/Latin America Region; Global Issues; Foreign Economic Policy.",
+  },
+];
+
 const sources = [
   {
     title: "Clinton Presidential Records",
@@ -1810,6 +1933,7 @@ const state = {
 const roots = {
   official: document.querySelector("#official-root"),
   countries: document.querySelector("#country-root"),
+  coverage: document.querySelector("#coverage-root"),
   sources: document.querySelector("#source-root"),
   libraryOverview: document.querySelector("#library-overview-root"),
   library: document.querySelector("#library-root"),
@@ -1832,6 +1956,7 @@ const controls = {
   source: document.querySelector("#source-filter"),
   reset: document.querySelector("#reset-filters"),
   export: document.querySelector("#export-queue"),
+  exportCoverage: document.querySelector("#export-coverage"),
   exportBoundaries: document.querySelector("#export-boundaries"),
   exportAuthorities: document.querySelector("#export-authorities"),
 };
@@ -1893,6 +2018,54 @@ function renderCountries() {
             ${country.terms.map((term) => `<li>${escapeHtml(term)}</li>`).join("")}
           </ul>
           <div class="meta">${pill(country.risk)}</div>
+        </article>
+      `,
+    )
+    .join("");
+}
+
+function renderCoverage() {
+  if (!roots.coverage) {
+    return;
+  }
+
+  roots.coverage.innerHTML = coverageAudit
+    .map(
+      (item) => `
+        <article class="coverage-card">
+          <div class="coverage-card-header">
+            <div>
+              <p class="kicker">${escapeHtml(item.status)}</p>
+              <h3>${escapeHtml(item.country)}</h3>
+            </div>
+            ${pill(item.status)}
+          </div>
+          <dl>
+            <div>
+              <dt>Public Anchors</dt>
+              <dd>${escapeHtml(item.publicAnchors)}</dd>
+            </div>
+            <div>
+              <dt>Private Record Targets</dt>
+              <dd>${escapeHtml(item.privateRecordTargets)}</dd>
+            </div>
+            <div>
+              <dt>Weak Spot</dt>
+              <dd>${escapeHtml(item.weakSpot)}</dd>
+            </div>
+            <div>
+              <dt>First Pull</dt>
+              <dd>${escapeHtml(item.firstPull)}</dd>
+            </div>
+            <div>
+              <dt>Promotion Proof</dt>
+              <dd>${escapeHtml(item.promotionProof)}</dd>
+            </div>
+            <div>
+              <dt>Boundary Watch</dt>
+              <dd>${escapeHtml(item.boundaryWatch)}</dd>
+            </div>
+          </dl>
         </article>
       `,
     )
@@ -2223,6 +2396,34 @@ function exportCsv() {
   URL.revokeObjectURL(url);
 }
 
+function exportCoverageCsv() {
+  const headers = [
+    "country",
+    "status",
+    "publicAnchors",
+    "privateRecordTargets",
+    "weakSpot",
+    "firstPull",
+    "promotionProof",
+    "boundaryWatch",
+  ];
+  const csv = [
+    headers.join(","),
+    ...coverageAudit.map((row) =>
+      headers
+        .map((key) => `"${String(row[key]).replaceAll('"', '""')}"`)
+        .join(","),
+    ),
+  ].join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "frus-central-america-country-evidence-audit.csv";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function exportBoundaryCsv() {
   const headers = [
     "volume",
@@ -2311,6 +2512,7 @@ function bindEvents() {
     renderQueue();
   });
   controls.export.addEventListener("click", exportCsv);
+  controls.exportCoverage?.addEventListener("click", exportCoverageCsv);
   controls.exportBoundaries?.addEventListener("click", exportBoundaryCsv);
   controls.exportAuthorities?.addEventListener("click", exportAuthorityCsv);
 }
@@ -2322,6 +2524,7 @@ function init() {
   setStat("#queue-count", queueItems.length);
   renderOfficial();
   renderCountries();
+  renderCoverage();
   renderSources();
   renderChronology();
   renderGaps();
