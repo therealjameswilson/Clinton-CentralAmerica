@@ -59,11 +59,15 @@ gap-control section records what was fixed and what still needs private-record f
 Federal Register and USAID source families were added so public statements can be tested
 against legal implementation, aid, disaster-relief, trade, TPS, and project records.
 
-## Compiler Packet Exports
+## Compiler Packet and Docket Exports
 
 The page includes browser-side CSV exports for the candidate chronology, source-note ledger,
-call-slip batches, and research queue. These are intended to become the working spreadsheet
-tabs for pre-pull requests, onsite logging, and daily closeout.
+selection docket, call-slip batches, and research queue. These are intended to become the
+working spreadsheet tabs for pre-pull requests, onsite logging, selection review, and daily closeout.
+
+The selection docket groups issue clusters by public anchor, private-record target, first pull,
+promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
+evidence before a document is promoted.
 
 The source map and queue also incorporate the Clinton administration FRUS index so adjacent
 volumes can be checked before a Central America selection decision is made.
