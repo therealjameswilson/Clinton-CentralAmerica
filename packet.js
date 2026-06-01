@@ -139,6 +139,64 @@
     },
   ];
 
+  const prePullQuestions = [
+    "Can these OA/ID batches be reviewed for restrictions, offsite storage, oversize material, or special handling before my visit?",
+    "If paging limits apply, please stage the first decision-record batch before speech, press, or public-chronology folders.",
+    "Please flag folders where withdrawal sheets, folder-level restriction notes, or partial releases can be inspected even if documents are closed.",
+    "Please advise whether trip books, PC/DC/PRD folders, or Staff Director files require any special appointment, camera, or handling rules.",
+  ];
+
+  const runSheetRows = [
+    {
+      workBlock: "Opening pull",
+      batch: "Batch 1 - Decision Records",
+      ids: "3906, 4001, 4003, 4004, 3908, 3910, 3898, 4123, 4125",
+      objective: "PC/DC/PRD spine for Panama and regional decisions",
+      mustCapture: "Folder title; OA/ID; meeting date; participants; decision/action line; withdrawal sheets",
+      nextIfClosed: "Log restriction basis, capture source note fields, ask for open cross-reference folders",
+    },
+    {
+      workBlock: "Opening pull",
+      batch: "Batch 2 - Soderberg Staff Files",
+      ids: "1404, 1405, 1408, 1409, 1416",
+      objective: "Guatemala, El Salvador, Honduras, immigration, and regional leaders",
+      mustCapture: "Document date; title; sender/recipient; clearance path; issue-file context",
+      nextIfClosed: "Move to Intelligence Programs and Democracy/Human Rights cross-checks",
+    },
+    {
+      workBlock: "Accountability pass",
+      batch: "Batch 3 - Guatemala and El Salvador Accountability",
+      ids: "793, 494, 2479, 2480, 2481, 2483, 2513, 2520, 2526, 3031, 3536, 3788, 3789",
+      objective: "Human-rights, IOB, declassification, churchwomen, Zona Rosa, and post-war implementation",
+      mustCapture: "Withdrawal sheets; declassification markers; case names; State/NSC routing; source-note trail",
+      nextIfClosed: "Record closure evidence, then pull migration and post-war implementation folders",
+    },
+    {
+      workBlock: "Relief and migration pass",
+      batch: "Batch 4 - Mitch, Migration, and Trip Books",
+      ids: "1890, 2980, 3067, 3074, 3075, 3134, 3422-3430, 3452, 3622, 3625, 3638",
+      objective: "Hurricane Mitch, TPS, NACARA, Central America trip books, and relief implementation",
+      mustCapture: "Trip-book table of contents; tabs copied; relief decisions; TPS hooks; agency follow-up",
+      nextIfClosed: "Use Public Papers chronology and Federal Register/USAID implementation controls",
+    },
+    {
+      workBlock: "Panama pass",
+      batch: "Batch 5 - Panama Defense Policy",
+      ids: "1693, 1831, 1859, 1860, 1864, 2184, 2475, 3355, 3481, 3487, 3584, 3585, 3586, 3595, 3658, 3663, 3826, 3843",
+      objective: "Canal transfer, residual military presence, bases, security, UXO, and Colombia-Panama posture",
+      mustCapture: "Decision record; Defense/State position; treaty obligation; public-private mismatch",
+      nextIfClosed: "Return to PC/DC/PRD folders and State/Defense public implementation records",
+    },
+    {
+      workBlock: "Boundary pass",
+      batch: "Batch 6 - Transnational Threats and Public Chronology",
+      ids: "1497, 1503, 2189, 2248, 3299, 3388, 3468, 4042, 4050, 4067, 4069, 4070, 103096-103106",
+      objective: "Crime, narcotics, San Jose summit, speech/press provenance, and public-diplomacy boundaries",
+      mustCapture: "Whether record is Central America, public diplomacy, narcotics, or global issue; selection rationale",
+      nextIfClosed: "Use docket boundary-risk notes and adjacent Clinton FRUS index",
+    },
+  ];
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -165,6 +223,16 @@
 
   function downloadCsv(filename, headers, rows) {
     const blob = new Blob([toCsv(headers, rows)], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function downloadText(filename, text) {
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -318,8 +386,54 @@
         font-weight: 500;
       }
 
+      .visit-kit {
+        display: grid;
+        grid-template-columns: minmax(0, 0.58fr) minmax(0, 1fr);
+        gap: 14px;
+        max-width: 1180px;
+        margin: 16px auto 18px;
+      }
+
+      .visit-kit article {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: 0 10px 28px rgba(16, 35, 31, 0.07);
+      }
+
+      .visit-kit h3,
+      .visit-kit p {
+        margin: 0;
+      }
+
+      .visit-kit ul {
+        display: grid;
+        gap: 8px;
+        margin: 12px 0 0;
+        padding-left: 18px;
+      }
+
+      .runsheet-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .runsheet-list div {
+        display: grid;
+        grid-template-columns: minmax(140px, 0.36fr) minmax(0, 1fr);
+        gap: 10px;
+        padding-top: 8px;
+        border-top: 1px solid var(--line);
+      }
+
+      .runsheet-list span {
+        color: var(--muted);
+      }
+
       @media (max-width: 980px) {
         .chronology-tools,
+        .visit-kit,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -329,6 +443,8 @@
 
       @media (max-width: 620px) {
         .chronology-tools,
+        .visit-kit,
+        .runsheet-list div,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -408,8 +524,82 @@
 
     actions.insertAdjacentHTML(
       "afterbegin",
-      `<button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>`,
+      `
+        <button id="export-prepull" class="tool-button" type="button">Export Pre-Pull TXT</button>
+        <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
+        <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
+      `,
     );
+  }
+
+  function buildPrePullText() {
+    const batchLines = runSheetRows
+      .map((row) => `- ${row.batch}: OA/IDs ${row.ids}. Objective: ${row.objective}.`)
+      .join("\n");
+    const questionLines = prePullQuestions.map((question) => `- ${question}`).join("\n");
+
+    return [
+      "Subject: Pre-pull request for FRUS Central America research visit",
+      "",
+      "Hello,",
+      "",
+      "I am preparing for a research visit for Foreign Relations of the United States, 1993-2000, Volume XXXII, Central America. I would be grateful for help reviewing the following Clinton Presidential Records/NSC OA/ID batches before arrival.",
+      "",
+      "Priority order",
+      batchLines,
+      "",
+      "Questions for staff",
+      questionLines,
+      "",
+      "If paging or staffing limits require a narrower first pull, please prioritize Batch 1 decision records, Batch 2 Soderberg staff files, and Batch 3 Guatemala/El Salvador accountability files before speech, press, and public-chronology files.",
+      "",
+      "For each folder, I am trying to preserve repository, collection, series or office, OA/ID, folder title, date span, restriction status, withdrawal-sheet evidence, and document-level release markings.",
+      "",
+      "Thank you.",
+    ].join("\n");
+  }
+
+  function renderVisitKit() {
+    const packetRoot = document.querySelector("#packet-root");
+    if (!packetRoot) {
+      return;
+    }
+
+    let root = document.querySelector("#visit-kit-root");
+    if (!root) {
+      packetRoot.insertAdjacentHTML("beforebegin", `<div id="visit-kit-root" class="visit-kit"></div>`);
+      root = document.querySelector("#visit-kit-root");
+    }
+
+    root.innerHTML = `
+      <article>
+        <p class="kicker">Pre-Pull Request</p>
+        <h3>Send This Before Arrival</h3>
+        <p>
+          The TXT export turns the call-slip batches into a concise staff request with
+          paging priorities, restriction questions, and source-note fields to preserve.
+        </p>
+        <ul>
+          ${prePullQuestions.map((question) => `<li>${htmlEscape(question)}</li>`).join("")}
+        </ul>
+      </article>
+      <article>
+        <p class="kicker">Reading-Room Run Sheet</p>
+        <h3>Work the Day by Batches</h3>
+        <div class="runsheet-list">
+          ${runSheetRows
+            .map(
+              (row) => `
+                <div>
+                  <strong>${htmlEscape(row.workBlock)}</strong>
+                  <span>${htmlEscape(row.batch)}: ${htmlEscape(row.objective)}</span>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </article>
+    `;
   }
 
   function renderSelectionDocket() {
@@ -654,7 +844,42 @@
     downloadCsv("frus-central-america-selection-docket.csv", headers, selectionDocket);
   }
 
+  function exportPrePullText() {
+    downloadText("frus-central-america-pre-pull-request.txt", buildPrePullText());
+  }
+
+  function exportRunSheetCsv() {
+    const headers = [
+      "workBlock",
+      "batch",
+      "ids",
+      "objective",
+      "mustCapture",
+      "nextIfClosed",
+      "requested",
+      "arrived",
+      "reviewed",
+      "copied",
+      "restrictionNotes",
+      "sourceNoteGaps",
+      "nextAction",
+    ];
+    const rows = runSheetRows.map((row) => ({
+      ...row,
+      requested: "",
+      arrived: "",
+      reviewed: "",
+      copied: "",
+      restrictionNotes: "",
+      sourceNoteGaps: "",
+      nextAction: "",
+    }));
+    downloadCsv("frus-central-america-reading-room-run-sheet.csv", headers, rows);
+  }
+
   function bindPacketExports() {
+    document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
+    document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
     document.querySelector("#export-source-notes")?.addEventListener("click", exportSourceNotesCsv);
@@ -669,6 +894,7 @@
   renderFilteredChronology();
   bindChronologyControls();
   installDocketExport();
+  renderVisitKit();
   renderSelectionDocket();
   renderPacket();
   bindPacketExports();
