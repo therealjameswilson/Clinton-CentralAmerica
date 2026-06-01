@@ -12,6 +12,7 @@ https://history.state.gov/historicaldocuments/frus1993-00v32
 - `index.html` - GitHub Pages-ready page shell.
 - `styles.css` - responsive page styling.
 - `app.js` - data and rendering for the candidate document chronology, gap controls, official anchors, country lanes, source families, and queue filters.
+- `packet.js` - browser-side compiler packet cards and CSV exports.
 - `assets/central-america-research-map.svg` - local visual asset for the workspace header.
 
 ## Clinton Library Finding-Aid Inputs
@@ -53,6 +54,12 @@ gap-control section records what was fixed and what still needs private-record f
 
 Federal Register and USAID source families were added so public statements can be tested
 against legal implementation, aid, disaster-relief, trade, TPS, and project records.
+
+## Compiler Packet Exports
+
+The page includes browser-side CSV exports for the candidate chronology, source-note ledger,
+call-slip batches, and research queue. These are intended to become the working spreadsheet
+tabs for pre-pull requests, onsite logging, and daily closeout.
 
 The source map and queue also incorporate the Clinton administration FRUS index so adjacent
 volumes can be checked before a Central America selection decision is made.
