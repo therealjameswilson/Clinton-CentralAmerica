@@ -197,6 +197,97 @@
     },
   ];
 
+  const closeoutRows = [
+    {
+      phase: "Folder accounting",
+      check:
+        "Every requested folder has a status: not pulled, arrived, reviewed, copied, restricted, no hit, or deferred.",
+      capture:
+        "Call-slip batch, OA/ID or NAID, folder title, request time, arrival time, review status, and staff note.",
+      evidence:
+        "Reading-room run sheet row, folder photo, or staff restriction note.",
+      nextAction:
+        "Reorder the next-day pull around closed folders, high-yield copied material, and unresolved source-note gaps.",
+    },
+    {
+      phase: "Document capture",
+      check:
+        "Each copied document has title, date, sender/recipient, page count, classification or release markings, and photo/PDF filename.",
+      capture:
+        "Candidate document title, date, document type, pages/images, markings, and file path or image range.",
+      evidence:
+        "Document review ledger row and matching image/PDF filename.",
+      nextAction:
+        "Create or update the review-ledger row before leaving the reading room.",
+    },
+    {
+      phase: "Restriction evidence",
+      check:
+        "Closed or partly withdrawn material has a usable restriction note rather than a vague memory.",
+      capture:
+        "Withdrawal sheet, folder-level restriction, exemption language, partial-release status, and whether open cross-reference folders exist.",
+      evidence:
+        "Withdrawal-sheet photo, staff note, or restriction text copied into the ledger.",
+      nextAction:
+        "Ask for open cross-reference folders or alternative series before moving to lower-priority speech/press files.",
+    },
+    {
+      phase: "Promotion decision",
+      check:
+        "Every copied item is marked as public anchor, private-process match, contextual support, boundary case, or reject/no selection.",
+      capture:
+        "Selection status, private-record match, promotion proof, boundary decision, and short abstract note.",
+      evidence:
+        "Document review ledger and selection docket updates.",
+      nextAction:
+        "Promote only records with private-policy evidence; route boundary cases to the adjacent-volume matrix.",
+    },
+    {
+      phase: "Source-note QA",
+      check:
+        "Each serious candidate has repository, collection, office/series, OA/ID or NAID, folder title, document date/title, and page/image control.",
+      capture:
+        "Complete FRUS-style source-note stem plus missing fields.",
+      evidence:
+        "Source-note ledger row and document-review ledger row.",
+      nextAction:
+        "Fill missing source-note pieces before abstracting or drafting selection rationale.",
+    },
+    {
+      phase: "No-hit searches",
+      check:
+        "Dead ends are recorded with query terms, repository, date searched, result count, and why the search mattered.",
+      capture:
+        "Search string, repository, filters, result count, useful hits, no-hit note, and follow-up query.",
+      evidence:
+        "Queue export row or closeout note.",
+      nextAction:
+        "Do not rerun the same failed search tomorrow unless the query or repository changes.",
+    },
+    {
+      phase: "Country and issue balance",
+      check:
+        "The day's captures do not overbuild public chronology while leaving thin country lanes or issue clusters untouched.",
+      capture:
+        "Countries covered, issue cluster, weak spot, first-pull gap, and whether coverage audit changed.",
+      evidence:
+        "Country evidence audit, selection docket, and copied-record list.",
+      nextAction:
+        "Move tomorrow's first pull toward the highest remaining weak spot.",
+    },
+    {
+      phase: "Next-day request",
+      check:
+        "Tomorrow's first pull is written before leaving, with alternates if restrictions or paging limits intervene.",
+      capture:
+        "Priority batch, OA/IDs/NAIDs, folder titles, reason to pull, fallback if closed, and staff question.",
+      evidence:
+        "Updated pre-pull or reading-room run sheet.",
+      nextAction:
+        "Send the request or hand it to staff before the end-of-day cutoff.",
+    },
+  ];
+
   const reviewLedgerHeaders = [
     "issue",
     "countries",
@@ -226,6 +317,15 @@
     "Private-record match to the public chronology anchor",
     "Selection status and cross-volume decision",
     "Short abstract note and next action",
+  ];
+
+  const closeoutPrompts = [
+    "Folder status for every request",
+    "Copied-document filenames and page ranges",
+    "Restriction and withdrawal-sheet evidence",
+    "Promotion or rejection decision",
+    "No-hit searches with exact query strings",
+    "Tomorrow's first pull and fallback",
   ];
 
   const htmlEscape = (value) =>
@@ -456,7 +556,24 @@
         margin-top: 12px;
       }
 
+      .closeout-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .review-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
+      .closeout-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
         border-radius: 6px;
@@ -487,6 +604,7 @@
         .chronology-tools,
         .visit-kit,
         .review-fields,
+        .closeout-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -498,6 +616,7 @@
         .chronology-tools,
         .visit-kit,
         .review-fields,
+        .closeout-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -581,6 +700,7 @@
       `
         <button id="export-prepull" class="tool-button" type="button">Export Pre-Pull TXT</button>
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
+        <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
@@ -652,6 +772,18 @@
               `,
             )
             .join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Daily Closeout</p>
+        <h3>End the Day With Tomorrow Already Shaped</h3>
+        <p>
+          The closeout export gives each research day a final control pass:
+          folder status, copied-document evidence, restriction notes, no-hit
+          searches, promotion decisions, source-note gaps, and next-day pulls.
+        </p>
+        <div class="closeout-fields">
+          ${closeoutPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -943,6 +1075,26 @@
     downloadCsv("frus-central-america-reading-room-run-sheet.csv", headers, rows);
   }
 
+  function exportCloseoutCsv() {
+    const headers = [
+      "date",
+      "phase",
+      "check",
+      "capture",
+      "evidence",
+      "status",
+      "notes",
+      "nextAction",
+    ];
+    const rows = closeoutRows.map((row) => ({
+      date: "",
+      ...row,
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-daily-closeout.csv", headers, rows);
+  }
+
   function exportReviewLedgerCsv() {
     const rows = selectionDocket.map((item) => ({
       issue: item.issue,
@@ -971,6 +1123,7 @@
   function bindPacketExports() {
     document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
+    document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
