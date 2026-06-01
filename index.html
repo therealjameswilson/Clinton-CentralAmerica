@@ -24,6 +24,7 @@
         <a href="#countries">Countries</a>
         <a href="#sources">Sources</a>
         <a href="#library">Library</a>
+        <a href="#packet">Packet</a>
         <a href="#queue">Queue</a>
         <a href="#method">Method</a>
       </nav>
@@ -188,6 +189,26 @@
         </div>
       </section>
 
+      <section class="section packet-section" id="packet" aria-labelledby="packet-title">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">Compiler Packet</p>
+            <h2 id="packet-title">Export the Working Files</h2>
+          </div>
+          <p class="section-note">
+            These exports turn the page into a portable workbench: a dated
+            chronology, a source-note ledger, and call-slip batches that can be
+            opened in a spreadsheet before or during archival work.
+          </p>
+        </div>
+        <div class="packet-actions" aria-label="Compiler packet exports">
+          <button id="export-chronology" class="tool-button" type="button">Export Chronology CSV</button>
+          <button id="export-source-notes" class="tool-button" type="button">Export Source Notes CSV</button>
+          <button id="export-call-slips" class="tool-button" type="button">Export Call Slips CSV</button>
+        </div>
+        <div id="packet-root" class="packet-grid" aria-live="polite"></div>
+      </section>
+
       <section class="section queue-section" id="queue" aria-labelledby="queue-title">
         <div class="section-heading">
           <div>
@@ -253,5 +274,6 @@
     </footer>
 
     <script src="app.js"></script>
+    <script src="packet.js"></script>
   </body>
 </html>

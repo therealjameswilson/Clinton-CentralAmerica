@@ -306,6 +306,7 @@ dd {
 .source-grid,
 .library-grid,
 .gap-grid,
+.packet-grid,
 .method-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -317,6 +318,7 @@ dd {
 .source-grid,
 .library-grid,
 .gap-grid,
+.packet-grid,
 .method-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -326,6 +328,7 @@ dd {
 .source-card,
 .library-card,
 .gap-card,
+.packet-card,
 .chronology-card,
 .method-card,
 .queue-card {
@@ -340,6 +343,7 @@ dd {
 .source-card,
 .library-card,
 .gap-card,
+.packet-card,
 .method-card {
   padding: 18px;
 }
@@ -349,6 +353,7 @@ dd {
 .source-card p,
 .library-card p,
 .gap-card p,
+.packet-card p,
 .chronology-card p,
 .method-card p,
 .queue-card p {
@@ -359,6 +364,7 @@ dd {
 .source-card p,
 .library-card p,
 .gap-card p,
+.packet-card p,
 .method-card p {
   margin: 10px 0 0;
 }
@@ -381,6 +387,7 @@ dd {
 .source-card .meta,
 .library-card .meta,
 .gap-card .meta,
+.packet-card .meta,
 .chronology-card .meta,
 .queue-card .meta {
   display: flex;
@@ -580,6 +587,27 @@ dd {
   margin-top: 4px;
   color: var(--muted);
   font-weight: 500;
+}
+
+.packet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1180px;
+  margin: 0 auto 14px;
+}
+
+.packet-card {
+  display: grid;
+  gap: 12px;
+}
+
+.packet-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: #354640;
 }
 
 .library-card {
@@ -788,6 +816,7 @@ select:focus {
   .source-grid,
   .library-grid,
   .gap-grid,
+  .packet-grid,
   .library-overview,
   .chronology-overview,
   .method-grid {
@@ -838,6 +867,7 @@ select:focus {
   .source-grid,
   .library-grid,
   .gap-grid,
+  .packet-grid,
   .library-overview,
   .chronology-overview,
   .method-grid,
@@ -855,6 +885,7 @@ select:focus {
   }
 
   .hero-actions,
+  .packet-actions,
   .queue-actions {
     align-items: stretch;
     flex-direction: column;
