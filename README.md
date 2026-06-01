@@ -62,9 +62,9 @@ against legal implementation, aid, disaster-relief, trade, TPS, and project reco
 ## Compiler Packet and Docket Exports
 
 The page includes browser-side exports for the pre-pull request, reading-room run sheet,
-candidate chronology, source-note ledger, selection docket, call-slip batches, and research
-queue. These are intended to become the working files for pre-pull requests, onsite logging,
-selection review, and daily closeout.
+document-review ledger, candidate chronology, source-note ledger, selection docket,
+call-slip batches, and research queue. These are intended to become the working files for
+pre-pull requests, onsite logging, selection review, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
