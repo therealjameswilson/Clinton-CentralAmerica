@@ -197,6 +197,37 @@
     },
   ];
 
+  const reviewLedgerHeaders = [
+    "issue",
+    "countries",
+    "candidateDocumentTitle",
+    "documentDate",
+    "documentType",
+    "sourceCollection",
+    "oaIdOrNaid",
+    "folderTitle",
+    "classificationOrMarkings",
+    "pagesOrImages",
+    "publicAnchor",
+    "privateRecordMatch",
+    "promotionProof",
+    "restrictionStatus",
+    "sourceNoteComplete",
+    "selectionStatus",
+    "crossVolumeDecision",
+    "abstractNote",
+    "nextAction",
+  ];
+
+  const reviewLedgerPrompts = [
+    "Candidate title/date/type",
+    "Repository, collection, OA/ID or NAID, and folder title",
+    "Classification, release, withdrawal, page, and image controls",
+    "Private-record match to the public chronology anchor",
+    "Selection status and cross-volume decision",
+    "Short abstract note and next action",
+  ];
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -414,6 +445,27 @@
         padding-left: 18px;
       }
 
+      .visit-kit article.full-span {
+        grid-column: 1 / -1;
+      }
+
+      .review-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .review-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .runsheet-list {
         display: grid;
         gap: 8px;
@@ -434,6 +486,7 @@
       @media (max-width: 980px) {
         .chronology-tools,
         .visit-kit,
+        .review-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -444,6 +497,7 @@
       @media (max-width: 620px) {
         .chronology-tools,
         .visit-kit,
+        .review-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -527,6 +581,7 @@
       `
         <button id="export-prepull" class="tool-button" type="button">Export Pre-Pull TXT</button>
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
+        <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
     );
@@ -597,6 +652,17 @@
               `,
             )
             .join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Document Review Ledger</p>
+        <h3>Evaluate Copied Records the Same Way Every Time</h3>
+        <p>
+          The ledger export turns each docket issue into a document-review row with
+          source-note, restriction, selection-status, abstract, and cross-volume fields.
+        </p>
+        <div class="review-fields">
+          ${reviewLedgerPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
     `;
@@ -877,9 +943,35 @@
     downloadCsv("frus-central-america-reading-room-run-sheet.csv", headers, rows);
   }
 
+  function exportReviewLedgerCsv() {
+    const rows = selectionDocket.map((item) => ({
+      issue: item.issue,
+      countries: item.countries,
+      candidateDocumentTitle: "",
+      documentDate: "",
+      documentType: "",
+      sourceCollection: "Clinton Presidential Records",
+      oaIdOrNaid: "",
+      folderTitle: "",
+      classificationOrMarkings: "",
+      pagesOrImages: "",
+      publicAnchor: item.publicAnchors,
+      privateRecordMatch: item.privateRecordTarget,
+      promotionProof: item.promotionProof,
+      restrictionStatus: "",
+      sourceNoteComplete: "",
+      selectionStatus: "",
+      crossVolumeDecision: item.boundaryRisk,
+      abstractNote: "",
+      nextAction: "",
+    }));
+    downloadCsv("frus-central-america-document-review-ledger.csv", reviewLedgerHeaders, rows);
+  }
+
   function bindPacketExports() {
     document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
+    document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
     document.querySelector("#export-source-notes")?.addEventListener("click", exportSourceNotesCsv);
