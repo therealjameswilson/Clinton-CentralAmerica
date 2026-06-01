@@ -90,10 +90,10 @@ consult another volume, and the first document-level check to run before promoti
 ## Compiler Packet and Docket Exports
 
 The page includes browser-side exports for the pre-pull request, reading-room run sheet,
-document-review ledger, country evidence audit, boundary matrix, authority index, candidate
-chronology, source-note ledger, selection docket, call-slip batches, and research queue.
-These are intended to become the working files for pre-pull requests, onsite logging,
-selection review, and daily closeout.
+daily closeout checklist, document-review ledger, country evidence audit, boundary matrix,
+authority index, candidate chronology, source-note ledger, selection docket, call-slip batches,
+and research queue. These are intended to become the working files for pre-pull requests,
+onsite logging, selection review, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
