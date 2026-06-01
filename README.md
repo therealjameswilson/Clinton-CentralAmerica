@@ -30,6 +30,16 @@ call-slip batches, and high-yield folder-title clusters derived from those findi
 The displayed source-note stems follow the FRUS order: repository, record collection,
 office or series, OA/ID locator, folder title, then a short editorial verification note.
 
+## Authority Search Index
+
+The page includes an exportable name and office-series authority index so the compiler can
+move from chronology leads to catalog searches quickly. It covers presidential diary
+headings, NSC staff files, speechwriting, press, humanitarian-affairs, access-management,
+intelligence, transnational-threats, strategic-planning, and Central American leader names.
+
+Each authority entry records search terms, likely source families, and the first document
+pairing move to try before requesting boxes or promoting a candidate record.
+
 ## Candidate Chronology Inputs
 
 The first section of the page uses Presidential Daily Diary records surfaced through the National Archives Catalog search:
@@ -73,9 +83,9 @@ consult another volume, and the first document-level check to run before promoti
 ## Compiler Packet and Docket Exports
 
 The page includes browser-side exports for the pre-pull request, reading-room run sheet,
-document-review ledger, boundary matrix, candidate chronology, source-note ledger,
-selection docket, call-slip batches, and research queue. These are intended to become the
-working files for pre-pull requests, onsite logging, selection review, and daily closeout.
+document-review ledger, boundary matrix, authority index, candidate chronology, source-note
+ledger, selection docket, call-slip batches, and research queue. These are intended to become
+the working files for pre-pull requests, onsite logging, selection review, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival

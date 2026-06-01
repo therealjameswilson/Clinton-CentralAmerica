@@ -515,6 +515,244 @@ const callSlipBatches = [
   },
 ];
 
+function catalogSearchUrl(query) {
+  return `https://catalog.archives.gov/search?q=${encodeURIComponent(query)}&collectionIdentifier=WJC*`;
+}
+
+const authorityIndex = [
+  {
+    name: "William J. Clinton",
+    role: "President",
+    lane: "Decision, call, meeting, trip, and public chronology anchor",
+    searchTerms: ["Clinton Central America", "POTUS Central America", "POTUS Trip Central America"],
+    likelySources:
+      "Presidential Daily Diary; trip books; NSC Records Management; Public Papers; speech and press files",
+    firstMove:
+      "Use dated diary and Public Papers anchors first, then search the same date in NSC, State, trip-book, speech, and press files.",
+    href: catalogSearchUrl('"William J. Clinton" "Central America"'),
+  },
+  {
+    name: "Ellen McCathran",
+    role: "Presidential Daily Diary file-unit heading",
+    lane: "Diary chronology and schedule control",
+    searchTerms: ["Ellen McCathran Presidential Daily Diary", "Presidential Daily Diary Hardcopy"],
+    likelySources: "Presidential Daily Diary OA/IDs CF 1982-CF 1986; LPWJC 2010-0083-F",
+    firstMove:
+      "Use diary hits to confirm calls, meetings, trip movements, participants, interpreters, and the exact date-time spine before pulling policy records.",
+    href: catalogSearchUrl('"Ellen McCathran" "Presidential Daily Diary"'),
+  },
+  {
+    name: "Nancy Soderberg",
+    role: "NSC Staff Director",
+    lane: "Guatemala, El Salvador, Honduras, immigration, and Central American leaders",
+    searchTerms: ["Soderberg Guatemala", "Soderberg El Salvador", "Central American Presidents Meeting"],
+    likelySources: "Staff Director-Soderberg, Nancy, OA/IDs 1404, 1405, 1408, 1409, 1416",
+    firstMove:
+      "Start here for high-level issue files that can convert public chronology leads into policy-process evidence.",
+    href: catalogSearchUrl('"Soderberg" "Guatemala"'),
+  },
+  {
+    name: "Antony Blinken",
+    role: "Speechwriting",
+    lane: "Costa Rica summit, leader events, environmental speech, and summit messaging",
+    searchTerms: ["Blinken Costa Rica", "Costa Rica Summit Opening Remarks", "Costa Rica Leaders Lunch"],
+    likelySources: "Speechwriting-Blinken, Antony, OA/ID 3388",
+    firstMove:
+      "Use speech files to identify message provenance, clearance paths, and names to chase in NSC and State files.",
+    href: catalogSearchUrl('"Blinken" "Costa Rica"'),
+  },
+  {
+    name: "Edward Widmer",
+    role: "Speechwriting",
+    lane: "1999 Central America trip, Guatemala, Honduras/Soto Cano, and Hurricane Mitch",
+    searchTerms: ["Widmer Central America", "Widmer Hurricane Mitch", "Guatemala March 11 1999"],
+    likelySources: "Speechwriting-Widmer, Edward, OA/ID 2189",
+    firstMove:
+      "Pair speech tabs with trip books and relief-policy files; do not stop at polished remarks when a decision file is likely nearby.",
+    href: catalogSearchUrl('"Widmer" "Hurricane Mitch"'),
+  },
+  {
+    name: "Philip J. Crowley",
+    role: "Press",
+    lane: "March 1999 Nicaragua, El Salvador, Honduras, and Guatemala trip file",
+    searchTerms: ["Crowley POTUS Central America trip", "Crowley Guatemala Honduras Nicaragua"],
+    likelySources: "Press-Crowley, Philip J., OA/IDs 103096-103106 and 3468",
+    firstMove:
+      "Use press files to reconstruct public-event sequence, press guidance, and gaps between public framing and private decisions.",
+    href: catalogSearchUrl('"Crowley" "Central America"'),
+  },
+  {
+    name: "Matthew Gobush",
+    role: "Press",
+    lane: "Hurricane Mitch public updates",
+    searchTerms: ["Gobush Hurricane Mitch", "Hurricane Mitch Updates December 1998"],
+    likelySources: "Press-Gobush, Matthew, OA/ID 3299",
+    firstMove:
+      "Use as a bridge from public messaging to relief, USAID, State, migration, and MHA implementation files.",
+    href: catalogSearchUrl('"Gobush" "Hurricane Mitch"'),
+  },
+  {
+    name: "Eric Schwartz",
+    role: "Multilateral and Humanitarian Affairs",
+    lane: "Hurricane Mitch, Central America relief, trip follow-up, and humanitarian policy",
+    searchTerms: ["Schwartz Hurricane Mitch", "Central America Hurricane Mitch 1999", "POTUS Central America Trip 1999"],
+    likelySources: "MHA-Schwartz, Eric, OA/IDs 3422-3430, 3426, 3429, 3452",
+    firstMove:
+      "Pull after the decision-record spine to test whether public relief commitments became policy, migration, or aid actions.",
+    href: catalogSearchUrl('"Schwartz" "Hurricane Mitch"'),
+  },
+  {
+    name: "Scott Busby",
+    role: "Multilateral and Humanitarian Affairs",
+    lane: "TPS and migration policy for Central America",
+    searchTerms: ["Busby TPS Central America", "TPS for Central America"],
+    likelySources: "MHA-Busby, Scott, OA/ID 1890",
+    firstMove:
+      "Use TPS files to connect Mitch relief and humanitarian policy to immigration-law implementation without losing the foreign-policy thread.",
+    href: catalogSearchUrl('"Busby" "TPS" "Central America"'),
+  },
+  {
+    name: "Wendy Patten",
+    role: "Multilateral and Humanitarian Affairs",
+    lane: "El Salvador churchwomen, Central American parity bill, and humanitarian-law context",
+    searchTerms: ["Patten El Salvador Church Women", "Central American and Haitian Parity Bill"],
+    likelySources: "MHA-Patten, Wendy, OA/ID 3536",
+    firstMove:
+      "Pair accountability-case files with migration and parity-bill records so El Salvador is not reduced to one case lane.",
+    href: catalogSearchUrl('"Patten" "El Salvador" "Church Women"'),
+  },
+  {
+    name: "Robert Malley",
+    role: "Democracy/Human Rights",
+    lane: "Guatemala and School of the Americas human-rights files",
+    searchTerms: ["Malley Guatemala", "School of the Americas Guatemala"],
+    likelySources: "Democracy/Human Rights-Malley, Robert, OA/ID 793",
+    firstMove:
+      "Capture withdrawal sheets and routing even if documents are closed; the closure evidence may still define the source trail.",
+    href: catalogSearchUrl('"Malley" "Guatemala"'),
+  },
+  {
+    name: "William Leary",
+    role: "Access Management",
+    lane: "El Salvador churchwomen document-preparation files",
+    searchTerms: ["Leary El Salvador Churchwomen", "Documents Prepared for El Salvador Churchwomen Case"],
+    likelySources: "Access Management-Leary, William, OA/IDs 3788, 3789",
+    firstMove:
+      "Use declassification and document-preparation records as a control set for accountability files and release status.",
+    href: catalogSearchUrl('"Leary" "El Salvador Churchwomen"'),
+  },
+  {
+    name: "Don Mitchell",
+    role: "Intelligence Programs",
+    lane: "El Salvador Zona Rosa and intelligence-accountability records",
+    searchTerms: ["Mitchell Zona Rosa", "El Salvador Zona Rosa 1996"],
+    likelySources: "Intelligence Programs-Mitchell, Don, OA/ID 3031",
+    firstMove:
+      "Treat release markings and withdrawal sheets as part of the evidence record before deciding whether the file can support selection.",
+    href: catalogSearchUrl('"Mitchell" "Zona Rosa"'),
+  },
+  {
+    name: "Randolph Eddy",
+    role: "Transnational Threats",
+    lane: "Central America country and narcotics/crime files",
+    searchTerms: ["Eddy Central America", "Eddy Belize El Salvador Guatemala Nicaragua Panama"],
+    likelySources: "Transnational Threats-Eddy, Randolph, OA/IDs 1497, 1503",
+    firstMove:
+      "Use after the diplomatic spine to decide whether a crime/narcotics file belongs in Central America or a global issues volume.",
+    href: catalogSearchUrl('"Eddy" "Central America"'),
+  },
+  {
+    name: "Frederick Rosa",
+    role: "Transnational Threats",
+    lane: "International crime, border security, and country files",
+    searchTerms: ["Rosa international crime Central America", "Border Security Review Central America"],
+    likelySources: "Transnational Threats-Rosa, Frederick, OA/IDs 4042, 4050, 4067, 4069, 4070",
+    firstMove:
+      "Search country names inside the crime files, then use the boundary matrix before routing the record away from Volume XXXII.",
+    href: catalogSearchUrl('"Rosa" "International Crime" "Central America"'),
+  },
+  {
+    name: "Steven Simon",
+    role: "Transnational Threats",
+    lane: "Panama transnational-security file",
+    searchTerms: ["Simon Panama", "Transnational Threats Panama"],
+    likelySources: "Transnational Threats-Simon, Steven, OA/ID 2248",
+    firstMove:
+      "Pair Panama threat files with Canal, defense, PRD, PC/DC, and State records before deciding whether the evidence is security context or policy substance.",
+    href: catalogSearchUrl('"Simon" "Panama" "Transnational Threats"'),
+  },
+  {
+    name: "James Gibney",
+    role: "Strategic Planning",
+    lane: "Costa Rica and regional strategic-planning context",
+    searchTerms: ["Gibney Costa Rica", "Strategic Planning Costa Rica"],
+    likelySources: "Strategic Planning-Gibney, James, OA/ID 773",
+    firstMove:
+      "Use as a follow-up pull after Costa Rica summit and trip-book folders identify whether strategic planning produced implementation records.",
+    href: catalogSearchUrl('"Gibney" "Costa Rica"'),
+  },
+  {
+    name: "Arnoldo Aleman",
+    role: "President of Nicaragua",
+    lane: "Hurricane Mitch calls, Nicaragua visit, and March 1999 meetings",
+    searchTerms: ["Arnoldo Aleman Clinton", "Aleman Hurricane Mitch", "Nicaragua March 8 1999"],
+    likelySources: "Daily Diary CF 1985-CF 1986; trip books OA/IDs 3622, 3638; Public Papers",
+    firstMove:
+      "Use the November 7, 1998 call and March 8, 1999 trip events to request telcon, memcon, briefing, and relief-policy matches.",
+    href: catalogSearchUrl('"Arnoldo Aleman" Clinton'),
+  },
+  {
+    name: "Carlos Roberto Flores",
+    role: "President of Honduras",
+    lane: "Hurricane Mitch calls, Soto Cano, Tegucigalpa reconstruction, and relief diplomacy",
+    searchTerms: ["Carlos Roberto Flores Clinton", "Flores Hurricane Mitch", "Soto Cano March 9 1999"],
+    likelySources: "Daily Diary CF 1985; trip books OA/IDs 3622, 3638; Public Papers; MHA files",
+    firstMove:
+      "Pair call evidence with Soto Cano, military-support, migration, USAID, and reconstruction-policy records.",
+    href: catalogSearchUrl('"Carlos Roberto Flores" Clinton'),
+  },
+  {
+    name: "Ernesto Perez Balladares",
+    role: "President of Panama",
+    lane: "1994 presidential call, Canal transfer, and Panama decision spine",
+    searchTerms: ["Perez Balladares Clinton", "Panama Canal transfer Clinton"],
+    likelySources: "Daily Diary CF 1983; Records Management PC/DC/PRD files; Defense Policy Panama files",
+    firstMove:
+      "Use the October 10, 1994 call as the dated anchor, then pull Panama PC/DC/PRD folders and defense-policy files.",
+    href: catalogSearchUrl('"Perez Balladares" Clinton'),
+  },
+  {
+    name: "Ramiro De Leon Carpio",
+    role: "President of Guatemala",
+    lane: "1993 Central American Presidents breakfast and Guatemala regional representation",
+    searchTerms: ["Ramiro De Leon Carpio Clinton", "Central American Presidents breakfast 1993"],
+    likelySources: "Daily Diary CF 1982; Soderberg regional leaders files; Guatemala country files",
+    firstMove:
+      "Use the 1993 breakfast to trace leader-level issues into Guatemala human-rights and peace-process files.",
+    href: catalogSearchUrl('"Ramiro De Leon Carpio" Clinton'),
+  },
+  {
+    name: "Armando Calderon Sol",
+    role: "President of El Salvador",
+    lane: "1999 El Salvador arrival, post-war consolidation, and accountability context",
+    searchTerms: ["Armando Calderon Sol Clinton", "El Salvador arrival March 8 1999"],
+    likelySources: "Daily Diary CF 1986; Soderberg OA/ID 1408; El Salvador accountability and MHA files",
+    firstMove:
+      "Pair trip-event evidence with post-war consolidation, migration, churchwomen, Zona Rosa, and democracy files.",
+    href: catalogSearchUrl('"Armando Calderon Sol" Clinton'),
+  },
+  {
+    name: "Tipper Gore",
+    role: "Public disaster-response interlocutor",
+    lane: "Hurricane Mitch damage call and relief public chronology",
+    searchTerms: ["Tipper Gore Hurricane Mitch", "telephone conversation hurricane damage Central America"],
+    likelySources: "Public Papers; press files; MHA Hurricane Mitch files",
+    firstMove:
+      "Use as a public anchor only; match the call to relief-policy, USAID, State, migration, and White House follow-up records.",
+    href: catalogSearchUrl('"Tipper Gore" "Hurricane Mitch"'),
+  },
+];
+
 const chronologyOverview = [
   {
     value: "59",
@@ -1575,6 +1813,7 @@ const roots = {
   sources: document.querySelector("#source-root"),
   libraryOverview: document.querySelector("#library-overview-root"),
   library: document.querySelector("#library-root"),
+  authorities: document.querySelector("#authority-root"),
   onsite: document.querySelector("#onsite-root"),
   batches: document.querySelector("#batch-root"),
   chronologyOverview: document.querySelector("#chronology-overview-root"),
@@ -1594,6 +1833,7 @@ const controls = {
   reset: document.querySelector("#reset-filters"),
   export: document.querySelector("#export-queue"),
   exportBoundaries: document.querySelector("#export-boundaries"),
+  exportAuthorities: document.querySelector("#export-authorities"),
 };
 
 const escapeHtml = (value) =>
@@ -1745,6 +1985,43 @@ function renderLibrary() {
         .join("")}
     </div>
   `;
+}
+
+function renderAuthorities() {
+  if (!roots.authorities) {
+    return;
+  }
+
+  roots.authorities.innerHTML = authorityIndex
+    .map(
+      (authority) => `
+        <article class="authority-card">
+          <div class="authority-card-header">
+            <div>
+              <p class="kicker">${escapeHtml(authority.role)}</p>
+              <h3>${escapeHtml(authority.name)}</h3>
+            </div>
+            ${pill(authority.lane.includes("Hurricane Mitch") ? "Mitch" : "Search")}
+          </div>
+          <p>${escapeHtml(authority.lane)}</p>
+          <dl>
+            <div>
+              <dt>Likely Sources</dt>
+              <dd>${escapeHtml(authority.likelySources)}</dd>
+            </div>
+            <div>
+              <dt>First Move</dt>
+              <dd>${escapeHtml(authority.firstMove)}</dd>
+            </div>
+          </dl>
+          <div class="authority-terms" aria-label="Search terms">
+            ${authority.searchTerms.map((term) => `<span>${escapeHtml(term)}</span>`).join("")}
+          </div>
+          <p><a class="inline-link" href="${authority.href}" rel="noreferrer">Open catalog search</a></p>
+        </article>
+      `,
+    )
+    .join("");
 }
 
 function renderChronology() {
@@ -1974,6 +2251,37 @@ function exportBoundaryCsv() {
   URL.revokeObjectURL(url);
 }
 
+function exportAuthorityCsv() {
+  const headers = [
+    "name",
+    "role",
+    "lane",
+    "searchTerms",
+    "likelySources",
+    "firstMove",
+    "href",
+  ];
+  const rows = authorityIndex.map((authority) => ({
+    ...authority,
+    searchTerms: authority.searchTerms.join("; "),
+  }));
+  const csv = [
+    headers.join(","),
+    ...rows.map((row) =>
+      headers
+        .map((key) => `"${String(row[key]).replaceAll('"', '""')}"`)
+        .join(","),
+    ),
+  ].join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "frus-central-america-authority-index.csv";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 function bindEvents() {
   controls.search.addEventListener("input", (event) => {
     state.search = event.target.value;
@@ -2004,6 +2312,7 @@ function bindEvents() {
   });
   controls.export.addEventListener("click", exportCsv);
   controls.exportBoundaries?.addEventListener("click", exportBoundaryCsv);
+  controls.exportAuthorities?.addEventListener("click", exportAuthorityCsv);
 }
 
 function init() {
@@ -2018,6 +2327,7 @@ function init() {
   renderGaps();
   renderBoundaries();
   renderLibrary();
+  renderAuthorities();
   populateFilters();
   renderQueue();
   renderMethod();

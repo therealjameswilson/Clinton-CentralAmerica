@@ -305,6 +305,7 @@ dd {
 .country-grid,
 .source-grid,
 .library-grid,
+.authority-grid,
 .gap-grid,
 .boundary-grid,
 .packet-grid,
@@ -318,6 +319,7 @@ dd {
 
 .source-grid,
 .library-grid,
+.authority-grid,
 .gap-grid,
 .boundary-grid,
 .packet-grid,
@@ -329,6 +331,7 @@ dd {
 .country-card,
 .source-card,
 .library-card,
+.authority-card,
 .gap-card,
 .boundary-card,
 .packet-card,
@@ -345,6 +348,7 @@ dd {
 .country-card,
 .source-card,
 .library-card,
+.authority-card,
 .gap-card,
 .boundary-card,
 .packet-card,
@@ -356,6 +360,7 @@ dd {
 .country-card p,
 .source-card p,
 .library-card p,
+.authority-card p,
 .gap-card p,
 .boundary-card p,
 .packet-card p,
@@ -368,6 +373,7 @@ dd {
 .official-card p,
 .source-card p,
 .library-card p,
+.authority-card p,
 .gap-card p,
 .boundary-card p,
 .packet-card p,
@@ -392,6 +398,7 @@ dd {
 .country-card .meta,
 .source-card .meta,
 .library-card .meta,
+.authority-card .meta,
 .gap-card .meta,
 .boundary-card .meta,
 .packet-card .meta,
@@ -580,29 +587,56 @@ dd {
   gap: 12px;
 }
 
+.authority-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .gap-card dl,
-.boundary-card dl {
+.boundary-card dl,
+.authority-card dl {
   display: grid;
   gap: 12px;
   margin: 0;
 }
 
 .gap-card dl div,
-.boundary-card dl div {
+.boundary-card dl div,
+.authority-card dl div {
   padding-top: 12px;
   border-top: 1px solid var(--line);
 }
 
 .gap-card dd,
-.boundary-card dd {
+.boundary-card dd,
+.authority-card dd {
   margin-top: 4px;
   color: var(--muted);
   font-weight: 500;
 }
 
+.authority-card,
 .boundary-card {
   display: grid;
   gap: 14px;
+}
+
+.authority-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.authority-terms span {
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-strong);
+  color: #31433d;
+  font-size: 0.78rem;
+  font-weight: 800;
 }
 
 .packet-actions {
@@ -831,6 +865,7 @@ select:focus {
   .country-grid,
   .source-grid,
   .library-grid,
+  .authority-grid,
   .gap-grid,
   .boundary-grid,
   .packet-grid,
@@ -883,6 +918,7 @@ select:focus {
   .country-grid,
   .source-grid,
   .library-grid,
+  .authority-grid,
   .gap-grid,
   .boundary-grid,
   .packet-grid,
