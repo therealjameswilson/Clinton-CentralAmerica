@@ -306,6 +306,7 @@ dd {
 .source-grid,
 .library-grid,
 .gap-grid,
+.boundary-grid,
 .packet-grid,
 .method-grid {
   display: grid;
@@ -318,6 +319,7 @@ dd {
 .source-grid,
 .library-grid,
 .gap-grid,
+.boundary-grid,
 .packet-grid,
 .method-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -328,6 +330,7 @@ dd {
 .source-card,
 .library-card,
 .gap-card,
+.boundary-card,
 .packet-card,
 .chronology-card,
 .method-card,
@@ -343,6 +346,7 @@ dd {
 .source-card,
 .library-card,
 .gap-card,
+.boundary-card,
 .packet-card,
 .method-card {
   padding: 18px;
@@ -353,6 +357,7 @@ dd {
 .source-card p,
 .library-card p,
 .gap-card p,
+.boundary-card p,
 .packet-card p,
 .chronology-card p,
 .method-card p,
@@ -364,6 +369,7 @@ dd {
 .source-card p,
 .library-card p,
 .gap-card p,
+.boundary-card p,
 .packet-card p,
 .method-card p {
   margin: 10px 0 0;
@@ -387,6 +393,7 @@ dd {
 .source-card .meta,
 .library-card .meta,
 .gap-card .meta,
+.boundary-card .meta,
 .packet-card .meta,
 .chronology-card .meta,
 .queue-card .meta {
@@ -565,28 +572,37 @@ dd {
   gap: 14px;
 }
 
-.gap-card-header {
+.gap-card-header,
+.boundary-card-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
 }
 
-.gap-card dl {
+.gap-card dl,
+.boundary-card dl {
   display: grid;
   gap: 12px;
   margin: 0;
 }
 
-.gap-card dl div {
+.gap-card dl div,
+.boundary-card dl div {
   padding-top: 12px;
   border-top: 1px solid var(--line);
 }
 
-.gap-card dd {
+.gap-card dd,
+.boundary-card dd {
   margin-top: 4px;
   color: var(--muted);
   font-weight: 500;
+}
+
+.boundary-card {
+  display: grid;
+  gap: 14px;
 }
 
 .packet-actions {
@@ -816,6 +832,7 @@ select:focus {
   .source-grid,
   .library-grid,
   .gap-grid,
+  .boundary-grid,
   .packet-grid,
   .library-overview,
   .chronology-overview,
@@ -867,6 +884,7 @@ select:focus {
   .source-grid,
   .library-grid,
   .gap-grid,
+  .boundary-grid,
   .packet-grid,
   .library-overview,
   .chronology-overview,

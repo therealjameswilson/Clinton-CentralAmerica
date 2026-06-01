@@ -571,7 +571,7 @@
   }
 
   function installDocketExport() {
-    const actions = document.querySelector(".packet-actions");
+    const actions = document.querySelector(".packet-section .packet-actions");
     if (!actions || document.querySelector("#export-selection-docket")) {
       return;
     }
