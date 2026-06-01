@@ -25,6 +25,7 @@
         <a href="#countries">Countries</a>
         <a href="#sources">Sources</a>
         <a href="#library">Library</a>
+        <a href="#authorities">People</a>
         <a href="#packet">Packet</a>
         <a href="#queue">Queue</a>
         <a href="#method">Method</a>
@@ -206,6 +207,24 @@
           <div id="onsite-root" class="onsite-panel" aria-live="polite"></div>
           <div id="batch-root" class="onsite-panel" aria-live="polite"></div>
         </div>
+      </section>
+
+      <section class="section authority-section" id="authorities" aria-labelledby="authority-title">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">Authority Search Index</p>
+            <h2 id="authority-title">Search Names and Offices Before Pulling Boxes</h2>
+          </div>
+          <p class="section-note">
+            These people and office-series names convert chronology leads and
+            finding-aid clusters into practical catalog searches, folder checks,
+            and document-pairing moves for the reading room.
+          </p>
+        </div>
+        <div class="packet-actions" aria-label="Authority index export">
+          <button id="export-authorities" class="tool-button" type="button">Export Authority Index CSV</button>
+        </div>
+        <div id="authority-root" class="authority-grid" aria-live="polite"></div>
       </section>
 
       <section class="section packet-section" id="packet" aria-labelledby="packet-title">
