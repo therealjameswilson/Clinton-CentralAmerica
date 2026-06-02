@@ -97,10 +97,11 @@ assist hub, NARA Scout, Strobe FOIA work, and the Central America compiler packe
 ## Compiler Packet and Docket Exports
 
 The page includes browser-side exports for the pre-pull request, reading-room run sheet,
-daily closeout checklist, source-note QA checklist, document-review ledger, country evidence
-audit, boundary matrix, authority index, candidate chronology, source-note ledger, selection
-docket, call-slip batches, and research queue. These are intended to become the working
-files for pre-pull requests, onsite logging, citation QA, selection review, and daily closeout.
+daily closeout checklist, source-note QA checklist, reference-question worksheet,
+document-review ledger, country evidence audit, boundary matrix, authority index,
+candidate chronology, source-note ledger, selection docket, call-slip batches, and
+research queue. These are intended to become the working files for pre-pull requests,
+onsite logging, access fallback, citation QA, selection review, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
