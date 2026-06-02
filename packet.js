@@ -19,6 +19,12 @@
       fields: ["Repository", "Collection", "OA/ID or NAID", "Date", "Title", "Page or image range"],
     },
     {
+      title: "Source-Note Builder",
+      purpose:
+        "Turn promoted candidate records into FRUS-style source-note components before drafting, citation QA, or final document assembly.",
+      fields: ["Repository", "Series", "Locator", "Folder", "Pages", "Draft note"],
+    },
+    {
       title: "Digital Copy Inventory",
       purpose:
         "Tie copied PDFs, photos, and scans to candidate documents, page ranges, quality checks, OCR status, backups, and source-note rows.",
@@ -782,6 +788,15 @@
     "Backup location",
   ];
 
+  const sourceNoteBuilderPrompts = [
+    "Repository",
+    "Record collection",
+    "Office or series",
+    "OA/ID or NAID",
+    "Folder title",
+    "Page or image range",
+  ];
+
   const publicAnchorPrompts = [
     "GovInfo source note",
     "Public claim",
@@ -1411,6 +1426,13 @@
         margin-top: 12px;
       }
 
+      .sourcenotebuilder-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .publicanchor-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1537,6 +1559,16 @@
         font-weight: 750;
       }
 
+      .sourcenotebuilder-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .publicanchor-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1644,6 +1676,7 @@
         .weekplan-fields,
         .contact-fields,
         .copyinventory-fields,
+        .sourcenotebuilder-fields,
         .publicanchor-fields,
         .nohit-fields,
         .routing-fields,
@@ -1669,6 +1702,7 @@
         .weekplan-fields,
         .contact-fields,
         .copyinventory-fields,
+        .sourcenotebuilder-fields,
         .publicanchor-fields,
         .nohit-fields,
         .routing-fields,
@@ -1763,6 +1797,7 @@
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
         <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
         <button id="export-copy-inventory" class="tool-button" type="button">Export Copy Inventory CSV</button>
+        <button id="export-source-note-builder" class="tool-button" type="button">Export Source-Note Builder CSV</button>
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
         <button id="export-contact-followup" class="tool-button" type="button">Export Contact Follow-Up CSV</button>
         <button id="export-public-anchor-crosswalk" class="tool-button" type="button">Export Public Anchor Crosswalk CSV</button>
@@ -1908,6 +1943,19 @@
         </p>
         <div class="copyinventory-fields">
           ${copyInventoryPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Source-Note Builder</p>
+        <h3>Draft the Citation Before the Memory Fades</h3>
+        <p>
+          The source-note builder export gives each candidate a FRUS-style
+          citation row for repository, record collection, office or series,
+          locator, folder title, document title/date, page or image range,
+          release markings, access evidence, and a draft source note.
+        </p>
+        <div class="sourcenotebuilder-fields">
+          ${sourceNoteBuilderPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -2407,6 +2455,62 @@
       notes: "",
     }));
     downloadCsv("frus-central-america-digital-copy-inventory.csv", headers, rows);
+  }
+
+  function exportSourceNoteBuilderCsv() {
+    const headers = [
+      "issue",
+      "countries",
+      "candidateDocumentTitle",
+      "documentDate",
+      "documentType",
+      "repository",
+      "recordCollection",
+      "officeOrSeries",
+      "locator",
+      "folderTitle",
+      "documentTitle",
+      "dateLine",
+      "pageOrImageRange",
+      "classificationOrReleaseMarkings",
+      "releaseStatus",
+      "accessOrRestrictionEvidence",
+      "publicAnchor",
+      "catalogOrCanonicalUrl",
+      "draftSourceNote",
+      "frusStyleCheck",
+      "sourceNoteOwner",
+      "status",
+      "notes",
+    ];
+    const rows = selectionDocket.map((item) => ({
+      issue: item.issue,
+      countries: item.countries,
+      candidateDocumentTitle: "",
+      documentDate: "",
+      documentType: "",
+      repository: "Clinton Presidential Library",
+      recordCollection: "Clinton Presidential Records",
+      officeOrSeries: "",
+      locator: item.privateRecordTarget,
+      folderTitle: "",
+      documentTitle: "",
+      dateLine: "",
+      pageOrImageRange: "",
+      classificationOrReleaseMarkings: "",
+      releaseStatus: "",
+      accessOrRestrictionEvidence: item.promotionProof,
+      publicAnchor: item.publicAnchors,
+      catalogOrCanonicalUrl: "",
+      draftSourceNote:
+        "Clinton Presidential Library, Clinton Presidential Records, [office or series], [OA/ID or NAID], [folder title].",
+      frusStyleCheck:
+        "Repository; record collection; office or series; OA/ID or NAID; folder title; document title/date; page or image range; release markings.",
+      sourceNoteOwner: "",
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-source-note-builder.csv", headers, rows);
   }
 
   function exportSourceNoteQaCsv() {
@@ -2916,6 +3020,7 @@
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
     document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
     document.querySelector("#export-copy-inventory")?.addEventListener("click", exportCopyInventoryCsv);
+    document.querySelector("#export-source-note-builder")?.addEventListener("click", exportSourceNoteBuilderCsv);
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
     document.querySelector("#export-contact-followup")?.addEventListener("click", exportContactFollowupCsv);
     document.querySelector("#export-public-anchor-crosswalk")?.addEventListener("click", exportPublicAnchorCrosswalkCsv);
