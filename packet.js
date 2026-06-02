@@ -48,6 +48,12 @@
         "Score copied candidates against policy value, private evidence, citation readiness, access, country balance, and boundary fit.",
       fields: ["Candidate", "Scores", "Recommendation", "Next action"],
     },
+    {
+      title: "Annotation Plan",
+      purpose:
+        "Carry selected candidates into editorial notes by tracking people, offices, context, cross-references, and unresolved questions.",
+      fields: ["Persons", "Context", "Cross-references", "Questions"],
+    },
   ];
 
   const selectionDocket = [
@@ -719,6 +725,15 @@
     "Boundary fit and recommendation",
   ];
 
+  const annotationPrompts = [
+    "Persons and offices",
+    "Editorial context",
+    "Public/private bridge",
+    "Related documents",
+    "Boundary cross-reference",
+    "Unresolved annotation question",
+  ];
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -982,6 +997,13 @@
         margin-top: 12px;
       }
 
+      .annotation-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .review-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1042,6 +1064,16 @@
         font-weight: 750;
       }
 
+      .annotation-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .runsheet-list {
         display: grid;
         gap: 8px;
@@ -1068,6 +1100,7 @@
         .reference-fields,
         .weekplan-fields,
         .scorecard-fields,
+        .annotation-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -1084,6 +1117,7 @@
         .reference-fields,
         .weekplan-fields,
         .scorecard-fields,
+        .annotation-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -1173,6 +1207,7 @@
         <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
+        <button id="export-annotation-plan" class="tool-button" type="button">Export Annotation Plan CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
     );
@@ -1316,6 +1351,19 @@
         </p>
         <div class="scorecard-fields">
           ${scorecardPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Annotation Plan</p>
+        <h3>Turn Selected Records Into Editorial Notes</h3>
+        <p>
+          The annotation export carries each docket issue into the editorial
+          apparatus by tracking people, offices, context notes, public/private
+          bridges, related documents, boundary cross-references, and unresolved
+          questions before drafting begins.
+        </p>
+        <div class="annotation-fields">
+          ${annotationPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
     `;
@@ -1748,6 +1796,48 @@
     downloadCsv("frus-central-america-selection-scorecard.csv", headers, rows);
   }
 
+  function exportAnnotationPlanCsv() {
+    const headers = [
+      "issue",
+      "countries",
+      "candidateDocumentTitle",
+      "documentDate",
+      "annotationTopic",
+      "personsToIdentify",
+      "officesOrAgencies",
+      "contextNeeded",
+      "chronologyBridge",
+      "publicStatementCrossReference",
+      "relatedDocuments",
+      "sourceNoteOrDeclassificationNote",
+      "boundaryCrossReference",
+      "implementationFollowUp",
+      "unresolvedQuestion",
+      "annotationStatus",
+      "notes",
+    ];
+    const rows = selectionDocket.map((item) => ({
+      issue: item.issue,
+      countries: item.countries,
+      candidateDocumentTitle: "",
+      documentDate: "",
+      annotationTopic: item.issue,
+      personsToIdentify: "",
+      officesOrAgencies: "",
+      contextNeeded: item.selectionQuestion,
+      chronologyBridge: item.publicAnchors,
+      publicStatementCrossReference: item.publicAnchors,
+      relatedDocuments: item.privateRecordTarget,
+      sourceNoteOrDeclassificationNote: item.promotionProof,
+      boundaryCrossReference: item.boundaryRisk,
+      implementationFollowUp: "",
+      unresolvedQuestion: item.selectionQuestion,
+      annotationStatus: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-annotation-plan.csv", headers, rows);
+  }
+
   function bindPacketExports() {
     document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
     document.querySelector("#export-week-plan")?.addEventListener("click", exportWeekPlanCsv);
@@ -1757,6 +1847,7 @@
     document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
+    document.querySelector("#export-annotation-plan")?.addEventListener("click", exportAnnotationPlanCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
     document.querySelector("#export-source-notes")?.addEventListener("click", exportSourceNotesCsv);
