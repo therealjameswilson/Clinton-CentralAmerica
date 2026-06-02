@@ -87,6 +87,13 @@ Counterterrorism; Global Issues; Rights and Governance; and National Security Po
 Each boundary card records when to keep a candidate in Volume XXXII, when to route or
 consult another volume, and the first document-level check to run before promotion.
 
+## Compiler Network Handoff
+
+The top navigation includes a `Copy Handoff` control that copies a compact working note
+with the live page, official volume URL, companion assist pages, current page counts,
+first moves, and packet exports. It is meant for moving quickly between the central
+assist hub, NARA Scout, Strobe FOIA work, and the Central America compiler packet.
+
 ## Compiler Packet and Docket Exports
 
 The page includes browser-side exports for the pre-pull request, reading-room run sheet,
