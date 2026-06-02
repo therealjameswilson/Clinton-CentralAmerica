@@ -49,6 +49,12 @@
       fields: ["Candidate", "Scores", "Recommendation", "Next action"],
     },
     {
+      title: "Document Assembly Sheet",
+      purpose:
+        "Turn promoted candidates into draft FRUS document packages with sequence, title-line, source-note, release, abstract, and adjacent-document controls.",
+      fields: ["Sequence", "Title line", "Source note", "Abstract"],
+    },
+    {
       title: "Annotation Plan",
       purpose:
         "Carry selected candidates into editorial notes by tracking people, offices, context, cross-references, and unresolved questions.",
@@ -731,6 +737,15 @@
     "Boundary fit and recommendation",
   ];
 
+  const assemblyPrompts = [
+    "Proposed document number",
+    "Section or chapter",
+    "FRUS title line",
+    "Source-note stem",
+    "Release markings",
+    "Adjacent documents",
+  ];
+
   const annotationPrompts = [
     "Persons and offices",
     "Editorial context",
@@ -778,6 +793,33 @@
       return "NSC; State; USTR; USAID; Federal Register implementation";
     }
     return "NSC; State; agency referral as indicated by withdrawal sheet";
+  }
+
+  function assemblySection(item) {
+    const issue = item.issue.toLowerCase();
+
+    if (issue.includes("guatemala")) {
+      return "Guatemala, human rights, intelligence, and peace implementation";
+    }
+    if (issue.includes("el salvador")) {
+      return "El Salvador, accountability, post-war consolidation, and migration";
+    }
+    if (issue.includes("mitch") || issue.includes("migration") || issue.includes("tps")) {
+      return "Hurricane Mitch, relief, migration, and humanitarian policy";
+    }
+    if (issue.includes("panama")) {
+      return "Panama Canal transfer, security posture, and counternarcotics";
+    }
+    if (issue.includes("san jose")) {
+      return "Regional summit diplomacy and Central America-U.S. partnership";
+    }
+    if (issue.includes("crime") || issue.includes("narcotics")) {
+      return "Transnational crime, narcotics certification, and law enforcement";
+    }
+    if (issue.includes("trade") || issue.includes("cbi")) {
+      return "Trade, CBI, development, and implementation";
+    }
+    return "Regional Central America policy sequence";
   }
 
   const htmlEscape = (value) =>
@@ -1043,6 +1085,13 @@
         margin-top: 12px;
       }
 
+      .assembly-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .annotation-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1117,6 +1166,16 @@
         font-weight: 750;
       }
 
+      .assembly-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .annotation-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1163,6 +1222,7 @@
         .reference-fields,
         .weekplan-fields,
         .scorecard-fields,
+        .assembly-fields,
         .annotation-fields,
         .declass-fields,
         .docket-heading,
@@ -1181,6 +1241,7 @@
         .reference-fields,
         .weekplan-fields,
         .scorecard-fields,
+        .assembly-fields,
         .annotation-fields,
         .declass-fields,
         .runsheet-list div,
@@ -1272,6 +1333,7 @@
         <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
+        <button id="export-document-assembly" class="tool-button" type="button">Export Document Assembly CSV</button>
         <button id="export-annotation-plan" class="tool-button" type="button">Export Annotation Plan CSV</button>
         <button id="export-declass-tracker" class="tool-button" type="button">Export Declassification Tracker CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
@@ -1417,6 +1479,19 @@
         </p>
         <div class="scorecard-fields">
           ${scorecardPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Document Assembly Sheet</p>
+        <h3>Turn Candidates Into FRUS Document Packages</h3>
+        <p>
+          The document assembly export gives each promoted candidate a draft
+          package row for document number, section, title line, archival source
+          note, release markings, abstract, sequence logic, and adjacent
+          documents before the candidate enters final drafting.
+        </p>
+        <div class="assembly-fields">
+          ${assemblyPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -1875,6 +1950,72 @@
     downloadCsv("frus-central-america-selection-scorecard.csv", headers, rows);
   }
 
+  function exportDocumentAssemblyCsv() {
+    const headers = [
+      "proposedDocumentNumber",
+      "sectionOrChapter",
+      "issue",
+      "countries",
+      "candidateDocumentTitle",
+      "documentDate",
+      "documentTime",
+      "documentType",
+      "senderOrAuthor",
+      "recipientOrParticipants",
+      "frusTitleLine",
+      "repository",
+      "collection",
+      "seriesOrOffice",
+      "locator",
+      "folderTitle",
+      "pageOrImageRange",
+      "classificationOrReleaseMarkings",
+      "sourceNoteStem",
+      "publicAnchor",
+      "privateRecordMatch",
+      "selectionRationale",
+      "abstract",
+      "annotationNeeds",
+      "previousDocumentLink",
+      "nextDocumentLink",
+      "crossVolumeBoundary",
+      "assemblyStatus",
+      "notes",
+    ];
+    const rows = selectionDocket.map((item) => ({
+      proposedDocumentNumber: "",
+      sectionOrChapter: assemblySection(item),
+      issue: item.issue,
+      countries: item.countries,
+      candidateDocumentTitle: "",
+      documentDate: "",
+      documentTime: "",
+      documentType: "",
+      senderOrAuthor: "",
+      recipientOrParticipants: "",
+      frusTitleLine: "",
+      repository: "Clinton Presidential Library",
+      collection: "Clinton Presidential Records",
+      seriesOrOffice: "",
+      locator: item.privateRecordTarget,
+      folderTitle: "",
+      pageOrImageRange: "",
+      classificationOrReleaseMarkings: "",
+      sourceNoteStem: "",
+      publicAnchor: item.publicAnchors,
+      privateRecordMatch: item.privateRecordTarget,
+      selectionRationale: item.promotionProof,
+      abstract: "",
+      annotationNeeds: item.selectionQuestion,
+      previousDocumentLink: "",
+      nextDocumentLink: "",
+      crossVolumeBoundary: item.boundaryRisk,
+      assemblyStatus: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-document-assembly.csv", headers, rows);
+  }
+
   function exportAnnotationPlanCsv() {
     const headers = [
       "issue",
@@ -1966,6 +2107,7 @@
     document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
+    document.querySelector("#export-document-assembly")?.addEventListener("click", exportDocumentAssemblyCsv);
     document.querySelector("#export-annotation-plan")?.addEventListener("click", exportAnnotationPlanCsv);
     document.querySelector("#export-declass-tracker")?.addEventListener("click", exportDeclassTrackerCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);

@@ -100,10 +100,12 @@ The page includes browser-side exports for the pre-pull request, first-week pull
 reading-room run sheet, daily closeout checklist, source-note QA checklist,
 reference-question worksheet, document-review ledger, country evidence audit,
 boundary matrix, authority index, candidate chronology, source-note ledger,
-selection scorecard, annotation plan, declassification tracker, selection docket,
-call-slip batches, and research queue. These are intended to become the working files for pre-pull
+selection scorecard, document assembly worksheet, annotation plan,
+declassification tracker, selection docket, call-slip batches, and research queue.
+These are intended to become the working files for pre-pull
 requests, onsite sequencing, onsite logging, access fallback, citation QA,
-selection review, annotation planning, declassification follow-up, and daily closeout.
+selection review, FRUS document assembly, annotation planning, declassification
+follow-up, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
@@ -113,6 +115,11 @@ The selection scorecard then gives each docket issue the same scoring fields for
 significance, presidential or NSC level, private-process evidence, source-note readiness,
 access status, country balance, boundary fit, implementation proof, recommendation, and
 next action.
+
+The document assembly worksheet turns promoted candidates into draft FRUS document
+packages by collecting proposed document number, section or chapter, title line,
+archival source-note stem, release markings, abstract, selection rationale,
+adjacent-document links, and boundary decision in one row.
 
 The annotation plan follows the scorecard by carrying each candidate issue into
 persons/offices, context notes, public/private bridges, related documents,
