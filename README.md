@@ -59,6 +59,10 @@ The chronology section includes country, type, evidence, and text filters plus a
 gate for each item so public anchors, diary evidence, and records needing memcon/telcon or
 agency follow-up can be triaged before archival time is spent.
 
+The packet also includes a Presidential contact follow-up export that filters Daily
+Diary calls, meetings, and trip events into telcon, memcon, briefing-paper, issue-file,
+participant-list, and follow-up cable searches.
+
 ## Gap Fixes
 
 The page now closes the first-pass chronology gaps for 1995, 1996, and 2000 with GovInfo
@@ -98,14 +102,15 @@ assist hub, NARA Scout, Strobe FOIA work, and the Central America compiler packe
 
 The page includes browser-side exports for the pre-pull request, first-week pull plan,
 reading-room run sheet, daily closeout checklist, source-note QA checklist,
-reference-question worksheet, document-review ledger, country evidence audit,
+Presidential contact follow-up worksheet, reference-question worksheet,
+document-review ledger, country evidence audit,
 boundary matrix, authority index, candidate chronology, source-note ledger,
 selection scorecard, document assembly worksheet, annotation plan,
 declassification tracker, selection docket, call-slip batches, and research queue.
 These are intended to become the working files for pre-pull
 requests, onsite sequencing, onsite logging, access fallback, citation QA,
-selection review, FRUS document assembly, annotation planning, declassification
-follow-up, and daily closeout.
+contact follow-up, selection review, FRUS document assembly, annotation planning,
+declassification follow-up, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival

@@ -19,6 +19,12 @@
       fields: ["Repository", "Collection", "OA/ID or NAID", "Date", "Title", "Page or image range"],
     },
     {
+      title: "Presidential Contact Follow-Up",
+      purpose:
+        "Convert Daily Diary calls, meetings, and trip events into telcon, memcon, briefing-paper, issue-file, and follow-up cable searches.",
+      fields: ["Diary entry", "Telcon", "Memcon", "Follow-up"],
+    },
+    {
       title: "Call-Slip Batch File",
       purpose:
         "Use folder clusters as pre-pull units so onsite time goes to decisions, not hunting through one-off folder titles.",
@@ -728,6 +734,15 @@
     "Final selection triage",
   ];
 
+  const contactPrompts = [
+    "Diary entry",
+    "Participant or event",
+    "Telcon or memcon",
+    "Briefing paper",
+    "Issue file",
+    "Follow-up cable",
+  ];
+
   const scorecardPrompts = [
     "Private-policy evidence",
     "Presidential or NSC level",
@@ -820,6 +835,78 @@
       return "Trade, CBI, development, and implementation";
     }
     return "Regional Central America policy sequence";
+  }
+
+  function contactSearchTargets(item) {
+    const text = `${item.title} ${item.summary} ${item.sourceNote}`.toLowerCase();
+
+    if (text.includes("panama")) {
+      return {
+        briefing:
+          "PC/DC/PRD folders, Defense Policy Panama files, treaty-obligation briefings, and State cable traffic.",
+        issue:
+          "Search Panama Canal transfer, Perez Balladares, residual presence, counternarcotics, and Canal Commission records.",
+      };
+    }
+    if (text.includes("mitch") || text.includes("honduras") || text.includes("nicaragua")) {
+      return {
+        briefing:
+          "Trip books OA/IDs 3622 and 3638, MHA relief files, USAID/State implementation records, and Soto Cano support files.",
+        issue:
+          "Search Hurricane Mitch relief, TPS, NACARA, reconstruction, migration, and military-support files.",
+      };
+    }
+    if (text.includes("san jose") || text.includes("costa rica") || text.includes("summit")) {
+      return {
+        briefing:
+          "Trip Book OA/ID 3625, Blinken OA/ID 3388, Soderberg regional files, and summit follow-up tasking.",
+        issue:
+          "Search summit diplomacy, regional law enforcement, trade, migration, environment, and leader-meeting files.",
+      };
+    }
+    if (text.includes("guatemala")) {
+      return {
+        briefing:
+          "Soderberg Guatemala files, Intelligence Programs files, Democracy/Human Rights files, and trip briefing tabs.",
+        issue:
+          "Search Bamaca/Harbury, Sister Ortiz, IOB, document declassification, peace accords, and human-rights implementation files.",
+      };
+    }
+    if (text.includes("el salvador")) {
+      return {
+        briefing:
+          "Soderberg El Salvador files, Access Management files, Intelligence Programs files, and MHA migration files.",
+        issue:
+          "Search accountability, Zona Rosa, police reform, post-war consolidation, DED, NACARA, and migration-policy files.",
+      };
+    }
+    return {
+      briefing:
+        "Search NSC country files, Soderberg staff files, speech and press provenance, trip books, and State reporting for the same date and participants.",
+      issue:
+        "Search the same date, country, participant names, staff office, and policy terms across Clinton Library, State, and public implementation records.",
+    };
+  }
+
+  function contactMatchTarget(item) {
+    if (item.type === "Call") {
+      return "Telcon, call memorandum, interpreter note, briefing note, and same-day issue-file routing.";
+    }
+    if (item.type === "Meeting") {
+      return "Memcon, participant list, briefing paper, action memorandum, and follow-up cable or tasking.";
+    }
+    if (item.type === "Trip event") {
+      return "Trip-book tab, briefing memorandum, bilateral meeting notes, press guidance, and embassy follow-up cable.";
+    }
+    return "Private-process match, briefing record, and follow-up implementation evidence.";
+  }
+
+  function presidentialContacts() {
+    return chronologyItems.filter(
+      (item) =>
+        item.sourceNote.includes("Presidential Daily Diary") &&
+        ["Call", "Meeting", "Trip event"].includes(item.type),
+    );
   }
 
   const htmlEscape = (value) =>
@@ -1078,6 +1165,13 @@
         margin-top: 12px;
       }
 
+      .contact-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .scorecard-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1156,6 +1250,16 @@
         font-weight: 750;
       }
 
+      .contact-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .scorecard-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1221,6 +1325,7 @@
         .sourceqa-fields,
         .reference-fields,
         .weekplan-fields,
+        .contact-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1240,6 +1345,7 @@
         .sourceqa-fields,
         .reference-fields,
         .weekplan-fields,
+        .contact-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1330,6 +1436,7 @@
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
         <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
+        <button id="export-contact-followup" class="tool-button" type="button">Export Contact Follow-Up CSV</button>
         <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
@@ -1418,6 +1525,19 @@
         </p>
         <div class="weekplan-fields">
           ${weekPlanPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Presidential Contact Follow-Up</p>
+        <h3>Turn Diary Contacts Into Private Records</h3>
+        <p>
+          The contact follow-up export filters Daily Diary calls, meetings, and
+          trip events into a search sheet for telcons, memcons, briefing papers,
+          issue files, participant lists, and follow-up cables before any diary
+          entry is promoted as selection evidence.
+        </p>
+        <div class="contact-fields">
+          ${contactPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -1858,6 +1978,51 @@
     downloadCsv("frus-central-america-source-note-qa.csv", headers, rows);
   }
 
+  function exportContactFollowupCsv() {
+    const headers = [
+      "date",
+      "type",
+      "title",
+      "countries",
+      "diarySourceNote",
+      "catalogUrl",
+      "promotionGate",
+      "telconOrMemconTarget",
+      "briefingPaperTarget",
+      "issueFileTarget",
+      "followUpCableTarget",
+      "matchingPrivateRecord",
+      "sourceNoteFieldsNeeded",
+      "owner",
+      "status",
+      "notes",
+    ];
+    const rows = presidentialContacts().map((item) => {
+      const targets = contactSearchTargets(item);
+      return {
+        date: item.date,
+        type: item.type,
+        title: item.title,
+        countries: item.countries.join("; "),
+        diarySourceNote: item.sourceNote,
+        catalogUrl: item.href,
+        promotionGate: chronologyGate(item),
+        telconOrMemconTarget: contactMatchTarget(item),
+        briefingPaperTarget: targets.briefing,
+        issueFileTarget: targets.issue,
+        followUpCableTarget:
+          "Search State cables, NSC routing, embassy reporting, agency implementation records, and same-week follow-up tasking.",
+        matchingPrivateRecord: "",
+        sourceNoteFieldsNeeded:
+          "Repository; collection; series or office; OA/ID or NAID; folder title; document title; date; page/image range; release markings.",
+        owner: "",
+        status: "",
+        notes: "",
+      };
+    });
+    downloadCsv("frus-central-america-presidential-contact-followup.csv", headers, rows);
+  }
+
   function exportReferenceQuestionsCsv() {
     const headers = [
       "priority",
@@ -2104,6 +2269,7 @@
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
     document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
+    document.querySelector("#export-contact-followup")?.addEventListener("click", exportContactFollowupCsv);
     document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
