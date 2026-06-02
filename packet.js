@@ -25,6 +25,12 @@
       fields: ["Diary entry", "Telcon", "Memcon", "Follow-up"],
     },
     {
+      title: "Public Anchor Crosswalk",
+      purpose:
+        "Force GovInfo/Public Papers anchors through private-record, agency follow-up, boundary, and promotion checks before selection.",
+      fields: ["Public source", "Private match", "Agency follow-up", "Boundary"],
+    },
+    {
       title: "Call-Slip Batch File",
       purpose:
         "Use folder clusters as pre-pull units so onsite time goes to decisions, not hunting through one-off folder titles.",
@@ -743,6 +749,15 @@
     "Follow-up cable",
   ];
 
+  const publicAnchorPrompts = [
+    "GovInfo source note",
+    "Public claim",
+    "Private match",
+    "Agency follow-up",
+    "Boundary risk",
+    "Promotion decision",
+  ];
+
   const scorecardPrompts = [
     "Private-policy evidence",
     "Presidential or NSC level",
@@ -907,6 +922,98 @@
         item.sourceNote.includes("Presidential Daily Diary") &&
         ["Call", "Meeting", "Trip event"].includes(item.type),
     );
+  }
+
+  function publicAnchors() {
+    return chronologyItems.filter(
+      (item) =>
+        item.sourceNote.includes("Public Papers") ||
+        item.linkLabel === "Open GovInfo record" ||
+        (item.badges || []).includes("Public Papers"),
+    );
+  }
+
+  function publicAnchorTargets(item) {
+    const text = `${item.title} ${item.summary} ${item.countries.join(" ")}`.toLowerCase();
+
+    if (text.includes("panama canal")) {
+      return {
+        privateMatch:
+          "PC/DC/PRD folders, Defense Policy Panama files, treaty-obligation records, State cable traffic, and Canal Commission briefings.",
+        agencyFollowUp:
+          "Defense, State, Canal Commission, and treaty-implementation records behind the public transfer statement.",
+        boundaryRisk:
+          "North America, defense, hemispheric-scope, and treaty-history overlap; keep only if the record shows Central America policy process.",
+      };
+    }
+    if (text.includes("mitch") || text.includes("soto cano") || text.includes("honduras") || text.includes("nicaragua")) {
+      return {
+        privateMatch:
+          "Trip books OA/IDs 3622 and 3638, MHA relief files, USAID/State implementation records, TPS/NACARA files, and Soto Cano support records.",
+        agencyFollowUp:
+          "USAID, State, Defense/Soto Cano, FEMA, INS/DOJ, and appropriations implementation records.",
+        boundaryRisk:
+          "Humanitarian assistance, migration, defense basing, and public diplomacy overlap; promote only with a private decision or implementation record.",
+      };
+    }
+    if (text.includes("san jose") || text.includes("costa rica") || text.includes("declaration") || text.includes("summit")) {
+      return {
+        privateMatch:
+          "Trip Book OA/ID 3625, Blinken OA/ID 3388, Soderberg OA/ID 1416, Strategic Planning OA/ID 773, and summit follow-up tasking.",
+        agencyFollowUp:
+          "State, NSC, law enforcement, trade, migration, environment, Open Skies, and embassy follow-up cables.",
+        boundaryRisk:
+          "Public Diplomacy, trade, environment, and hemispheric summit volumes; promote only if follow-up tasking is Central America-specific.",
+      };
+    }
+    if (text.includes("guatemala")) {
+      return {
+        privateMatch:
+          "Soderberg OA/ID 1404, Intelligence Programs files, Democracy/Human Rights files, declassification records, trip-book tabs, and State reporting.",
+        agencyFollowUp:
+          "State, NSC, intelligence equities, IOB/declassification, peace-accord implementation, and human-rights reporting.",
+        boundaryRisk:
+          "Rights/governance and intelligence overlap; do not let apology or peace-process language substitute for a private policy record.",
+      };
+    }
+    if (text.includes("el salvador")) {
+      return {
+        privateMatch:
+          "Soderberg OA/ID 1408, Access Management OA/IDs 3788 and 3789, Intelligence Programs OA/ID 3031, MHA files, and post-war implementation records.",
+        agencyFollowUp:
+          "State, NSC, justice/accountability files, police reform records, DED/NACARA, and migration-policy implementation.",
+        boundaryRisk:
+          "A public address can overstate policy substance; promote only with post-war implementation, accountability, or migration-policy records.",
+      };
+    }
+    if (text.includes("narcotics") || text.includes("drug") || text.includes("belize")) {
+      return {
+        privateMatch:
+          "Transnational Threats OA/IDs, State/INL certification files, INCSR country narratives, DOJ/law-enforcement tasking, and State cables.",
+        agencyFollowUp:
+          "State/INL, DOJ, Treasury, CIA Reading Room/CREST, congressional notification, and INCSR implementation records.",
+        boundaryRisk:
+          "Narcotics, law enforcement, counterterrorism, and Belize/Caribbean overlap; keep only Central America policy records.",
+      };
+    }
+    if (text.includes("trade") || text.includes("caribbean basin") || text.includes("cbi") || text.includes("economic recovery")) {
+      return {
+        privateMatch:
+          "Federal Register beneficiary records, USTR files, State implementation files, USAID project records, congressional files, and summit follow-up folders.",
+        agencyFollowUp:
+          "USTR, Treasury, State, USAID, Federal Register, and country-by-country eligibility or implementation records.",
+        boundaryRisk:
+          "Foreign Economic Policy and Caribbean Basin scope overlap; promote only if Central America implementation is document-level clear.",
+      };
+    }
+    return {
+      privateMatch:
+        "Search the same date, title, country, named participants, and policy terms in NSC, State, trip-book, speech, press, and agency implementation files.",
+      agencyFollowUp:
+        "Check State cables, NSC routing, agency implementation records, Federal Register, USAID, and public-release controls.",
+      boundaryRisk:
+        "Public diplomacy and adjacent-volume overlap; promote only after private-process evidence changes the status from public anchor to candidate document.",
+    };
   }
 
   const htmlEscape = (value) =>
@@ -1172,6 +1279,13 @@
         margin-top: 12px;
       }
 
+      .publicanchor-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .scorecard-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1260,6 +1374,16 @@
         font-weight: 750;
       }
 
+      .publicanchor-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .scorecard-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1326,6 +1450,7 @@
         .reference-fields,
         .weekplan-fields,
         .contact-fields,
+        .publicanchor-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1346,6 +1471,7 @@
         .reference-fields,
         .weekplan-fields,
         .contact-fields,
+        .publicanchor-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1437,6 +1563,7 @@
         <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
         <button id="export-contact-followup" class="tool-button" type="button">Export Contact Follow-Up CSV</button>
+        <button id="export-public-anchor-crosswalk" class="tool-button" type="button">Export Public Anchor Crosswalk CSV</button>
         <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
@@ -1538,6 +1665,19 @@
         </p>
         <div class="contact-fields">
           ${contactPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Public Anchor Crosswalk</p>
+        <h3>Make Public Statements Prove Their Private Match</h3>
+        <p>
+          The public-anchor export filters GovInfo and Public Papers entries
+          into a crosswalk for source-note details, private-record searches,
+          agency implementation checks, boundary risk, and promotion decisions
+          before a public statement enters the selection docket.
+        </p>
+        <div class="publicanchor-fields">
+          ${publicAnchorPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -2023,6 +2163,60 @@
     downloadCsv("frus-central-america-presidential-contact-followup.csv", headers, rows);
   }
 
+  function exportPublicAnchorCrosswalkCsv() {
+    const headers = [
+      "date",
+      "type",
+      "title",
+      "countries",
+      "publicSourceNote",
+      "govinfoUrl",
+      "publicAnchorClaim",
+      "verificationLimit",
+      "privateRecordSearch",
+      "agencyImplementationSearch",
+      "sourceNoteFieldsNeeded",
+      "boundaryRisk",
+      "promotionTest",
+      "matchingPrivateRecord",
+      "promotionDecision",
+      "owner",
+      "status",
+      "notes",
+    ];
+    const rows = publicAnchors().map((item) => {
+      const targets = publicAnchorTargets(item);
+      return {
+        date: item.date,
+        type: item.type,
+        title: item.title,
+        countries: item.countries.join("; "),
+        publicSourceNote: item.sourceNote,
+        govinfoUrl: item.href,
+        publicAnchorClaim: item.summary,
+        verificationLimit:
+          item.sourceNote.includes("not available") ||
+          item.sourceNote.includes("not verified") ||
+          item.sourceNote.includes("could not be verified") ||
+          item.sourceNote.includes("incomplete")
+            ? "GovInfo verification limitation noted in public source note."
+            : "",
+        privateRecordSearch: targets.privateMatch,
+        agencyImplementationSearch: targets.agencyFollowUp,
+        sourceNoteFieldsNeeded:
+          "Public Papers year/book; page range; document title; event date; GovInfo URL; private repository; collection; series or office; locator; folder; document title; release markings.",
+        boundaryRisk: targets.boundaryRisk,
+        promotionTest: chronologyGate(item),
+        matchingPrivateRecord: "",
+        promotionDecision: "",
+        owner: "",
+        status: "",
+        notes: "",
+      };
+    });
+    downloadCsv("frus-central-america-public-anchor-crosswalk.csv", headers, rows);
+  }
+
   function exportReferenceQuestionsCsv() {
     const headers = [
       "priority",
@@ -2270,6 +2464,7 @@
     document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
     document.querySelector("#export-contact-followup")?.addEventListener("click", exportContactFollowupCsv);
+    document.querySelector("#export-public-anchor-crosswalk")?.addEventListener("click", exportPublicAnchorCrosswalkCsv);
     document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
