@@ -83,6 +83,11 @@ The digital copy inventory ties copied PDFs, photos, and scan batches to candida
 documents, page or image ranges, quality checks, OCR/transcription status, backup
 locations, and the source-note rows needed for later citation.
 
+The source-note builder export turns each candidate into a FRUS-style citation
+component row, preserving repository, record collection, office or series, locator,
+folder title, document title/date, page or image range, release markings, access
+evidence, and a draft source note before the visit details fade.
+
 ## Gap Fixes
 
 The page now closes the first-pass chronology gaps for 1995, 1996, and 2000 with GovInfo
@@ -121,7 +126,7 @@ assist hub, NARA Scout, Strobe FOIA work, and the Central America compiler packe
 ## Compiler Packet and Docket Exports
 
 The page includes browser-side exports for the pre-pull request, first-week pull plan,
-reading-room run sheet, daily closeout checklist, source-note QA checklist,
+reading-room run sheet, daily closeout checklist, source-note builder, source-note QA checklist,
 Presidential contact follow-up worksheet, Public Papers crosswalk, reference-question worksheet,
 digital copy inventory, no-hit search log, exclusion and routing register,
 document-review ledger, country evidence audit, boundary matrix, authority index,
@@ -131,8 +136,9 @@ declassification tracker, selection docket, call-slip batches, and research queu
 These are intended to become the working files for pre-pull
 requests, onsite sequencing, onsite logging, access fallback, citation QA,
 contact follow-up, public/private matching, copied-image control, no-hit control,
-exclusion/routing decisions, selection review, FRUS document assembly, annotation planning,
-authority identification, declassification follow-up, and daily closeout.
+exclusion/routing decisions, selection review, source-note drafting,
+FRUS document assembly, annotation planning, authority identification,
+declassification follow-up, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
@@ -147,6 +153,11 @@ The document assembly worksheet turns promoted candidates into draft FRUS docume
 packages by collecting proposed document number, section or chapter, title line,
 archival source-note stem, release markings, abstract, selection rationale,
 adjacent-document links, and boundary decision in one row.
+
+The source-note builder gives those same candidates a citation-specific row for
+repository, record collection, office or series, locator, folder title, document
+metadata, page or image range, access evidence, a FRUS-style check string, and a
+draft source note.
 
 The annotation plan follows the scorecard by carrying each candidate issue into
 persons/offices, context notes, public/private bridges, related documents,
