@@ -54,6 +54,12 @@
         "Carry selected candidates into editorial notes by tracking people, offices, context, cross-references, and unresolved questions.",
       fields: ["Persons", "Context", "Cross-references", "Questions"],
     },
+    {
+      title: "Declassification Tracker",
+      purpose:
+        "Preserve closed-record evidence, agency equities, referral status, and re-review paths for candidates that cannot be selected yet.",
+      fields: ["Equities", "Withdrawal", "Referral", "Review path"],
+    },
   ];
 
   const selectionDocket = [
@@ -734,6 +740,46 @@
     "Unresolved annotation question",
   ];
 
+  const declassPrompts = [
+    "Withdrawal-sheet text",
+    "Agency equity",
+    "Referral or review path",
+    "Open parallel record",
+    "Selection impact",
+    "Next request",
+  ];
+
+  function declassEquities(item) {
+    const issue = item.issue.toLowerCase();
+    const target = item.privateRecordTarget.toLowerCase();
+
+    if (issue.includes("guatemala") || target.includes("iob")) {
+      return "NSC; State; intelligence equities; IOB/declassification review";
+    }
+    if (issue.includes("panama")) {
+      return "NSC; State; Defense; Canal/security equities; counternarcotics as applicable";
+    }
+    if (issue.includes("mitch")) {
+      return "NSC; State; USAID; INS/DOJ; Defense/Soto Cano as applicable";
+    }
+    if (issue.includes("san jose")) {
+      return "NSC; State; speech/press/trip-book clearance; summit follow-up";
+    }
+    if (issue.includes("migration") || issue.includes("tps") || issue.includes("nacara")) {
+      return "NSC; State; INS/DOJ; Federal Register/TPS implementation";
+    }
+    if (issue.includes("el salvador")) {
+      return "NSC; State; intelligence equities; justice/accountability records";
+    }
+    if (issue.includes("crime") || issue.includes("narcotics")) {
+      return "NSC; State/INL; DOJ/law enforcement; CIA Reading Room/CREST as applicable";
+    }
+    if (issue.includes("trade") || issue.includes("cbi")) {
+      return "NSC; State; USTR; USAID; Federal Register implementation";
+    }
+    return "NSC; State; agency referral as indicated by withdrawal sheet";
+  }
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -1004,6 +1050,13 @@
         margin-top: 12px;
       }
 
+      .declass-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .review-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1074,6 +1127,16 @@
         font-weight: 750;
       }
 
+      .declass-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .runsheet-list {
         display: grid;
         gap: 8px;
@@ -1101,6 +1164,7 @@
         .weekplan-fields,
         .scorecard-fields,
         .annotation-fields,
+        .declass-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -1118,6 +1182,7 @@
         .weekplan-fields,
         .scorecard-fields,
         .annotation-fields,
+        .declass-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -1208,6 +1273,7 @@
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
         <button id="export-annotation-plan" class="tool-button" type="button">Export Annotation Plan CSV</button>
+        <button id="export-declass-tracker" class="tool-button" type="button">Export Declassification Tracker CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
     );
@@ -1364,6 +1430,19 @@
         </p>
         <div class="annotation-fields">
           ${annotationPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Declassification Tracker</p>
+        <h3>Keep Closed Records in the Evidence Trail</h3>
+        <p>
+          The declassification tracker turns restrictions, referrals,
+          withdrawal sheets, agency equities, open parallel records, and next
+          requests into a worksheet so closed records still support selection
+          and follow-up decisions.
+        </p>
+        <div class="declass-fields">
+          ${declassPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
     `;
@@ -1838,6 +1917,46 @@
     downloadCsv("frus-central-america-annotation-plan.csv", headers, rows);
   }
 
+  function exportDeclassTrackerCsv() {
+    const headers = [
+      "issue",
+      "countries",
+      "candidateDocumentTitle",
+      "documentDate",
+      "folderOrDocumentLocator",
+      "restrictionStatus",
+      "withdrawalSheetText",
+      "agencyEquities",
+      "referralOrReviewPath",
+      "openParallelRecord",
+      "sourceNoteEvidence",
+      "selectionImpact",
+      "nextRequest",
+      "owner",
+      "status",
+      "notes",
+    ];
+    const rows = selectionDocket.map((item) => ({
+      issue: item.issue,
+      countries: item.countries,
+      candidateDocumentTitle: "",
+      documentDate: "",
+      folderOrDocumentLocator: item.privateRecordTarget,
+      restrictionStatus: "",
+      withdrawalSheetText: "",
+      agencyEquities: declassEquities(item),
+      referralOrReviewPath: "",
+      openParallelRecord: item.publicAnchors,
+      sourceNoteEvidence: item.promotionProof,
+      selectionImpact: item.boundaryRisk,
+      nextRequest: "",
+      owner: "",
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-declassification-tracker.csv", headers, rows);
+  }
+
   function bindPacketExports() {
     document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
     document.querySelector("#export-week-plan")?.addEventListener("click", exportWeekPlanCsv);
@@ -1848,6 +1967,7 @@
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
     document.querySelector("#export-annotation-plan")?.addEventListener("click", exportAnnotationPlanCsv);
+    document.querySelector("#export-declass-tracker")?.addEventListener("click", exportDeclassTrackerCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
     document.querySelector("#export-source-notes")?.addEventListener("click", exportSourceNotesCsv);
