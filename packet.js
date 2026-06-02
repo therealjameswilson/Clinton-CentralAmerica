@@ -36,6 +36,12 @@
         "Keep staff questions, access fallbacks, restriction evidence, and next pull moves ready before the first folder arrives.",
       fields: ["Question", "Evidence needed", "Fallback", "Log field"],
     },
+    {
+      title: "First-Week Pull Plan",
+      purpose:
+        "Turn call-slip batches into day blocks with stop rules, pivot points, and closeout outputs.",
+      fields: ["Day", "Batch", "Decision point", "Fallback", "Closeout"],
+    },
   ];
 
   const selectionDocket = [
@@ -536,6 +542,168 @@
     "Next-day first pull",
   ];
 
+  const weekPlanRows = [
+    {
+      day: "Pre-arrival",
+      workBlock: "Staff request and restriction screen",
+      priorityBatch: "Batches 1-3",
+      objective:
+        "Send the pre-pull request and ask staff to screen restrictions, offsite storage, paging limits, oversize material, trip-book handling, and camera rules.",
+      decisionPoint:
+        "If any decision, Soderberg, or accountability folders are closed or delayed, identify open cross-reference folders before arrival.",
+      stopRule:
+        "Do not add lower-priority speech or press folders until the first three batches have an access posture.",
+      fallbackIfBlocked:
+        "Use the reference-question worksheet to ask for withdrawal sheets, partial-release evidence, and two open alternates.",
+      closeoutOutput:
+        "Confirmed first-day pull order, two alternates, staff questions, and any handling constraints.",
+    },
+    {
+      day: "Day 1 morning",
+      workBlock: "Decision-record spine",
+      priorityBatch: "Batch 1 - Decision Records",
+      objective:
+        "Work PC/DC/PRD and Records Management folders for Panama, regional decisions, and policy-process anchors.",
+      decisionPoint:
+        "Can at least one decision memo, meeting record, action line, or withdrawal sheet support a private-policy candidate?",
+      stopRule:
+        "Stop broad browsing once the decision spine is either copied, restricted with evidence, or exhausted by folder-level no hits.",
+      fallbackIfBlocked:
+        "Move to Batch 2 Soderberg files and ask staff for open decision-file cross-references.",
+      closeoutOutput:
+        "Decision-record status, copied titles, restricted folders, and source-note gaps entered into the review ledger.",
+    },
+    {
+      day: "Day 1 afternoon",
+      workBlock: "NSC staff-file match",
+      priorityBatch: "Batch 2 - Soderberg Staff Files",
+      objective:
+        "Match public chronology anchors to Soderberg files for Guatemala, El Salvador, Honduras, immigration, and regional leader contacts.",
+      decisionPoint:
+        "Which public anchors have a memo, telcon, briefing paper, routing note, or follow-up cable trail?",
+      stopRule:
+        "Do not promote public remarks or diary entries without one private-process match or a documented closed-record trail.",
+      fallbackIfBlocked:
+        "Move to Batch 3 accountability files for Guatemala and El Salvador, then log Soderberg no-hit terms.",
+      closeoutOutput:
+        "Public-to-private matches, no-hit searches, and next-day accountability targets.",
+    },
+    {
+      day: "Day 2 morning",
+      workBlock: "Accountability and intelligence evidence",
+      priorityBatch: "Batch 3 - Guatemala and El Salvador Accountability",
+      objective:
+        "Review human-rights, IOB, declassification, churchwomen, Zona Rosa, and post-war implementation files.",
+      decisionPoint:
+        "Can accountability records show policy handling, declassification equities, or implementation choices rather than case background alone?",
+      stopRule:
+        "Stop copying case context once the file stops showing U.S. policy process, routing, decision, or implementation evidence.",
+      fallbackIfBlocked:
+        "Capture restriction evidence and shift to migration or post-war implementation folders that can balance the narrative.",
+      closeoutOutput:
+        "Accountability candidates, restriction evidence, balance risks, and next pull for thin country lanes.",
+    },
+    {
+      day: "Day 2 afternoon",
+      workBlock: "Mitch, migration, and trip-book setup",
+      priorityBatch: "Batch 4 - Mitch, Migration, and Trip Books",
+      objective:
+        "Map Hurricane Mitch relief, TPS, NACARA, trip-book tabs, relief decisions, and agency follow-up records.",
+      decisionPoint:
+        "Which trip tabs or relief records connect the public travel chronology to reconstruction, migration, or military-support decisions?",
+      stopRule:
+        "Photograph tables of contents before copying tabs; copy only tabs tied to a selection docket question.",
+      fallbackIfBlocked:
+        "Use Public Papers, Federal Register TPS controls, USAID project leads, and staff-file cross-references.",
+      closeoutOutput:
+        "Trip-tab targets, relief/migration private matches, agency follow-up leads, and missing source-note fields.",
+    },
+    {
+      day: "Day 3 morning",
+      workBlock: "Panama policy and defense pass",
+      priorityBatch: "Batch 5 - Panama Defense Policy",
+      objective:
+        "Test Canal transfer, residual military presence, bases, UXO, security, counternarcotics, and Colombia-Panama posture.",
+      decisionPoint:
+        "Which Panama records belong in Central America rather than North America, defense, narcotics, or hemispheric-scope files?",
+      stopRule:
+        "Route records with only incidental Central America references to the boundary matrix before they consume copying time.",
+      fallbackIfBlocked:
+        "Return to Batch 1 PC/DC/PRD folders and State/Defense public implementation records.",
+      closeoutOutput:
+        "Panama candidate list, boundary decisions, defense-policy source notes, and unresolved restriction questions.",
+    },
+    {
+      day: "Day 3 afternoon",
+      workBlock: "Summit and regional diplomacy pass",
+      priorityBatch: "Batch 6 - San Jose, strategic planning, and speech/press provenance",
+      objective:
+        "Check San Jose summit, Costa Rica trip, Central American leaders, strategic planning, speechwriting, and press provenance.",
+      decisionPoint:
+        "Did the summit produce a policy decision, implementation tasking, or follow-up track that belongs in this volume?",
+      stopRule:
+        "Use speech and press files as provenance controls after decision and trip-book records have been checked.",
+      fallbackIfBlocked:
+        "Route public-diplomacy-heavy material through the boundary matrix and keep only records with policy-process value.",
+      closeoutOutput:
+        "Summit follow-up leads, public/private matches, speech provenance, and boundary-risk notes.",
+    },
+    {
+      day: "Day 4 morning",
+      workBlock: "Transnational threats and narcotics",
+      priorityBatch: "Batch 6 - Threats and narcotics files",
+      objective:
+        "Review crime, narcotics, certification, Belize visibility, Guatemala transit issues, Panama security, and regional threat files.",
+      decisionPoint:
+        "Which threat records are Central America policy records rather than companion-volume law-enforcement material?",
+      stopRule:
+        "Stop when the record shifts from foreign-policy decision evidence to generalized law-enforcement reporting.",
+      fallbackIfBlocked:
+        "Use INCSR, State FOIA, CIA Reading Room, and public certification letters as implementation controls.",
+      closeoutOutput:
+        "Threat/narcotics candidates, exclusions, agency follow-up searches, and no-hit notes.",
+    },
+    {
+      day: "Day 4 afternoon",
+      workBlock: "Country-balance repair",
+      priorityBatch: "Weakest lanes from country evidence audit",
+      objective:
+        "Repair thin country lanes before the final day by targeting Belize, Costa Rica, Honduras, Nicaragua, or El Salvador gaps shown in the coverage audit.",
+      decisionPoint:
+        "Which country still lacks private-process evidence after chronology, staff files, trip books, and implementation records?",
+      stopRule:
+        "Do not chase every country keyword; pull only files that answer a named coverage-audit weak spot.",
+      fallbackIfBlocked:
+        "Ask staff for better series names, alternate spellings, WHORM leads, speechwriting/press cross-references, or agency records.",
+      closeoutOutput:
+        "Updated country audit, repaired weak spots, remaining no-hit searches, and final-day first pull.",
+    },
+    {
+      day: "Day 5",
+      workBlock: "Selection triage and final closeout",
+      priorityBatch: "All copied/restricted candidates",
+      objective:
+        "Reconcile copied documents, restricted folders, no-hit searches, source-note gaps, docket status, and boundary routing before leaving.",
+      decisionPoint:
+        "Which records are ready for promotion, which need follow-up, and which should be rejected or routed to an adjacent volume?",
+      stopRule:
+        "Do not leave with copied documents lacking title/date/source-note controls, page/image ranges, or a next action.",
+      fallbackIfBlocked:
+        "Create next reference request, FOIA/re-review question, agency search, or public-implementation follow-up from the closeout export.",
+      closeoutOutput:
+        "Completed review ledger, source-note QA, reference-question status, selection docket, and next research packet.",
+    },
+  ];
+
+  const weekPlanPrompts = [
+    "First pull order",
+    "Stop rule",
+    "Pivot if closed",
+    "Country-balance repair",
+    "Daily closeout output",
+    "Final selection triage",
+  ];
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -785,6 +953,13 @@
         margin-top: 12px;
       }
 
+      .weekplan-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .review-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -825,6 +1000,16 @@
         font-weight: 750;
       }
 
+      .weekplan-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .runsheet-list {
         display: grid;
         gap: 8px;
@@ -849,6 +1034,7 @@
         .closeout-fields,
         .sourceqa-fields,
         .reference-fields,
+        .weekplan-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -863,6 +1049,7 @@
         .closeout-fields,
         .sourceqa-fields,
         .reference-fields,
+        .weekplan-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -945,6 +1132,7 @@
       "afterbegin",
       `
         <button id="export-prepull" class="tool-button" type="button">Export Pre-Pull TXT</button>
+        <button id="export-week-plan" class="tool-button" type="button">Export First-Week Plan CSV</button>
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
         <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
@@ -1020,6 +1208,18 @@
               `,
             )
             .join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">First-Week Pull Plan</p>
+        <h3>Make the First Week a Decision Machine</h3>
+        <p>
+          The first-week export turns the call-slip batches into day blocks
+          with decision points, stop rules, fallback moves, and the closeout
+          output each block should produce before the next pull begins.
+        </p>
+        <div class="weekplan-fields">
+          ${weekPlanPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -1319,6 +1519,27 @@
     downloadText("frus-central-america-pre-pull-request.txt", buildPrePullText());
   }
 
+  function exportWeekPlanCsv() {
+    const headers = [
+      "day",
+      "workBlock",
+      "priorityBatch",
+      "objective",
+      "decisionPoint",
+      "stopRule",
+      "fallbackIfBlocked",
+      "closeoutOutput",
+      "status",
+      "notes",
+    ];
+    const rows = weekPlanRows.map((row) => ({
+      ...row,
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-first-week-plan.csv", headers, rows);
+  }
+
   function exportRunSheetCsv() {
     const headers = [
       "workBlock",
@@ -1433,6 +1654,7 @@
 
   function bindPacketExports() {
     document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
+    document.querySelector("#export-week-plan")?.addEventListener("click", exportWeekPlanCsv);
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
     document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
