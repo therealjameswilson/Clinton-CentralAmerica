@@ -43,6 +43,12 @@
       fields: ["Copied", "Restricted", "No hit", "Needs follow-up", "Next pull"],
     },
     {
+      title: "No-Hit Search Log",
+      purpose:
+        "Preserve failed or weak searches with exact query terms, repositories, result counts, useful hits, follow-up queries, and next decisions.",
+      fields: ["Query", "Repository", "Result count", "Follow-up"],
+    },
+    {
       title: "Reference Question Bank",
       purpose:
         "Keep staff questions, access fallbacks, restriction evidence, and next pull moves ready before the first folder arrives.",
@@ -758,6 +764,15 @@
     "Promotion decision",
   ];
 
+  const noHitPrompts = [
+    "Exact query",
+    "Repository and filters",
+    "Result count",
+    "Useful hits",
+    "No-hit note",
+    "Follow-up query",
+  ];
+
   const scorecardPrompts = [
     "Private-policy evidence",
     "Presidential or NSC level",
@@ -1014,6 +1029,28 @@
       boundaryRisk:
         "Public diplomacy and adjacent-volume overlap; promote only after private-process evidence changes the status from public anchor to candidate document.",
     };
+  }
+
+  function noHitNextRepository(item) {
+    if (item.source.includes("GovInfo")) {
+      return "Search paired NSC, State, trip-book, speech, press, Federal Register, USAID, and agency implementation records.";
+    }
+    if (item.source.includes("Clinton Presidential Records")) {
+      return "Try NARA Catalog, Clinton Digital Library variants, staff-file names, OA/ID clusters, and reference-staff cross-references.";
+    }
+    if (item.source.includes("National Archives")) {
+      return "Try Clinton Library finding-aid clusters, Daily Diary dates, staff names, country files, and FOIA release collections.";
+    }
+    if (item.source.includes("Federal Register")) {
+      return "Try USTR, State, USAID, INS/DOJ, public-law history, and country implementation files.";
+    }
+    if (item.source.includes("Department of State")) {
+      return "Try State FOIA variants, INCSR narratives, embassy reporting, NARA Catalog, and Clinton Library issue files.";
+    }
+    if (item.source.includes("FRUS")) {
+      return "Check adjacent Clinton volume shells, citation guidance, source-note conventions, and boundary matrix routing.";
+    }
+    return "Record variant terms, alternate repository, date limits, names checked, and next source family before rerunning.";
   }
 
   const htmlEscape = (value) =>
@@ -1286,6 +1323,13 @@
         margin-top: 12px;
       }
 
+      .nohit-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .scorecard-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1384,6 +1428,16 @@
         font-weight: 750;
       }
 
+      .nohit-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .scorecard-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1451,6 +1505,7 @@
         .weekplan-fields,
         .contact-fields,
         .publicanchor-fields,
+        .nohit-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1472,6 +1527,7 @@
         .weekplan-fields,
         .contact-fields,
         .publicanchor-fields,
+        .nohit-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1564,6 +1620,7 @@
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
         <button id="export-contact-followup" class="tool-button" type="button">Export Contact Follow-Up CSV</button>
         <button id="export-public-anchor-crosswalk" class="tool-button" type="button">Export Public Anchor Crosswalk CSV</button>
+        <button id="export-nohit-log" class="tool-button" type="button">Export No-Hit Search Log CSV</button>
         <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
@@ -1690,6 +1747,18 @@
         </p>
         <div class="closeout-fields">
           ${closeoutPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">No-Hit Search Log</p>
+        <h3>Keep Dead Ends From Coming Back Tomorrow</h3>
+        <p>
+          The no-hit export turns the research queue into a search ledger for
+          exact queries, repositories, filters, result counts, useful hits,
+          weak-hit notes, follow-up queries, and next-source decisions.
+        </p>
+        <div class="nohit-fields">
+          ${noHitPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -2217,6 +2286,50 @@
     downloadCsv("frus-central-america-public-anchor-crosswalk.csv", headers, rows);
   }
 
+  function exportNoHitLogCsv() {
+    const headers = [
+      "dateSearched",
+      "repositoryOrSite",
+      "countryOrIssue",
+      "priority",
+      "searchPurpose",
+      "exactQuery",
+      "filtersOrScope",
+      "searchUrl",
+      "expectedOutput",
+      "resultCount",
+      "usefulHits",
+      "noHitOrWeakHitNote",
+      "followUpQuery",
+      "nextRepositoryOrSource",
+      "decision",
+      "owner",
+      "status",
+      "notes",
+    ];
+    const rows = queueItems.map((item) => ({
+      dateSearched: "",
+      repositoryOrSite: item.source,
+      countryOrIssue: item.country,
+      priority: item.priority,
+      searchPurpose: item.title,
+      exactQuery: item.query,
+      filtersOrScope: "",
+      searchUrl: item.href,
+      expectedOutput: item.output,
+      resultCount: "",
+      usefulHits: "",
+      noHitOrWeakHitNote: "",
+      followUpQuery: "",
+      nextRepositoryOrSource: noHitNextRepository(item),
+      decision: "",
+      owner: "",
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-no-hit-search-log.csv", headers, rows);
+  }
+
   function exportReferenceQuestionsCsv() {
     const headers = [
       "priority",
@@ -2465,6 +2578,7 @@
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
     document.querySelector("#export-contact-followup")?.addEventListener("click", exportContactFollowupCsv);
     document.querySelector("#export-public-anchor-crosswalk")?.addEventListener("click", exportPublicAnchorCrosswalkCsv);
+    document.querySelector("#export-nohit-log")?.addEventListener("click", exportNoHitLogCsv);
     document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
