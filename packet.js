@@ -19,6 +19,12 @@
       fields: ["Repository", "Collection", "OA/ID or NAID", "Date", "Title", "Page or image range"],
     },
     {
+      title: "Digital Copy Inventory",
+      purpose:
+        "Tie copied PDFs, photos, and scans to candidate documents, page ranges, quality checks, OCR status, backups, and source-note rows.",
+      fields: ["Filename", "Image range", "Quality", "Source note"],
+    },
+    {
       title: "Presidential Contact Follow-Up",
       purpose:
         "Convert Daily Diary calls, meetings, and trip events into telcon, memcon, briefing-paper, issue-file, and follow-up cable searches.",
@@ -761,6 +767,15 @@
     "Follow-up cable",
   ];
 
+  const copyInventoryPrompts = [
+    "Filename or path",
+    "Page/image range",
+    "Copy quality",
+    "OCR or transcription",
+    "Source-note row",
+    "Backup location",
+  ];
+
   const publicAnchorPrompts = [
     "GovInfo source note",
     "Public claim",
@@ -1374,6 +1389,13 @@
         margin-top: 12px;
       }
 
+      .copyinventory-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .publicanchor-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1483,6 +1505,16 @@
         font-weight: 750;
       }
 
+      .copyinventory-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .publicanchor-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1579,6 +1611,7 @@
         .reference-fields,
         .weekplan-fields,
         .contact-fields,
+        .copyinventory-fields,
         .publicanchor-fields,
         .nohit-fields,
         .routing-fields,
@@ -1602,6 +1635,7 @@
         .reference-fields,
         .weekplan-fields,
         .contact-fields,
+        .copyinventory-fields,
         .publicanchor-fields,
         .nohit-fields,
         .routing-fields,
@@ -1694,6 +1728,7 @@
         <button id="export-week-plan" class="tool-button" type="button">Export First-Week Plan CSV</button>
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
         <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
+        <button id="export-copy-inventory" class="tool-button" type="button">Export Copy Inventory CSV</button>
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
         <button id="export-contact-followup" class="tool-button" type="button">Export Contact Follow-Up CSV</button>
         <button id="export-public-anchor-crosswalk" class="tool-button" type="button">Export Public Anchor Crosswalk CSV</button>
@@ -1825,6 +1860,19 @@
         </p>
         <div class="closeout-fields">
           ${closeoutPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Digital Copy Inventory</p>
+        <h3>Make Every Image Findable After the Visit</h3>
+        <p>
+          The copy inventory export connects each candidate issue to copied
+          PDFs, photos, scan batches, page or image ranges, quality problems,
+          OCR or transcription status, backup location, and the source-note row
+          that will support citation later.
+        </p>
+        <div class="copyinventory-fields">
+          ${copyInventoryPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -2257,6 +2305,60 @@
       notes: "",
     }));
     downloadCsv("frus-central-america-daily-closeout.csv", headers, rows);
+  }
+
+  function exportCopyInventoryCsv() {
+    const headers = [
+      "issue",
+      "countries",
+      "candidateDocumentTitle",
+      "documentDate",
+      "repository",
+      "collection",
+      "folderOrLocator",
+      "copyType",
+      "filePathOrFilename",
+      "fileBatchOrRoll",
+      "pageOrImageRange",
+      "pageCount",
+      "scanOrPhotoQuality",
+      "ocrOrTranscriptionStatus",
+      "redactionOrReleaseMarkingsVisible",
+      "sourceNoteStem",
+      "sourceNoteEvidenceNeeded",
+      "reviewLedgerLink",
+      "documentAssemblyLink",
+      "backupLocation",
+      "needsRecopy",
+      "nextAction",
+      "notes",
+    ];
+    const rows = selectionDocket.map((item) => ({
+      issue: item.issue,
+      countries: item.countries,
+      candidateDocumentTitle: "",
+      documentDate: "",
+      repository: "Clinton Presidential Library",
+      collection: "Clinton Presidential Records",
+      folderOrLocator: item.privateRecordTarget,
+      copyType: "",
+      filePathOrFilename: "",
+      fileBatchOrRoll: "",
+      pageOrImageRange: "",
+      pageCount: "",
+      scanOrPhotoQuality: "",
+      ocrOrTranscriptionStatus: "",
+      redactionOrReleaseMarkingsVisible: "",
+      sourceNoteStem: "",
+      sourceNoteEvidenceNeeded: item.promotionProof,
+      reviewLedgerLink: "",
+      documentAssemblyLink: "",
+      backupLocation: "",
+      needsRecopy: "",
+      nextAction: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-digital-copy-inventory.csv", headers, rows);
   }
 
   function exportSourceNoteQaCsv() {
@@ -2729,6 +2831,7 @@
     document.querySelector("#export-week-plan")?.addEventListener("click", exportWeekPlanCsv);
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
     document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
+    document.querySelector("#export-copy-inventory")?.addEventListener("click", exportCopyInventoryCsv);
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
     document.querySelector("#export-contact-followup")?.addEventListener("click", exportContactFollowupCsv);
     document.querySelector("#export-public-anchor-crosswalk")?.addEventListener("click", exportPublicAnchorCrosswalkCsv);
