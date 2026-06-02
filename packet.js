@@ -91,6 +91,12 @@
       fields: ["Persons", "Context", "Cross-references", "Questions"],
     },
     {
+      title: "Annotation Authority Register",
+      purpose:
+        "Turn authority names and office-series leads into annotation-ready identities, search variants, evidence links, and unresolved identification questions.",
+      fields: ["Name or office", "Role", "Variants", "Annotation note"],
+    },
+    {
       title: "Declassification Tracker",
       purpose:
         "Preserve closed-record evidence, agency equities, referral status, and re-review paths for candidates that cannot be selected yet.",
@@ -830,6 +836,15 @@
     "Unresolved annotation question",
   ];
 
+  const authorityRegisterPrompts = [
+    "Name or office",
+    "Role and title",
+    "Search variants",
+    "First evidence",
+    "Annotation note",
+    "Unresolved authority question",
+  ];
+
   const declassPrompts = [
     "Withdrawal-sheet text",
     "Agency equity",
@@ -1438,6 +1453,13 @@
         margin-top: 12px;
       }
 
+      .authorityregister-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .declass-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1575,6 +1597,16 @@
         font-weight: 750;
       }
 
+      .authorityregister-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .declass-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1618,6 +1650,7 @@
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
+        .authorityregister-fields,
         .declass-fields,
         .docket-heading,
         .docket-row,
@@ -1642,6 +1675,7 @@
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
+        .authorityregister-fields,
         .declass-fields,
         .runsheet-list div,
         .docket-heading,
@@ -1739,6 +1773,7 @@
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
         <button id="export-document-assembly" class="tool-button" type="button">Export Document Assembly CSV</button>
         <button id="export-annotation-plan" class="tool-button" type="button">Export Annotation Plan CSV</button>
+        <button id="export-authority-register" class="tool-button" type="button">Export Authority Register CSV</button>
         <button id="export-declass-tracker" class="tool-button" type="button">Export Declassification Tracker CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
@@ -1973,6 +2008,19 @@
         </p>
         <div class="annotation-fields">
           ${annotationPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Annotation Authority Register</p>
+        <h3>Turn Names and Offices Into Usable Notes</h3>
+        <p>
+          The authority register export turns the name and office search index
+          into a worksheet for roles, search variants, evidence, draft
+          annotation text, unresolved identity questions, and source-note links
+          before document annotation begins.
+        </p>
+        <div class="authorityregister-fields">
+          ${authorityRegisterPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -2786,6 +2834,42 @@
     downloadCsv("frus-central-america-annotation-plan.csv", headers, rows);
   }
 
+  function exportAuthorityRegisterCsv() {
+    const headers = [
+      "nameOrOffice",
+      "role",
+      "countryOrIssueLane",
+      "searchVariants",
+      "likelySources",
+      "firstEvidenceMove",
+      "catalogSearchUrl",
+      "annotationText",
+      "identityQuestion",
+      "officeOrAgency",
+      "sourceNoteLink",
+      "relatedCandidateIssue",
+      "status",
+      "notes",
+    ];
+    const rows = authorityIndex.map((authority) => ({
+      nameOrOffice: authority.name,
+      role: authority.role,
+      countryOrIssueLane: authority.lane,
+      searchVariants: authority.searchTerms.join("; "),
+      likelySources: authority.likelySources,
+      firstEvidenceMove: authority.firstMove,
+      catalogSearchUrl: authority.href,
+      annotationText: "",
+      identityQuestion: "",
+      officeOrAgency: authority.role,
+      sourceNoteLink: "",
+      relatedCandidateIssue: "",
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-annotation-authority-register.csv", headers, rows);
+  }
+
   function exportDeclassTrackerCsv() {
     const headers = [
       "issue",
@@ -2842,6 +2926,7 @@
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
     document.querySelector("#export-document-assembly")?.addEventListener("click", exportDocumentAssemblyCsv);
     document.querySelector("#export-annotation-plan")?.addEventListener("click", exportAnnotationPlanCsv);
+    document.querySelector("#export-authority-register")?.addEventListener("click", exportAuthorityRegisterCsv);
     document.querySelector("#export-declass-tracker")?.addEventListener("click", exportDeclassTrackerCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);

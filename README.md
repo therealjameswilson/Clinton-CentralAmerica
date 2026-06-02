@@ -40,6 +40,10 @@ intelligence, transnational-threats, strategic-planning, and Central American le
 Each authority entry records search terms, likely source families, and the first document
 pairing move to try before requesting boxes or promoting a candidate record.
 
+The annotation authority register converts those same authority entries into a worksheet
+for names, offices, roles, search variants, first evidence moves, draft annotation text,
+source-note links, and unresolved identity questions before final annotation work begins.
+
 ## Candidate Chronology Inputs
 
 The first section of the page uses Presidential Daily Diary records surfaced through the National Archives Catalog search:
@@ -122,13 +126,13 @@ Presidential contact follow-up worksheet, Public Papers crosswalk, reference-que
 digital copy inventory, no-hit search log, exclusion and routing register,
 document-review ledger, country evidence audit, boundary matrix, authority index,
 candidate chronology, source-note ledger,
-selection scorecard, document assembly worksheet, annotation plan,
+selection scorecard, document assembly worksheet, annotation plan, annotation authority register,
 declassification tracker, selection docket, call-slip batches, and research queue.
 These are intended to become the working files for pre-pull
 requests, onsite sequencing, onsite logging, access fallback, citation QA,
 contact follow-up, public/private matching, copied-image control, no-hit control,
 exclusion/routing decisions, selection review, FRUS document assembly, annotation planning,
-declassification follow-up, and daily closeout.
+authority identification, declassification follow-up, and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
@@ -147,6 +151,10 @@ adjacent-document links, and boundary decision in one row.
 The annotation plan follows the scorecard by carrying each candidate issue into
 persons/offices, context notes, public/private bridges, related documents,
 boundary cross-references, implementation follow-up, and unresolved editorial questions.
+
+The annotation authority register then translates the authority search index into
+annotation-ready identity rows, preserving role labels, search variants, likely sources,
+first evidence moves, draft note text, source-note links, and unresolved identity questions.
 
 The declassification tracker keeps closed, partly withdrawn, or agency-equity-heavy
 records in the evidence trail by preserving withdrawal-sheet text, referral or re-review
