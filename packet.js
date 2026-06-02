@@ -49,6 +49,12 @@
       fields: ["Query", "Repository", "Result count", "Follow-up"],
     },
     {
+      title: "Exclusion and Routing Register",
+      purpose:
+        "Record why candidates are rejected, deferred, or routed to adjacent Clinton-era volumes so borderline records do not re-enter review without new evidence.",
+      fields: ["Disposition", "Reason", "Destination", "Revisit trigger"],
+    },
+    {
       title: "Reference Question Bank",
       purpose:
         "Keep staff questions, access fallbacks, restriction evidence, and next pull moves ready before the first folder arrives.",
@@ -773,6 +779,15 @@
     "Follow-up query",
   ];
 
+  const routingPrompts = [
+    "Candidate or lead",
+    "Reason to exclude",
+    "Adjacent volume",
+    "Evidence still needed",
+    "Revisit trigger",
+    "Final disposition",
+  ];
+
   const scorecardPrompts = [
     "Private-policy evidence",
     "Presidential or NSC level",
@@ -1053,6 +1068,49 @@
     return "Record variant terms, alternate repository, date limits, names checked, and next source family before rerunning.";
   }
 
+  function routingDestination(boundaryRisk) {
+    const risk = boundaryRisk.toLowerCase();
+    const destinations = [];
+
+    if (risk.includes("public diplomacy")) {
+      destinations.push("Volume XIV, Public Diplomacy");
+    }
+    if (risk.includes("north america") || risk.includes("canal")) {
+      destinations.push("Volume IV, North America");
+    }
+    if (risk.includes("caribbean") || risk.includes("belize")) {
+      destinations.push("Volume XXXIV, Cuba, Haiti, and the Caribbean");
+    }
+    if (risk.includes("south america") || risk.includes("latin america")) {
+      destinations.push("Volume XXXI, South America and Latin America Region");
+    }
+    if (risk.includes("trade") || risk.includes("economic")) {
+      destinations.push("Volume XXXVI, Foreign Economic Policy");
+    }
+    if (
+      risk.includes("narcotics") ||
+      risk.includes("law enforcement") ||
+      risk.includes("law-enforcement") ||
+      risk.includes("counterterrorism")
+    ) {
+      destinations.push("Volume XV, Counterterrorism and Narcotics");
+    }
+    if (risk.includes("rights") || risk.includes("human rights") || risk.includes("governance")) {
+      destinations.push("Volume XII, Rights and Governance");
+    }
+    if (risk.includes("defense") || risk.includes("national security")) {
+      destinations.push("Volume VI, National Security Policy");
+    }
+    if (risk.includes("migration") || risk.includes("domestic")) {
+      destinations.push("Domestic policy or immigration-law context file");
+    }
+    if (risk.includes("humanitarian")) {
+      destinations.push("Humanitarian assistance or global issues review");
+    }
+
+    return destinations.length ? destinations.join("; ") : "Use boundary matrix before final disposition";
+  }
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -1330,6 +1388,13 @@
         margin-top: 12px;
       }
 
+      .routing-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .scorecard-fields {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1438,6 +1503,16 @@
         font-weight: 750;
       }
 
+      .routing-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .scorecard-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1506,6 +1581,7 @@
         .contact-fields,
         .publicanchor-fields,
         .nohit-fields,
+        .routing-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1528,6 +1604,7 @@
         .contact-fields,
         .publicanchor-fields,
         .nohit-fields,
+        .routing-fields,
         .scorecard-fields,
         .assembly-fields,
         .annotation-fields,
@@ -1621,6 +1698,7 @@
         <button id="export-contact-followup" class="tool-button" type="button">Export Contact Follow-Up CSV</button>
         <button id="export-public-anchor-crosswalk" class="tool-button" type="button">Export Public Anchor Crosswalk CSV</button>
         <button id="export-nohit-log" class="tool-button" type="button">Export No-Hit Search Log CSV</button>
+        <button id="export-routing-register" class="tool-button" type="button">Export Routing Register CSV</button>
         <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
@@ -1759,6 +1837,19 @@
         </p>
         <div class="nohit-fields">
           ${noHitPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Exclusion and Routing Register</p>
+        <h3>Keep Rejected and Routed Records Accountable</h3>
+        <p>
+          The routing register records candidates that should be rejected,
+          deferred, held for new evidence, or routed to adjacent Clinton-era
+          volumes, with the reason and revisit trigger preserved before the
+          same borderline record consumes another review pass.
+        </p>
+        <div class="routing-fields">
+          ${routingPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -2330,6 +2421,69 @@
     downloadCsv("frus-central-america-no-hit-search-log.csv", headers, rows);
   }
 
+  function exportRoutingRegisterCsv() {
+    const headers = [
+      "registerType",
+      "candidateOrLead",
+      "countryOrIssue",
+      "currentEvidence",
+      "reasonToExcludeDeferOrRoute",
+      "suggestedDestination",
+      "keepInVolumeWhen",
+      "routeOrConsultWhen",
+      "firstCheckBeforeFinalDecision",
+      "privateRecordStillNeeded",
+      "sourceNoteOrAccessGap",
+      "revisitTrigger",
+      "finalDisposition",
+      "decisionDate",
+      "owner",
+      "notes",
+    ];
+    const docketRows = selectionDocket.map((item) => ({
+      registerType: "Candidate issue cluster",
+      candidateOrLead: item.issue,
+      countryOrIssue: item.countries,
+      currentEvidence: item.publicAnchors,
+      reasonToExcludeDeferOrRoute: item.boundaryRisk,
+      suggestedDestination: routingDestination(item.boundaryRisk),
+      keepInVolumeWhen: item.promotionProof,
+      routeOrConsultWhen: item.boundaryRisk,
+      firstCheckBeforeFinalDecision: item.selectionQuestion,
+      privateRecordStillNeeded: item.privateRecordTarget,
+      sourceNoteOrAccessGap: "",
+      revisitTrigger:
+        "Revisit only if a private-process record, complete source note, or declassification evidence resolves the boundary risk.",
+      finalDisposition: "",
+      decisionDate: "",
+      owner: "",
+      notes: "",
+    }));
+    const boundaryRows = boundaryMatrix.map((item) => ({
+      registerType: "Adjacent-volume boundary lane",
+      candidateOrLead: `${item.volume}: ${item.officialTitle}`,
+      countryOrIssue: item.riskLane,
+      currentEvidence: item.href,
+      reasonToExcludeDeferOrRoute: item.routeOrConsultWhen,
+      suggestedDestination: `${item.volume}, ${item.officialTitle}`,
+      keepInVolumeWhen: item.keepInXxxiiWhen,
+      routeOrConsultWhen: item.routeOrConsultWhen,
+      firstCheckBeforeFinalDecision: item.firstCheck,
+      privateRecordStillNeeded: "",
+      sourceNoteOrAccessGap: "",
+      revisitTrigger:
+        "Revisit when the candidate contains a Central America-specific decision, action line, source note, or implementation record.",
+      finalDisposition: "",
+      decisionDate: "",
+      owner: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-exclusion-routing-register.csv", headers, [
+      ...docketRows,
+      ...boundaryRows,
+    ]);
+  }
+
   function exportReferenceQuestionsCsv() {
     const headers = [
       "priority",
@@ -2579,6 +2733,7 @@
     document.querySelector("#export-contact-followup")?.addEventListener("click", exportContactFollowupCsv);
     document.querySelector("#export-public-anchor-crosswalk")?.addEventListener("click", exportPublicAnchorCrosswalkCsv);
     document.querySelector("#export-nohit-log")?.addEventListener("click", exportNoHitLogCsv);
+    document.querySelector("#export-routing-register")?.addEventListener("click", exportRoutingRegisterCsv);
     document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);

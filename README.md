@@ -71,6 +71,10 @@ The no-hit search log export turns the research queue into a reusable ledger for
 exact queries, repositories, filters, result counts, weak hits, follow-up queries, and
 next-source decisions so dead ends do not have to be rediscovered.
 
+The exclusion and routing register records candidates that are rejected, deferred,
+held for new evidence, or routed to adjacent Clinton-era volumes, using the selection
+docket and boundary matrix as seeded decision rows.
+
 ## Gap Fixes
 
 The page now closes the first-pass chronology gaps for 1995, 1996, and 2000 with GovInfo
@@ -111,14 +115,15 @@ assist hub, NARA Scout, Strobe FOIA work, and the Central America compiler packe
 The page includes browser-side exports for the pre-pull request, first-week pull plan,
 reading-room run sheet, daily closeout checklist, source-note QA checklist,
 Presidential contact follow-up worksheet, Public Papers crosswalk, reference-question worksheet,
-no-hit search log, document-review ledger, country evidence audit,
+no-hit search log, exclusion and routing register, document-review ledger, country evidence audit,
 boundary matrix, authority index, candidate chronology, source-note ledger,
 selection scorecard, document assembly worksheet, annotation plan,
 declassification tracker, selection docket, call-slip batches, and research queue.
 These are intended to become the working files for pre-pull
 requests, onsite sequencing, onsite logging, access fallback, citation QA,
-contact follow-up, public/private matching, no-hit control, selection review,
-FRUS document assembly, annotation planning, declassification follow-up, and daily closeout.
+contact follow-up, public/private matching, no-hit control, exclusion/routing decisions,
+selection review, FRUS document assembly, annotation planning, declassification follow-up,
+and daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
