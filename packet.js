@@ -30,6 +30,12 @@
         "End each archival day by marking no-hit searches, restricted folders, copied documents, source-note gaps, and next-day pull order.",
       fields: ["Copied", "Restricted", "No hit", "Needs follow-up", "Next pull"],
     },
+    {
+      title: "Reference Question Bank",
+      purpose:
+        "Keep staff questions, access fallbacks, restriction evidence, and next pull moves ready before the first folder arrives.",
+      fields: ["Question", "Evidence needed", "Fallback", "Log field"],
+    },
   ];
 
   const selectionDocket = [
@@ -430,6 +436,106 @@
     "Release markings and boundary decision",
   ];
 
+  const referenceQuestionRows = [
+    {
+      priority: "Critical",
+      scenario: "First pull is restricted or partly withdrawn",
+      staffQuestion:
+        "Can I inspect the withdrawal sheet, folder-level restriction note, or partial-release marker for this OA/ID before moving to the next batch?",
+      evidenceNeeded:
+        "Restriction basis, exemption language, withdrawal-sheet date, reviewer note, and whether any item-level description is open.",
+      fallbackIfNo:
+        "Move to the paired issue-file batch, log the closed folder in the review ledger, and search the same people/issues in Daily Diary, Public Papers, State, USAID, and Federal Register records.",
+      logField: "restrictionEvidence",
+    },
+    {
+      priority: "Critical",
+      scenario: "Decision-record batch is delayed, offsite, or capped by paging limits",
+      staffQuestion:
+        "If paging limits or offsite storage affect this batch, which PC/DC/PRD, Staff Director, or Soderberg folders can be staged first today?",
+      evidenceNeeded:
+        "Arrival estimate, paging limit, offsite status, alternate OA/IDs, and staff-recommended first folder.",
+      fallbackIfNo:
+        "Use the run sheet priority order: Batch 1 decision records, Batch 2 Soderberg files, Batch 3 accountability files, then trip books and public chronology.",
+      logField: "pagingFallback",
+    },
+    {
+      priority: "High",
+      scenario: "Folder title is broad but may contain multiple document candidates",
+      staffQuestion:
+        "Does the folder have a contents list, tab divider, date span, or item-level description that can help me target document-level copying?",
+      evidenceNeeded:
+        "Contents list, tab title, date range, document titles, page count, and any visible routing or release markings.",
+      fallbackIfNo:
+        "Photograph the folder front, contents structure, and first-page metadata before choosing which items to copy.",
+      logField: "documentBoundary",
+    },
+    {
+      priority: "High",
+      scenario: "A diary call or meeting has no obvious telcon or memcon",
+      staffQuestion:
+        "Are there open cross-reference folders for the same date, participant, country, or staff office that might contain the telcon, memcon, briefing paper, or follow-up cable?",
+      evidenceNeeded:
+        "Participant names, date, event type, related staff office, country, and alternate collection or series.",
+      fallbackIfNo:
+        "Record the diary as chronology evidence only and do not promote until a private-process match is found.",
+      logField: "privateRecordMatch",
+    },
+    {
+      priority: "High",
+      scenario: "Trip book, briefing tab, or oversize material has handling limits",
+      staffQuestion:
+        "Do trip books, tabbed briefing material, oversize items, or bound volumes require special handling, camera rules, or a separate appointment?",
+      evidenceNeeded:
+        "Handling rule, camera rule, request cutoff, appointment need, allowed page range, and whether staff can identify tab titles.",
+      fallbackIfNo:
+        "Capture table of contents and tab titles first, then request only tabs tied to the docket question.",
+      logField: "handlingRule",
+    },
+    {
+      priority: "Medium",
+      scenario: "Digitized surrogate or public record may duplicate onsite material",
+      staffQuestion:
+        "Is there a digitized surrogate, declassified copy, FOIA release, or public reading-room version that should be used before paging the physical folder?",
+      evidenceNeeded:
+        "Catalog URL, NAID, FOIA tracking number, release status, digital-object URL, and page/image range.",
+      fallbackIfNo:
+        "Keep the onsite folder in the pull queue but test the same title in NARA Catalog, Clinton Digital Library, CIA Reading Room, State FOIA, GovInfo, and Federal Register.",
+      logField: "digitalSurrogate",
+    },
+    {
+      priority: "Medium",
+      scenario: "Country lane is thin after the first pass",
+      staffQuestion:
+        "Are there staff-file, WHORM, speechwriting, press, trip-book, or agency cross-references for this country that are more productive than broad country keyword searching?",
+      evidenceNeeded:
+        "Recommended series, office name, staff name, alternate spelling, date range, and likely OA/ID.",
+      fallbackIfNo:
+        "Use the country evidence audit to shift the next pull toward the weakest lane while preserving no-hit searches.",
+      logField: "countryGap",
+    },
+    {
+      priority: "Medium",
+      scenario: "End-of-day pull needs a written next move",
+      staffQuestion:
+        "Before I leave, can the next-day first pull and two alternates be queued or checked for restrictions?",
+      evidenceNeeded:
+        "Next-day batch, two alternates, restriction screen, arrival expectation, and any staff note.",
+      fallbackIfNo:
+        "Export the daily closeout and run sheet, then send the pre-pull request with the first pull, alternates, and staff questions.",
+      logField: "nextDayRequest",
+    },
+  ];
+
+  const referenceQuestionPrompts = [
+    "Restriction basis",
+    "Paging or offsite status",
+    "Open cross-reference folder",
+    "Handling or camera rule",
+    "Digital surrogate",
+    "Next-day first pull",
+  ];
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -672,6 +778,13 @@
         margin-top: 12px;
       }
 
+      .reference-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .review-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -693,6 +806,16 @@
       }
 
       .sourceqa-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
+      .reference-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
         border-radius: 6px;
@@ -725,6 +848,7 @@
         .review-fields,
         .closeout-fields,
         .sourceqa-fields,
+        .reference-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -738,6 +862,7 @@
         .review-fields,
         .closeout-fields,
         .sourceqa-fields,
+        .reference-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -823,6 +948,7 @@
         <button id="export-run-sheet" class="tool-button" type="button">Export Run Sheet CSV</button>
         <button id="export-closeout" class="tool-button" type="button">Export Closeout CSV</button>
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
+        <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
@@ -919,6 +1045,18 @@
         </p>
         <div class="sourceqa-fields">
           ${sourceNoteQaPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Reference Questions</p>
+        <h3>Turn Access Problems Into the Next Ask</h3>
+        <p>
+          The reference-question export gives closed folders, offsite pulls,
+          broad folder titles, handling limits, thin country lanes, and
+          missing telcons or memcons a ready staff question and fallback path.
+        </p>
+        <div class="reference-fields">
+          ${referenceQuestionPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
       <article class="full-span">
@@ -1249,6 +1387,25 @@
     downloadCsv("frus-central-america-source-note-qa.csv", headers, rows);
   }
 
+  function exportReferenceQuestionsCsv() {
+    const headers = [
+      "priority",
+      "scenario",
+      "staffQuestion",
+      "evidenceNeeded",
+      "fallbackIfNo",
+      "logField",
+      "status",
+      "notes",
+    ];
+    const rows = referenceQuestionRows.map((row) => ({
+      ...row,
+      status: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-reference-questions.csv", headers, rows);
+  }
+
   function exportReviewLedgerCsv() {
     const rows = selectionDocket.map((item) => ({
       issue: item.issue,
@@ -1279,6 +1436,7 @@
     document.querySelector("#export-run-sheet")?.addEventListener("click", exportRunSheetCsv);
     document.querySelector("#export-closeout")?.addEventListener("click", exportCloseoutCsv);
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
+    document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
