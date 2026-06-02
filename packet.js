@@ -42,6 +42,12 @@
         "Turn call-slip batches into day blocks with stop rules, pivot points, and closeout outputs.",
       fields: ["Day", "Batch", "Decision point", "Fallback", "Closeout"],
     },
+    {
+      title: "Selection Scorecard",
+      purpose:
+        "Score copied candidates against policy value, private evidence, citation readiness, access, country balance, and boundary fit.",
+      fields: ["Candidate", "Scores", "Recommendation", "Next action"],
+    },
   ];
 
   const selectionDocket = [
@@ -704,6 +710,15 @@
     "Final selection triage",
   ];
 
+  const scorecardPrompts = [
+    "Private-policy evidence",
+    "Presidential or NSC level",
+    "Source-note readiness",
+    "Access and release status",
+    "Country or issue balance",
+    "Boundary fit and recommendation",
+  ];
+
   const htmlEscape = (value) =>
     String(value).replace(
       /[&<>"']/g,
@@ -960,6 +975,13 @@
         margin-top: 12px;
       }
 
+      .scorecard-fields {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
       .review-fields span {
         padding: 8px 10px;
         border: 1px solid var(--line);
@@ -1010,6 +1032,16 @@
         font-weight: 750;
       }
 
+      .scorecard-fields span {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: #31433d;
+        font-size: 0.86rem;
+        font-weight: 750;
+      }
+
       .runsheet-list {
         display: grid;
         gap: 8px;
@@ -1035,6 +1067,7 @@
         .sourceqa-fields,
         .reference-fields,
         .weekplan-fields,
+        .scorecard-fields,
         .docket-heading,
         .docket-row,
         .docket-row dl {
@@ -1050,6 +1083,7 @@
         .sourceqa-fields,
         .reference-fields,
         .weekplan-fields,
+        .scorecard-fields,
         .runsheet-list div,
         .docket-heading,
         .docket-row,
@@ -1138,6 +1172,7 @@
         <button id="export-source-note-qa" class="tool-button" type="button">Export Source-Note QA CSV</button>
         <button id="export-reference-questions" class="tool-button" type="button">Export Reference Questions CSV</button>
         <button id="export-review-ledger" class="tool-button" type="button">Export Review Ledger CSV</button>
+        <button id="export-selection-scorecard" class="tool-button" type="button">Export Selection Scorecard CSV</button>
         <button id="export-selection-docket" class="tool-button" type="button">Export Docket CSV</button>
       `,
     );
@@ -1268,6 +1303,19 @@
         </p>
         <div class="review-fields">
           ${reviewLedgerPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
+        </div>
+      </article>
+      <article class="full-span">
+        <p class="kicker">Selection Scorecard</p>
+        <h3>Promote Candidates With the Same Test Every Time</h3>
+        <p>
+          The scorecard export seeds one row per docket issue so copied records
+          can be scored for policy significance, private-process evidence,
+          citation readiness, access, country balance, and boundary fit before
+          a final select, defer, route, or reject decision.
+        </p>
+        <div class="scorecard-fields">
+          ${scorecardPrompts.map((prompt) => `<span>${htmlEscape(prompt)}</span>`).join("")}
         </div>
       </article>
     `;
@@ -1652,6 +1700,54 @@
     downloadCsv("frus-central-america-document-review-ledger.csv", reviewLedgerHeaders, rows);
   }
 
+  function exportSelectionScorecardCsv() {
+    const headers = [
+      "issue",
+      "countries",
+      "candidateDocumentTitle",
+      "documentDate",
+      "publicAnchors",
+      "privateRecordTarget",
+      "promotionProof",
+      "boundaryRisk",
+      "policySignificanceScore",
+      "presidentialOrNscLevelScore",
+      "privateProcessEvidenceScore",
+      "sourceNoteReadinessScore",
+      "accessAndReleaseScore",
+      "countryOrIssueBalanceScore",
+      "boundaryFitScore",
+      "implementationOrFollowThroughScore",
+      "totalScore",
+      "recommendation",
+      "nextAction",
+      "notes",
+    ];
+    const rows = selectionDocket.map((item) => ({
+      issue: item.issue,
+      countries: item.countries,
+      candidateDocumentTitle: "",
+      documentDate: "",
+      publicAnchors: item.publicAnchors,
+      privateRecordTarget: item.privateRecordTarget,
+      promotionProof: item.promotionProof,
+      boundaryRisk: item.boundaryRisk,
+      policySignificanceScore: "",
+      presidentialOrNscLevelScore: "",
+      privateProcessEvidenceScore: "",
+      sourceNoteReadinessScore: "",
+      accessAndReleaseScore: "",
+      countryOrIssueBalanceScore: "",
+      boundaryFitScore: "",
+      implementationOrFollowThroughScore: "",
+      totalScore: "",
+      recommendation: "",
+      nextAction: "",
+      notes: "",
+    }));
+    downloadCsv("frus-central-america-selection-scorecard.csv", headers, rows);
+  }
+
   function bindPacketExports() {
     document.querySelector("#export-prepull")?.addEventListener("click", exportPrePullText);
     document.querySelector("#export-week-plan")?.addEventListener("click", exportWeekPlanCsv);
@@ -1660,6 +1756,7 @@
     document.querySelector("#export-source-note-qa")?.addEventListener("click", exportSourceNoteQaCsv);
     document.querySelector("#export-reference-questions")?.addEventListener("click", exportReferenceQuestionsCsv);
     document.querySelector("#export-review-ledger")?.addEventListener("click", exportReviewLedgerCsv);
+    document.querySelector("#export-selection-scorecard")?.addEventListener("click", exportSelectionScorecardCsv);
     document.querySelector("#export-selection-docket")?.addEventListener("click", exportSelectionDocketCsv);
     document.querySelector("#export-chronology")?.addEventListener("click", exportChronologyCsv);
     document.querySelector("#export-source-notes")?.addEventListener("click", exportSourceNotesCsv);

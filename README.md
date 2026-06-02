@@ -100,13 +100,19 @@ The page includes browser-side exports for the pre-pull request, first-week pull
 reading-room run sheet, daily closeout checklist, source-note QA checklist,
 reference-question worksheet, document-review ledger, country evidence audit,
 boundary matrix, authority index, candidate chronology, source-note ledger,
-selection docket, call-slip batches, and research queue. These are intended to
-become the working files for pre-pull requests, onsite sequencing, onsite logging,
-access fallback, citation QA, selection review, and daily closeout.
+selection scorecard, selection docket, call-slip batches, and research queue.
+These are intended to become the working files for pre-pull requests, onsite
+sequencing, onsite logging, access fallback, citation QA, selection review, and
+daily closeout.
 
 The selection docket groups issue clusters by public anchor, private-record target, first pull,
 promotion proof, and cross-volume boundary risk so the compiler can decide what needs archival
 evidence before a document is promoted.
+
+The selection scorecard then gives each docket issue the same scoring fields for policy
+significance, presidential or NSC level, private-process evidence, source-note readiness,
+access status, country balance, boundary fit, implementation proof, recommendation, and
+next action.
 
 The source map and queue also incorporate the Clinton administration FRUS index so adjacent
 volumes can be checked before a Central America selection decision is made.
