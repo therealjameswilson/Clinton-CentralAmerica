@@ -33,8 +33,8 @@ call-slip batches, and high-yield folder-title clusters derived from those findi
 
 The displayed source-note stems follow the published FRUS pattern: `Source:`
 repository, record collection, office or series, OA/ID locator, and folder title,
-followed by classification and release-status language where it is known or by a
-bracketed placeholder where the document-level marking still needs review.
+with verified classification, handling, and release-status statements appended
+only after document-level review.
 
 ## Authority Search Index
 

@@ -350,7 +350,7 @@ const clintonSourceRoot =
 
 function sourceNoteStem(series, ids, folderTitle) {
   const idLabel = /[,;-]/.test(ids) ? "OA/IDs" : "OA/ID";
-  return `${clintonSourceRoot}, ${series}, ${idLabel} ${ids}, ${folderTitle}. [Classification marking and release status.]`;
+  return `${clintonSourceRoot}, ${series}, ${idLabel} ${ids}, ${folderTitle}.`;
 }
 
 const libraryClusters = [
