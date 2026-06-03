@@ -1892,9 +1892,9 @@ const queueItems = [
 
 const methodCards = [
   {
-    title: "Keep selection separate",
+    title: "Keep human selection separate",
     text:
-      "The page tracks discovery and evidence readiness. It should not decide which documents belong in the printed volume.",
+      "The page tracks discovery and evidence readiness. The compiler decides which documents belong in the printed volume.",
   },
   {
     title: "Preserve source notes early",
