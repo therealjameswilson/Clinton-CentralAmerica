@@ -350,7 +350,7 @@ const clintonSourceRoot =
 
 function sourceNoteStem(series, ids, folderTitle) {
   const idLabel = /[,;-]/.test(ids) ? "OA/IDs" : "OA/ID";
-  return `${clintonSourceRoot}, ${series}, ${idLabel} ${ids}, ${folderTitle}. Folder-title lead from finding aid 2013-0185-M; document-level classification and release markings to be verified onsite.`;
+  return `${clintonSourceRoot}, ${series}, ${idLabel} ${ids}, ${folderTitle}. [Classification marking and release status.]`;
 }
 
 const libraryClusters = [
@@ -1110,15 +1110,34 @@ const dailyDiaryRoot =
   "Source: Clinton Library, Clinton Presidential Records, Presidential Daily Diary, Ellen McCathran";
 
 function dailyDiarySourceNote(oaId, folderTitle, entryLabel, naid) {
-  return `${dailyDiaryRoot}, OA/ID ${oaId}, ${folderTitle}, ${entryLabel}. NARA Catalog NAID ${naid}; FOIA 2010-0083-F; entry-level redactions and release markings verified from the digitized Daily Diary file unit.`;
+  return `${dailyDiaryRoot}, OA/ID ${oaId}, ${folderTitle}, ${entryLabel}; NARA Catalog, NAID ${naid}. Released in part under FOIA 2010-0083-F.`;
 }
 
 const publicPapersRoot =
-  "Source: Public Papers of the Presidents of the United States: William J. Clinton";
+  "Source: Public Papers: Clinton";
 
-function publicPapersSourceNote(year, book, pageRange, title, eventDate, verificationNote = "") {
-  const note = verificationNote ? ` ${verificationNote}` : "";
-  return `${publicPapersRoot} (${year}, ${book}), ${pageRange}, "${title}," ${eventDate}. GovInfo details page; public chronology lead to be matched against relevant White House, NSC, State, agency, and implementation records before selection.${note}`;
+function frusPageRange(pageRange) {
+  if (pageRange.startsWith("pages ")) {
+    return `pp. ${pageRange.slice("pages ".length)}`;
+  }
+  if (pageRange.startsWith("page ")) {
+    return `p. ${pageRange.slice("page ".length)}`;
+  }
+  return pageRange;
+}
+
+function frusSupplementalNote(verificationNote) {
+  if (!verificationNote) {
+    return "";
+  }
+  const cleaned = verificationNote
+    .replace(/^GovInfo (notes|flags) that /, "")
+    .replaceAll(" and that ", " and ");
+  return ` ${cleaned.charAt(0).toUpperCase()}${cleaned.slice(1)}`;
+}
+
+function publicPapersSourceNote(year, book, pageRange, _title, _eventDate, verificationNote = "") {
+  return `${publicPapersRoot}, ${year}, ${book}, ${frusPageRange(pageRange)}.${frusSupplementalNote(verificationNote)}`;
 }
 
 const chronologyItems = [

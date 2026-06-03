@@ -2489,7 +2489,7 @@
       candidateDocumentTitle: "",
       documentDate: "",
       documentType: "",
-      repository: "Clinton Presidential Library",
+      repository: "Clinton Library",
       recordCollection: "Clinton Presidential Records",
       officeOrSeries: "",
       locator: item.privateRecordTarget,
@@ -2503,9 +2503,9 @@
       publicAnchor: item.publicAnchors,
       catalogOrCanonicalUrl: "",
       draftSourceNote:
-        "Clinton Presidential Library, Clinton Presidential Records, [office or series], [OA/ID or NAID], [folder title].",
+        "Source: Clinton Library, Clinton Presidential Records, National Security Council, [office or series], [OA/ID or NAID], [folder title]. [Classification marking and release status.]",
       frusStyleCheck:
-        "Repository; record collection; office or series; OA/ID or NAID; folder title; document title/date; page or image range; release markings.",
+        "Source: repository, record collection, office or series, OA/ID or NAID, folder title. Classification marking and release status.",
       sourceNoteOwner: "",
       status: "",
       notes: "",

@@ -31,8 +31,10 @@ The onsite research section incorporates OCR/text extraction from these local fi
 The PDFs are not committed to this repository. The page keeps only a compact research plan,
 call-slip batches, and high-yield folder-title clusters derived from those finding aids.
 
-The displayed source-note stems follow the FRUS order: repository, record collection,
-office or series, OA/ID locator, folder title, then a short editorial verification note.
+The displayed source-note stems follow the published FRUS pattern: `Source:`
+repository, record collection, office or series, OA/ID locator, and folder title,
+followed by classification and release-status language where it is known or by a
+bracketed placeholder where the document-level marking still needs review.
 
 ## Authority Search Index
 
