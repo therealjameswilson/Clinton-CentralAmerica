@@ -3,6 +3,10 @@
 This repository contains a static compiler-facing workspace for
 `Foreign Relations of the United States, 1993-2000, Volume XXXII, Central America`.
 
+The page is deliberately human-led and audit-first. It organizes evidence,
+questions, and spreadsheet-ready worksheets, but it does not make selection
+recommendations or ask the compiler to trust an opaque conclusion.
+
 The Office of the Historian currently lists the volume as `Being Researched`:
 
 https://history.state.gov/historicaldocuments/frus1993-00v32
