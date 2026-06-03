@@ -2503,9 +2503,9 @@
       publicAnchor: item.publicAnchors,
       catalogOrCanonicalUrl: "",
       draftSourceNote:
-        "Source: Clinton Library, Clinton Presidential Records, National Security Council, [office or series], [OA/ID or NAID], [folder title]. [Classification marking and release status.]",
+        "Source: Clinton Library, Clinton Presidential Records, National Security Council, [office or series], [OA/ID or NAID], [folder title].",
       frusStyleCheck:
-        "Source: repository, record collection, office or series, OA/ID or NAID, folder title. Classification marking and release status.",
+        "Source: repository, record collection, office or series, OA/ID or NAID, folder title; then append verified classification, handling, and release statements.",
       sourceNoteOwner: "",
       status: "",
       notes: "",
